@@ -1,65 +1,132 @@
-import Image from "next/image";
+import Link from "next/link";
+import VehicleCard from "@/components/VehicleCard";
+import { featuredVehicles } from "@/lib/vehicles";
+
+const perks = [
+  {
+    title: "Honest, Up-Front Pricing",
+    body: "Every vehicle is competitively priced with no hidden fees or last-minute surprises.",
+  },
+  {
+    title: "Financing for All Credit",
+    body: "Good credit, bad credit, or no credit — our team works with multiple lenders to get you approved.",
+  },
+  {
+    title: "Inspected & Reconditioned",
+    body: "Each car passes a multi-point inspection so you can drive off the lot with confidence.",
+  },
+];
 
 export default function Home() {
+  const featured = featuredVehicles();
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <>
+      {/* Hero */}
+      <section className="relative overflow-hidden bg-navy">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-gradient-to-br from-navy via-navy-light to-navy"
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+        <div className="relative mx-auto flex max-w-6xl flex-col items-start gap-6 px-4 py-24 sm:px-6 lg:py-32">
+          <span className="rounded-full bg-gold/15 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-gold ring-1 ring-gold/30">
+            Springfield&apos;s trusted used car dealer
+          </span>
+          <h1 className="max-w-2xl text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
+            Find your next car with{" "}
+            <span className="text-gold">confidence.</span>
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="max-w-xl text-lg text-zinc-300">
+            Quality pre-owned cars, trucks, and SUVs — backed by honest pricing
+            and financing options for every credit situation.
           </p>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <Link
+              href="/inventory"
+              className="rounded-full bg-gold px-6 py-3 text-center text-sm font-semibold text-navy transition hover:bg-amber-300"
+            >
+              Browse Inventory
+            </Link>
+            <Link
+              href="/financing"
+              className="rounded-full border border-white/25 px-6 py-3 text-center text-sm font-semibold text-white transition hover:border-gold hover:text-gold"
+            >
+              Get Pre-Approved
+            </Link>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* Perks */}
+      <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+        <div className="grid gap-6 md:grid-cols-3">
+          {perks.map((perk) => (
+            <div
+              key={perk.title}
+              className="rounded-xl border border-zinc-200 bg-zinc-50 p-6"
+            >
+              <h3 className="text-lg font-semibold text-navy">{perk.title}</h3>
+              <p className="mt-2 text-sm text-zinc-600">{perk.body}</p>
+            </div>
+          ))}
         </div>
-      </main>
-    </div>
+      </section>
+
+      {/* Featured inventory */}
+      <section className="bg-zinc-50 py-16">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="flex items-end justify-between">
+            <div>
+              <h2 className="text-2xl font-bold text-navy sm:text-3xl">
+                Featured Vehicles
+              </h2>
+              <p className="mt-1 text-sm text-zinc-600">
+                Hand-picked deals from our current lot.
+              </p>
+            </div>
+            <Link
+              href="/inventory"
+              className="hidden text-sm font-semibold text-gold-dark hover:underline sm:block"
+            >
+              View all inventory →
+            </Link>
+          </div>
+
+          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {featured.map((vehicle) => (
+              <VehicleCard key={vehicle.id} vehicle={vehicle} />
+            ))}
+          </div>
+
+          <div className="mt-8 sm:hidden">
+            <Link
+              href="/inventory"
+              className="text-sm font-semibold text-gold-dark hover:underline"
+            >
+              View all inventory →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="bg-navy">
+        <div className="mx-auto flex max-w-6xl flex-col items-center gap-6 px-4 py-16 text-center sm:px-6">
+          <h2 className="text-2xl font-bold text-white sm:text-3xl">
+            Ready to drive something better?
+          </h2>
+          <p className="max-w-lg text-zinc-300">
+            Stop by the lot or reach out and our team will help you find the
+            right vehicle and the right payment.
+          </p>
+          <Link
+            href="/contact"
+            className="rounded-full bg-gold px-6 py-3 text-sm font-semibold text-navy transition hover:bg-amber-300"
+          >
+            Contact Our Team
+          </Link>
+        </div>
+      </section>
+    </>
   );
 }
