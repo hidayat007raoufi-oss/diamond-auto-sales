@@ -24,8 +24,8 @@ export default function FinancingPage() {
         <div>
           <SectionHeading
             kicker="Financing"
-            title={<>Approved, the easy way.</>}
-            intro="Bad credit? No credit? First car? Our finance specialists shop your application across a network of lenders to find a payment that fits your life."
+            title={<>Financing made clear.</>}
+            intro="Apply online or speak with our team to explore options for your next vehicle. All credit considered, trade-ins welcome."
           />
 
           <ul className="mt-10 space-y-4">

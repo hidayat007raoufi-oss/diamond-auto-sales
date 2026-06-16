@@ -17,9 +17,9 @@ export default function ServicesPage() {
       <section className="cinematic vignette relative overflow-hidden">
         <div className="mx-auto max-w-7xl px-5 pb-20 pt-36 sm:px-8">
           <SectionHeading
-            kicker="Beyond the Sale"
-            title={<>Automotive services, in-house.</>}
-            intro="Everything your vehicle needs, under one roof — handled by our specialists, not outsourced."
+            kicker="Service"
+            title={<>Services after the sale.</>}
+            intro="Keep your vehicle at its best with in-house care from our specialists."
           />
         </div>
       </section>
@@ -37,7 +37,7 @@ export default function ServicesPage() {
           <div className="glass mt-10 flex flex-col items-start justify-between gap-6 rounded-3xl border border-line p-9 sm:flex-row sm:items-center">
             <div>
               <h3 className="text-2xl font-semibold text-white">Ready to book a service?</h3>
-              <p className="mt-2 text-sm text-dim">Concierge drop-off and return available across the Triangle.</p>
+              <p className="mt-2 text-sm text-dim">Pickup and return available across the Triangle.</p>
             </div>
             <Button href="/contact">Schedule Service</Button>
           </div>

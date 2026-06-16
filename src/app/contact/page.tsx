@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 const rows = [
   { label: "Visit", value: "5915 Triangle Drive, Raleigh, NC 27616" },
   { label: "Call", value: "(919) 887-8666", href: "tel:+19198878666" },
-  { label: "Email", value: "concierge@diamondautonc.com", href: "mailto:concierge@diamondautonc.com" },
+  { label: "Email", value: "hello@diamondautonc.com", href: "mailto:hello@diamondautonc.com" },
   { label: "Hours", value: "Mon–Fri 9–7 · Sat 9–5 · Sun by appointment" },
 ];
 
@@ -22,9 +22,9 @@ export default function ContactPage() {
       <div className="mx-auto grid max-w-7xl gap-14 px-5 pb-28 pt-36 sm:px-8 lg:grid-cols-[1fr_1.05fr]">
         <div>
           <SectionHeading
-            kicker="Ready to find your Diamond?"
-            title={<>Let&apos;s get you driving.</>}
-            intro="Stop by our Raleigh showroom or browse online. Our team is ready to help you drive home something special today."
+            kicker="Contact"
+            title={<>Ready to find your next vehicle?</>}
+            intro="Stop by our Raleigh showroom or send a message and our team will confirm availability."
           />
 
           <div className="mt-12 space-y-6">

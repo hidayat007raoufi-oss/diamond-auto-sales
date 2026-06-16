@@ -8,17 +8,17 @@ const links = [
   { href: "/inventory", label: "Inventory" },
   { href: "/financing", label: "Financing" },
   { href: "/services", label: "Services" },
-  { href: "/programs", label: "Programs" },
+  { href: "/#reviews", label: "Reviews" },
   { href: "/contact", label: "Contact" },
 ];
 
 function Mark() {
   return (
     <Link href="/" className="group flex items-center gap-2.5" aria-label="Diamond home">
-      <DiamondLogo className="h-9 w-9" />
+      <DiamondLogo className="h-8 w-8" />
       <span className="flex flex-col leading-none">
-        <span className="text-[14px] font-semibold tracking-[0.34em] text-white">DIAMOND</span>
-        <span className="text-[8px] font-medium tracking-[0.34em] text-mute">AUTO SALES · LLC</span>
+        <span className="text-[13px] font-semibold tracking-[0.3em] text-white">DIAMOND</span>
+        <span className="text-[8px] font-medium tracking-[0.3em] text-mute">AUTO SALES · LLC</span>
       </span>
     </Link>
   );
@@ -45,13 +45,13 @@ export default function Header() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-        scrolled ? "glass-strong border-b border-line py-3" : "border-b border-transparent py-5"
+        scrolled ? "glass-strong border-b border-line py-2.5" : "border-b border-transparent py-4"
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-5 sm:px-8">
         <Mark />
 
-        <nav className="hidden items-center gap-9 lg:flex">
+        <nav className="hidden items-center gap-10 lg:flex">
           {links.map((l) => (
             <Link
               key={l.href}

@@ -13,9 +13,9 @@ export default function InventoryPage() {
   return (
     <div className="mx-auto max-w-7xl px-5 pb-28 pt-36 sm:px-8">
       <SectionHeading
-        kicker="The Collection"
-        title={<>Current inventory.</>}
-        intro="Hand-selected vehicles, reconditioned in-house and ready to drive. This is where it starts."
+        kicker="Inventory"
+        title={<>Available inventory.</>}
+        intro="Browse selected vehicles ready for sale in Raleigh."
       />
       <div className="mt-12">
         <InventoryExplorer vehicles={vehicles} />

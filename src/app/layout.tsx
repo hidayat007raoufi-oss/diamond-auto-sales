@@ -10,26 +10,24 @@ const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"]
 export const metadata: Metadata = {
   metadataBase: new URL("https://diamondauto.com"),
   title: {
-    default: "Diamond Auto — Automotive Ownership, Reimagined | Raleigh, NC",
-    template: "%s | Diamond Auto",
+    default: "Diamond Auto Sales — Premium Vehicles in Raleigh, NC",
+    template: "%s | Diamond Auto Sales",
   },
   description:
-    "A premium automotive ownership platform in Raleigh, NC. Luxury vehicle sales, detailing, window tint, mechanic, tire, customization, and fleet protection programs.",
+    "Premium pre-owned and luxury vehicles for sale in Raleigh, NC. Transparent financing, 27-point inspected inventory, and in-house service.",
   keywords: [
-    "luxury cars Raleigh",
-    "premium vehicle sales",
-    "auto detailing Raleigh",
-    "window tint",
-    "fleet maintenance",
-    "vehicle protection plans",
-    "Diamond Auto",
+    "used cars Raleigh",
+    "luxury cars Raleigh NC",
+    "premium vehicles for sale",
+    "auto financing Raleigh",
+    "Diamond Auto Sales",
   ],
   openGraph: {
-    title: "Diamond Auto — Automotive Ownership, Reimagined",
+    title: "Diamond Auto Sales — Premium Vehicles in Raleigh, NC",
     description:
-      "Luxury vehicle sales and premium automotive services in Raleigh, North Carolina.",
+      "Premium vehicles, transparent financing, and in-house service in Raleigh, North Carolina.",
     type: "website",
-    siteName: "Diamond Auto",
+    siteName: "Diamond Auto Sales",
     locale: "en_US",
   },
   twitter: { card: "summary_large_image" },
@@ -45,14 +43,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
       <body className="grain min-h-screen text-text">
-        {/* living ambient background — drifts behind transparent sections */}
-        <div aria-hidden className="fixed inset-0 -z-10 overflow-hidden bg-black">
-          <div className="drift absolute -left-[10%] top-[4%] h-[60vh] w-[60vh] rounded-full bg-[radial-gradient(circle,rgba(59,130,246,0.1),transparent_60%)] blur-3xl" />
-          <div className="drift-slow absolute right-[-12%] top-[38%] h-[55vh] w-[55vh] rounded-full bg-[radial-gradient(circle,rgba(37,99,235,0.09),transparent_62%)] blur-3xl" />
-          <div
-            className="drift absolute bottom-[-10%] left-[20%] h-[50vh] w-[50vh] rounded-full bg-[radial-gradient(circle,rgba(96,165,250,0.07),transparent_62%)] blur-3xl"
-            style={{ animationDelay: "-8s" }}
-          />
+        {/* calm, static base — a single soft top spotlight, no blue blobs */}
+        <div aria-hidden className="fixed inset-0 -z-10 bg-black">
+          <div className="absolute inset-x-0 top-0 h-[55vh] bg-[radial-gradient(55%_50%_at_50%_0%,rgba(255,255,255,0.045),transparent_72%)]" />
         </div>
         <Header />
         <main>{children}</main>

@@ -5,9 +5,9 @@ const columns = [
     title: "Vehicles",
     links: [
       { href: "/inventory", label: "All Inventory" },
-      { href: "/inventory", label: "Coupes & Sports" },
-      { href: "/inventory", label: "Luxury SUVs" },
       { href: "/financing", label: "Financing" },
+      { href: "/financing", label: "Trade-In" },
+      { href: "/#reviews", label: "Reviews" },
     ],
   },
   {
@@ -20,35 +20,26 @@ const columns = [
       { href: "/services", label: "Customization" },
     ],
   },
-  {
-    title: "Programs",
-    links: [
-      { href: "/programs", label: "Fleet Maintenance" },
-      { href: "/programs", label: "Vehicle Care" },
-      { href: "/programs", label: "Tire Care" },
-      { href: "/programs", label: "Protection Plans" },
-    ],
-  },
 ];
 
 export default function Footer() {
   return (
-    <footer className="relative border-t border-line bg-bg">
+    <footer className="relative border-t border-line bg-black">
       <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8">
         <div className="grid gap-14 lg:grid-cols-[1.4fr_2fr]">
           <div>
             <p className="display text-3xl text-metal">Diamond</p>
-            <p className="mt-1 text-[10px] tracking-[0.35em] text-mute">RALEIGH · LUXURY AUTOMOTIVE</p>
+            <p className="mt-1 text-[10px] tracking-[0.35em] text-mute">RALEIGH · AUTO SALES</p>
             <p className="mt-6 max-w-xs text-sm leading-relaxed text-dim">
-              A luxury automotive ownership platform — premium vehicles, in-house
-              care, and membership programs, all from one Raleigh home.
+              Premium vehicles, transparent financing, and full in-house service
+              — in Raleigh, North Carolina.
             </p>
             <p className="mt-6 text-xs tracking-wide text-mute">
               Raleigh · Durham · Cary · Chapel Hill · The Triangle
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
             {columns.map((col) => (
               <div key={col.title}>
                 <p className="kicker mb-4">{col.title}</p>
@@ -73,11 +64,11 @@ export default function Footer() {
                   </a>
                 </li>
                 <li>
-                  <a href="mailto:concierge@diamondautonc.com" className="transition-colors hover:text-white">
-                    concierge@diamondautonc.com
+                  <a href="mailto:hello@diamondautonc.com" className="transition-colors hover:text-white">
+                    hello@diamondautonc.com
                   </a>
                 </li>
-                <li className="text-mute">Mon–Fri 9–7 · Sat 9–5 · Sun by appt.</li>
+                <li className="text-mute">Mon–Fri 9–7 · Sat 9–5</li>
               </ul>
             </div>
           </div>
