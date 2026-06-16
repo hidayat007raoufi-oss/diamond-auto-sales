@@ -201,6 +201,19 @@ body {
 .kenburns {
   animation: kenburns 22s var(--ease-out-soft) infinite alternate;
 }
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-16px) rotate(1.5deg);
+  }
+}
+.floaty {
+  animation: floaty 9s ease-in-out infinite;
+}
+
 @keyframes sheen {
   0% {
     transform: translateX(-130%) skewX(-18deg);

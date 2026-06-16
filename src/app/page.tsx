@@ -1,6 +1,5 @@
 import Button from "@/components/site/Button";
 import Reveal from "@/components/motion/Reveal";
-import Parallax from "@/components/motion/Parallax";
 import Counter from "@/components/motion/Counter";
 import SectionHeading from "@/components/site/SectionHeading";
 import VehicleCard from "@/components/site/VehicleCard";
@@ -48,20 +47,54 @@ export default function Home() {
     <>
       {/* ============ 1 · HERO ============ */}
       <section className="cinematic vignette relative flex min-h-[100svh] items-center overflow-hidden">
-        <div className="absolute inset-0 kenburns bg-[radial-gradient(70%_60%_at_50%_-5%,rgba(150,160,175,0.22),transparent_60%)]" />
-        <Parallax speed={0.12} className="absolute inset-x-0 bottom-[-20%] top-0">
-          <div className="absolute left-1/2 top-1/2 h-[60vh] w-[60vh] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.08),transparent_60%)] blur-2xl" />
-        </Parallax>
+        {/* ambient light */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 kenburns bg-[radial-gradient(55%_55%_at_62%_-2%,rgba(150,160,175,0.2),transparent_62%)]"
+        />
+
+        {/* focal diamond — the brand made visual */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute right-[-24%] top-1/2 -translate-y-1/2 opacity-50 sm:right-[-10%] sm:opacity-70 lg:right-[1%]"
+        >
+          <div className="floaty relative grid place-items-center">
+            <div className="absolute h-[60vh] w-[60vh] rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.1),transparent_62%)] blur-2xl" />
+            <svg
+              viewBox="0 0 200 200"
+              className="relative h-[46vh] w-[46vh] max-h-[560px] max-w-[560px] sm:h-[62vh] sm:w-[62vh]"
+            >
+              <defs>
+                <linearGradient id="hd" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stopColor="#ffffff" stopOpacity="0.95" />
+                  <stop offset="0.5" stopColor="#c9ccd1" stopOpacity="0.5" />
+                  <stop offset="1" stopColor="#6c6c72" stopOpacity="0.15" />
+                </linearGradient>
+              </defs>
+              <g stroke="url(#hd)" fill="none" strokeWidth="0.7" strokeLinejoin="round">
+                <path d="M60 42 H140 L180 92 L100 182 L20 92 Z" />
+                <path d="M20 92 H180" />
+                <path d="M60 42 L20 92 M140 42 L180 92 M60 42 L60 92 M140 42 L140 92" />
+                <path d="M20 92 L100 182 M180 92 L100 182 M60 92 L100 182 M140 92 L100 182 M100 92 L100 182" />
+              </g>
+            </svg>
+          </div>
+        </div>
 
         <div className="relative z-10 mx-auto w-full max-w-7xl px-5 pt-28 sm:px-8">
           <p className="rise kicker" style={{ animationDelay: "0.1s" }}>
-            Raleigh · North Carolina
+            Raleigh · Luxury Automotive
           </p>
-          <h1 className="rise display mt-6 max-w-4xl text-[15vw] leading-[0.92] text-white sm:text-7xl lg:text-8xl" style={{ animationDelay: "0.2s" }}>
-            Automotive Ownership.
-            <span className="block text-metal">Reimagined.</span>
+          <h1
+            className="rise display mt-7 max-w-3xl text-[3.25rem] leading-[0.95] text-white sm:text-7xl lg:text-[5.4rem]"
+            style={{ animationDelay: "0.2s" }}
+          >
+            Automotive Ownership. <span className="text-metal">Reimagined.</span>
           </h1>
-          <p className="rise mt-8 max-w-md text-lg leading-relaxed text-dim" style={{ animationDelay: "0.35s" }}>
+          <p
+            className="rise mt-8 max-w-md text-lg leading-relaxed text-dim sm:text-xl"
+            style={{ animationDelay: "0.35s" }}
+          >
             Premium vehicles, in-house care, and ownership programs — engineered
             into one effortless experience in the Triangle.
           </p>
@@ -71,12 +104,23 @@ export default function Home() {
               Schedule Service
             </Button>
           </div>
+
+          <div
+            className="rise mt-14 flex flex-wrap items-center gap-x-7 gap-y-3 text-[11px] uppercase tracking-[0.2em] text-mute"
+            style={{ animationDelay: "0.65s" }}
+          >
+            <span>27-Point Diamond Certified</span>
+            <span className="hidden h-3 w-px bg-line-strong sm:block" />
+            <span>Financing for All Credit</span>
+            <span className="hidden h-3 w-px bg-line-strong sm:block" />
+            <span>Concierge Service</span>
+          </div>
         </div>
 
         {/* scroll cue */}
         <div className="absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-2 sm:flex">
           <span className="text-[10px] uppercase tracking-[0.3em] text-mute">Scroll</span>
-          <span className="h-10 w-px bg-gradient-to-b from-silver to-transparent" />
+          <span className="h-10 w-px animate-pulse bg-gradient-to-b from-silver to-transparent" />
         </div>
       </section>
 

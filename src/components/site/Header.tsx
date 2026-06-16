@@ -21,8 +21,8 @@ function Mark() {
         </svg>
       </span>
       <span className="flex flex-col leading-none">
-        <span className="text-[13px] font-semibold tracking-[0.32em] text-white">DIAMOND</span>
-        <span className="text-[8px] font-medium tracking-[0.38em] text-mute">RALEIGH · LUXURY AUTO</span>
+        <span className="text-[14px] font-semibold tracking-[0.34em] text-white">DIAMOND</span>
+        <span className="text-[8px] font-medium tracking-[0.34em] text-mute">AUTO SALES · LLC</span>
       </span>
     </Link>
   );
@@ -68,10 +68,19 @@ export default function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4">
+          <a
+            href="tel:+19198878666"
+            className="hidden items-center gap-2 text-[13px] font-medium text-dim transition-colors hover:text-white md:flex"
+          >
+            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path d="M5 4h4l2 5-3 2a11 11 0 005 5l2-3 5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z" />
+            </svg>
+            (919) 887-8666
+          </a>
           <Link
             href="/inventory"
-            className="btn-sheen hidden rounded-full border border-line-strong bg-white/5 px-5 py-2 text-[13px] font-medium text-white transition-colors hover:bg-white hover:text-black sm:inline-flex"
+            className="btn-sheen hidden rounded-full bg-white px-5 py-2 text-[13px] font-semibold text-black transition-colors hover:bg-silver-bright sm:inline-flex"
           >
             View Inventory
           </Link>
