@@ -23,16 +23,63 @@ export default function PaymentCalculator() {
     return (principal * r) / (1 - Math.pow(1 + r, -term));
   }, [price, down, apr, term]);
 
+  // Live amortization curve — remaining balance over the term.
+  const { linePath, areaPath } = useMemo(() => {
+    const principal = Math.max(price - down, 0) || 1;
+    const r = apr / 100 / 12;
+    const n = term;
+    const pts: [number, number][] = [];
+    for (let i = 0; i <= n; i++) {
+      let bal =
+        r === 0
+          ? principal - monthly * i
+          : principal * Math.pow(1 + r, i) - monthly * ((Math.pow(1 + r, i) - 1) / r);
+      bal = Math.max(bal, 0);
+      const x = (i / n) * 300;
+      const y = 6 + (1 - bal / principal) * 78;
+      pts.push([x, y]);
+    }
+    const line = pts
+      .map((p, i) => `${i === 0 ? "M" : "L"}${p[0].toFixed(1)} ${p[1].toFixed(1)}`)
+      .join(" ");
+    return { linePath: line, areaPath: `${line} L300 90 L0 90 Z` };
+  }, [price, down, apr, term, monthly]);
+
   return (
     <div className="glass rounded-3xl border border-line p-7 sm:p-9">
       <p className="kicker">Estimated Monthly Payment</p>
-      <p className="display mt-3 text-6xl text-metal">
+      <p className="display mt-3 text-6xl text-azure">
         {money(monthly)}
         <span className="text-2xl text-dim">/mo</span>
       </p>
       <p className="mt-2 text-xs text-mute">
         {term} months · {apr.toFixed(1)}% APR · {money(down)} down
       </p>
+
+      {/* live APR balance graph */}
+      <div className="mt-6">
+        <svg viewBox="0 0 300 90" preserveAspectRatio="none" className="h-24 w-full" aria-hidden>
+          <defs>
+            <linearGradient id="pc-fill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stopColor="#3b82f6" stopOpacity="0.45" />
+              <stop offset="1" stopColor="#3b82f6" stopOpacity="0" />
+            </linearGradient>
+          </defs>
+          <path d={areaPath} fill="url(#pc-fill)" />
+          <path
+            d={linePath}
+            fill="none"
+            stroke="#60a5fa"
+            strokeWidth="1.5"
+            vectorEffect="non-scaling-stroke"
+          />
+        </svg>
+        <div className="mt-1 flex justify-between text-[10px] uppercase tracking-widest text-mute">
+          <span>Today</span>
+          <span>Balance over {term} mo</span>
+          <span>Paid off</span>
+        </div>
+      </div>
 
       <div className="mt-9 space-y-7">
         <Slider label="Vehicle price" value={money(price)} min={15000} max={250000} step={1000} raw={price} onChange={setPrice} />
@@ -102,7 +149,7 @@ function Slider({
         onChange={(e) => onChange(Number(e.target.value))}
         className="lux-range w-full"
         style={{
-          background: `linear-gradient(90deg, #e9ebee ${pct}%, rgba(255,255,255,0.1) ${pct}%)`,
+          background: `linear-gradient(90deg, #3b82f6 ${pct}%, rgba(255,255,255,0.1) ${pct}%)`,
         }}
       />
     </div>

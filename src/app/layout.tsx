@@ -44,7 +44,16 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-      <body className="grain min-h-screen bg-bg text-text">
+      <body className="grain min-h-screen text-text">
+        {/* living ambient background — drifts behind transparent sections */}
+        <div aria-hidden className="fixed inset-0 -z-10 overflow-hidden bg-black">
+          <div className="drift absolute -left-[10%] top-[4%] h-[60vh] w-[60vh] rounded-full bg-[radial-gradient(circle,rgba(59,130,246,0.1),transparent_60%)] blur-3xl" />
+          <div className="drift-slow absolute right-[-12%] top-[38%] h-[55vh] w-[55vh] rounded-full bg-[radial-gradient(circle,rgba(37,99,235,0.09),transparent_62%)] blur-3xl" />
+          <div
+            className="drift absolute bottom-[-10%] left-[20%] h-[50vh] w-[50vh] rounded-full bg-[radial-gradient(circle,rgba(96,165,250,0.07),transparent_62%)] blur-3xl"
+            style={{ animationDelay: "-8s" }}
+          />
+        </div>
         <Header />
         <main>{children}</main>
         <Footer />

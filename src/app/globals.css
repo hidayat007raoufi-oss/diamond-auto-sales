@@ -18,6 +18,10 @@
   --color-silver: #c9ccd1;
   --color-silver-bright: #e9ebee;
 
+  --color-accent: #3b82f6;
+  --color-accent-bright: #60a5fa;
+  --color-ice: #bfe0ff;
+
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 
@@ -39,13 +43,24 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
+html {
+  background: #000000;
+}
 body {
-  background: var(--color-bg);
+  background: transparent;
   color: var(--color-text);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
+}
+
+/* Blue metallic accent text */
+.text-azure {
+  background: linear-gradient(180deg, #eaf3ff 0%, #60a5fa 48%, #2563eb 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 ::selection {
@@ -214,6 +229,67 @@ body {
   animation: floaty 9s ease-in-out infinite;
 }
 
+/* ---------- Sparkling blue diamond logo ---------- */
+@keyframes logoGlow {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 2px rgba(59, 130, 246, 0.45));
+  }
+  50% {
+    filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.9));
+  }
+}
+.diamond-logo {
+  animation: logoGlow 3.6s ease-in-out infinite;
+}
+.diamond-logo:hover {
+  animation-duration: 1.4s;
+}
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.spark {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: twinkle 2.4s ease-in-out infinite;
+}
+.spark.s2 {
+  animation-delay: 0.8s;
+}
+.spark.s3 {
+  animation-delay: 1.6s;
+}
+
+/* ---------- Living ambient background ---------- */
+@keyframes drift {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(7%, -5%) scale(1.08);
+  }
+  66% {
+    transform: translate(-6%, 6%) scale(0.95);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+.drift {
+  animation: drift 20s ease-in-out infinite;
+}
+.drift-slow {
+  animation: drift 30s ease-in-out infinite;
+}
+
 @keyframes sheen {
   0% {
     transform: translateX(-130%) skewX(-18deg);
@@ -287,12 +363,12 @@ body {
   width: 20px;
   border-radius: 50%;
   background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.08), 0 2px 8px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(59, 130, 246, 0.4);
+  box-shadow: 0 0 0 6px rgba(59, 130, 246, 0.18), 0 0 14px rgba(59, 130, 246, 0.5);
   transition: box-shadow 0.25s var(--ease-lux);
 }
 .lux-range::-webkit-slider-thumb:hover {
-  box-shadow: 0 0 0 9px rgba(255, 255, 255, 0.12), 0 2px 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 0 9px rgba(59, 130, 246, 0.24), 0 0 18px rgba(59, 130, 246, 0.7);
 }
 .lux-range::-moz-range-thumb {
   height: 20px;

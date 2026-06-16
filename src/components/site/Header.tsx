@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import DiamondLogo from "@/components/site/DiamondLogo";
 
 const links = [
   { href: "/inventory", label: "Inventory" },
@@ -14,12 +15,7 @@ const links = [
 function Mark() {
   return (
     <Link href="/" className="group flex items-center gap-2.5" aria-label="Diamond home">
-      <span className="relative grid h-8 w-8 place-items-center">
-        <svg viewBox="0 0 24 24" className="h-7 w-7 text-silver transition-transform duration-700 group-hover:rotate-180" fill="none" stroke="currentColor" strokeWidth="1.3">
-          <path d="M6 3h12l4 6-10 12L2 9l4-6Z" />
-          <path d="M2 9h20M9 3l3 18M15 3l-3 18M6 9l6 0M12 9l6 0" strokeWidth="0.7" opacity="0.5" />
-        </svg>
-      </span>
+      <DiamondLogo className="h-9 w-9" />
       <span className="flex flex-col leading-none">
         <span className="text-[14px] font-semibold tracking-[0.34em] text-white">DIAMOND</span>
         <span className="text-[8px] font-medium tracking-[0.34em] text-mute">AUTO SALES · LLC</span>
