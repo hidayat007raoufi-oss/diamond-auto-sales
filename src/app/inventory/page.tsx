@@ -1,29 +1,24 @@
 import type { Metadata } from "next";
-import VehicleCard from "@/components/VehicleCard";
+import SectionHeading from "@/components/site/SectionHeading";
+import InventoryExplorer from "@/components/site/InventoryExplorer";
 import { vehicles } from "@/lib/vehicles";
 
 export const metadata: Metadata = {
   title: "Inventory",
   description:
-    "Browse our full inventory of quality pre-owned cars, trucks, and SUVs at Diamond Auto Sales.",
+    "Browse the current collection of luxury and performance vehicles at Diamond Auto in Raleigh, NC. Hand-selected, Diamond Certified, and ready to drive.",
 };
 
 export default function InventoryPage() {
-  const available = vehicles.filter((v) => v.status !== "Sold").length;
-
   return (
-    <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-      <div className="border-b border-zinc-200 pb-6">
-        <h1 className="text-3xl font-bold text-navy">Our Inventory</h1>
-        <p className="mt-2 text-zinc-600">
-          {available} vehicles available now. Filtering and search coming soon.
-        </p>
-      </div>
-
-      <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {vehicles.map((vehicle) => (
-          <VehicleCard key={vehicle.id} vehicle={vehicle} />
-        ))}
+    <div className="mx-auto max-w-7xl px-5 pb-28 pt-36 sm:px-8">
+      <SectionHeading
+        kicker="The Collection"
+        title={<>Current inventory.</>}
+        intro="Hand-selected vehicles, reconditioned in-house and ready to drive. This is where it starts."
+      />
+      <div className="mt-12">
+        <InventoryExplorer vehicles={vehicles} />
       </div>
     </div>
   );

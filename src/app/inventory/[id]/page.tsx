@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import Button from "@/components/site/Button";
+import Reveal from "@/components/motion/Reveal";
+import VehicleCard from "@/components/site/VehicleCard";
 import {
+  estMonthly,
   formatMileage,
   formatPrice,
   getVehicle,
@@ -16,83 +20,114 @@ export async function generateMetadata(
   props: PageProps<"/inventory/[id]">
 ): Promise<Metadata> {
   const { id } = await props.params;
-  const vehicle = getVehicle(id);
-  if (!vehicle) return { title: "Vehicle not found" };
+  const v = getVehicle(id);
+  if (!v) return { title: "Vehicle not found" };
   return {
-    title: `${vehicle.year} ${vehicle.make} ${vehicle.model}`,
-    description: `${vehicle.year} ${vehicle.make} ${vehicle.model} — ${formatMileage(
-      vehicle.mileage
-    )}, ${formatPrice(vehicle.price)} at Diamond Auto Sales.`,
+    title: `${v.year} ${v.make} ${v.model} ${v.trim}`,
+    description: `${v.year} ${v.make} ${v.model} ${v.trim} — ${v.power}, ${formatMileage(
+      v.mileage
+    )}, ${formatPrice(v.price)} at Diamond Auto, Raleigh NC.`,
   };
 }
 
 export default async function VehiclePage(props: PageProps<"/inventory/[id]">) {
   const { id } = await props.params;
-  const vehicle = getVehicle(id);
-  if (!vehicle) notFound();
+  const v = getVehicle(id);
+  if (!v) notFound();
 
   const specs: [string, string][] = [
-    ["Mileage", formatMileage(vehicle.mileage)],
-    ["Body Type", vehicle.bodyType],
-    ["Fuel", vehicle.fuel],
-    ["Transmission", vehicle.transmission],
-    ["Drivetrain", vehicle.drivetrain],
-    ["Exterior", vehicle.exteriorColor],
+    ["Year", String(v.year)],
+    ["Mileage", formatMileage(v.mileage)],
+    ["Power", v.power],
+    ["0–60 mph", v.zeroToSixty],
+    ["Drivetrain", v.drivetrain],
+    ["Body", v.bodyType],
+    ["Exterior", v.exterior],
+    ["Status", v.status],
   ];
 
-  return (
-    <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
-      <Link
-        href="/inventory"
-        className="text-sm font-medium text-gold-dark hover:underline"
-      >
-        ← Back to inventory
-      </Link>
+  const similar = vehicles.filter((x) => x.id !== v.id && x.bodyType === v.bodyType).slice(0, 3);
+  const fallback = vehicles.filter((x) => x.id !== v.id).slice(0, 3);
+  const related = (similar.length ? similar : fallback).slice(0, 3);
 
-      <div className="mt-6 grid gap-8 lg:grid-cols-2">
-        <div
-          className={`flex h-72 items-center justify-center rounded-2xl bg-gradient-to-br ${vehicle.accent} lg:h-full lg:min-h-[24rem]`}
-        >
-          <span className="text-sm font-medium uppercase tracking-widest text-white/70">
-            {vehicle.make} {vehicle.model}
-          </span>
+  return (
+    <div className="pt-28">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <Link href="/inventory" className="text-sm text-dim transition-colors hover:text-white">
+          ← Back to inventory
+        </Link>
+
+        <div className="mt-6 grid gap-10 lg:grid-cols-2">
+          {/* Presentation */}
+          <Reveal blur>
+            <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-line">
+              <div className="absolute inset-0 kenburns" style={{ background: v.tone }} />
+              <div className="absolute inset-0 bg-[radial-gradient(60%_50%_at_70%_15%,rgba(255,255,255,0.18),transparent_60%)]" />
+              <span className="absolute left-5 top-5 rounded-full border border-line bg-black/40 px-3 py-1 text-[11px] tracking-widest text-white/80 backdrop-blur">
+                Diamond Certified
+              </span>
+              <span className="pointer-events-none absolute bottom-6 left-1/2 -translate-x-1/2 text-sm uppercase tracking-[0.4em] text-white/25">
+                {v.make}
+              </span>
+            </div>
+          </Reveal>
+
+          {/* Detail */}
+          <div className="flex flex-col">
+            <Reveal>
+              <p className="kicker">{v.year} · {v.bodyType}</p>
+              <h1 className="display mt-3 text-4xl text-white sm:text-5xl">
+                {v.make} {v.model}
+              </h1>
+              <p className="mt-2 text-lg text-dim">{v.trim}</p>
+            </Reveal>
+
+            <Reveal delay={100}>
+              <div className="mt-7 flex items-end gap-5 border-y border-line py-6">
+                <div>
+                  <p className="display text-4xl text-metal">{formatPrice(v.price)}</p>
+                  <p className="mt-1 text-xs text-mute">est. {estMonthly(v.price)} · 72mo</p>
+                </div>
+              </div>
+            </Reveal>
+
+            <Reveal delay={160}>
+              <dl className="mt-7 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-4">
+                {specs.slice(0, 4).map(([k, val]) => (
+                  <div key={k} className="bg-bg p-4">
+                    <dt className="text-[10px] uppercase tracking-widest text-mute">{k}</dt>
+                    <dd className="mt-1 text-sm font-semibold text-white">{val}</dd>
+                  </div>
+                ))}
+              </dl>
+              <dl className="mt-px grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-4">
+                {specs.slice(4).map(([k, val]) => (
+                  <div key={k} className="bg-bg p-4">
+                    <dt className="text-[10px] uppercase tracking-widest text-mute">{k}</dt>
+                    <dd className="mt-1 text-sm font-semibold text-white">{val}</dd>
+                  </div>
+                ))}
+              </dl>
+            </Reveal>
+
+            <Reveal delay={220}>
+              <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+                <Button href="/contact">Ask About This Vehicle</Button>
+                <Button href="/financing" variant="ghost">
+                  Estimate Payments
+                </Button>
+              </div>
+            </Reveal>
+          </div>
         </div>
 
-        <div>
-          <h1 className="text-3xl font-bold text-navy">
-            {vehicle.year} {vehicle.make} {vehicle.model}
-          </h1>
-          <p className="mt-2 text-2xl font-bold text-gold-dark">
-            {formatPrice(vehicle.price)}
-          </p>
-
-          <dl className="mt-6 grid grid-cols-2 gap-4">
-            {specs.map(([label, value]) => (
-              <div
-                key={label}
-                className="rounded-lg border border-zinc-200 bg-zinc-50 p-3"
-              >
-                <dt className="text-xs uppercase tracking-wide text-zinc-500">
-                  {label}
-                </dt>
-                <dd className="mt-1 text-sm font-semibold text-navy">{value}</dd>
-              </div>
+        {/* Related */}
+        <div className="mt-28 border-t border-line pt-16">
+          <h2 className="display text-2xl text-white sm:text-3xl">More from the collection</h2>
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {related.map((r) => (
+              <VehicleCard key={r.id} vehicle={r} />
             ))}
-          </dl>
-
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link
-              href="/contact"
-              className="rounded-full bg-gold px-6 py-3 text-center text-sm font-semibold text-navy transition hover:bg-amber-300"
-            >
-              Ask About This Vehicle
-            </Link>
-            <Link
-              href="/financing"
-              className="rounded-full border border-navy/20 px-6 py-3 text-center text-sm font-semibold text-navy transition hover:border-gold"
-            >
-              Estimate Payments
-            </Link>
           </div>
         </div>
       </div>

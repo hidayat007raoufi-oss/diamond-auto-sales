@@ -1,61 +1,58 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Button from "@/components/site/Button";
+import Reveal from "@/components/motion/Reveal";
+import SectionHeading from "@/components/site/SectionHeading";
+import PaymentCalculator from "@/components/site/PaymentCalculator";
 
 export const metadata: Metadata = {
   title: "Financing",
   description:
-    "Flexible auto financing for all credit situations at Diamond Auto Sales. Good credit, bad credit, or no credit — get pre-approved today.",
+    "Bad credit, no credit, or first car? Diamond Auto's finance specialists shop 15+ lenders to find a payment that fits your life. Get pre-approved with a soft credit check.",
 };
 
-const steps = [
-  {
-    title: "Apply Online",
-    body: "Fill out a quick, secure application — it only takes a few minutes and won't impact your credit to check.",
-  },
-  {
-    title: "Get Matched",
-    body: "We work with multiple lenders to find terms that fit your budget and credit situation.",
-  },
-  {
-    title: "Drive Away",
-    body: "Pick your vehicle, sign, and drive home. It's that simple.",
-  },
+const points = [
+  "Get pre-approved in minutes — soft credit check only",
+  "Competitive rates from 15+ trusted lending partners",
+  "First-time buyer & credit-rebuilding programs",
+  "Top-dollar trade-in offers, even if you still owe",
 ];
 
 export default function FinancingPage() {
   return (
-    <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
-      <h1 className="text-3xl font-bold text-navy">Financing Made Simple</h1>
-      <p className="mt-2 max-w-2xl text-zinc-600">
-        Good credit, bad credit, or no credit — our finance team works with a
-        network of lenders to get you behind the wheel.
-      </p>
+    <section className="cinematic vignette relative overflow-hidden">
+      <div className="mx-auto grid max-w-7xl gap-16 px-5 pb-28 pt-36 sm:px-8 sm:pb-36 lg:grid-cols-[1fr_1.05fr] lg:items-center">
+        <div>
+          <SectionHeading
+            kicker="Financing"
+            title={<>Approved, the easy way.</>}
+            intro="Bad credit? No credit? First car? Our finance specialists shop your application across a network of lenders to find a payment that fits your life."
+          />
 
-      <div className="mt-10 grid gap-6 sm:grid-cols-3">
-        {steps.map((step, i) => (
-          <div
-            key={step.title}
-            className="rounded-xl border border-zinc-200 bg-zinc-50 p-6"
-          >
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gold font-bold text-navy">
-              {i + 1}
-            </span>
-            <h2 className="mt-4 text-lg font-semibold text-navy">
-              {step.title}
-            </h2>
-            <p className="mt-2 text-sm text-zinc-600">{step.body}</p>
+          <ul className="mt-10 space-y-4">
+            {points.map((p, i) => (
+              <Reveal key={p} delay={i * 80}>
+                <li className="flex items-start gap-3.5 text-[15px] text-dim">
+                  <svg viewBox="0 0 24 24" className="mt-0.5 h-5 w-5 shrink-0 text-silver" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <path d="M5 12l4 4L19 7" />
+                  </svg>
+                  {p}
+                </li>
+              </Reveal>
+            ))}
+          </ul>
+
+          <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+            <Button href="/contact">Get Pre-Approved</Button>
+            <Button href="/inventory" variant="ghost">
+              Browse Inventory
+            </Button>
           </div>
-        ))}
-      </div>
+        </div>
 
-      <div className="mt-10">
-        <Link
-          href="/contact"
-          className="rounded-full bg-gold px-6 py-3 text-sm font-semibold text-navy transition hover:bg-amber-300"
-        >
-          Start Your Application
-        </Link>
+        <Reveal delay={120} blur>
+          <PaymentCalculator />
+        </Reveal>
       </div>
-    </div>
+    </section>
   );
 }
