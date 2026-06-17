@@ -19,7 +19,7 @@ export default function SectionHeading({
         <p className="kicker">{kicker}</p>
       </Reveal>
       <Reveal delay={90} blur>
-        <h2 className="display mt-4 text-4xl text-white sm:text-5xl text-balance">{title}</h2>
+        <h2 className="display mt-4 text-[2.4rem] leading-[1.04] text-white sm:text-5xl lg:text-[3.25rem] text-balance">{title}</h2>
       </Reveal>
       {intro && (
         <Reveal delay={180} blur>

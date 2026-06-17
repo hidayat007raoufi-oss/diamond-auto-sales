@@ -1,11 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/site/Header";
 import Footer from "@/components/site/Footer";
-
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+import StickyCTABar from "@/components/site/StickyCTABar";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://diamondauto.com"),
@@ -41,15 +38,18 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+    <html lang="en" className="antialiased">
       <body className="grain min-h-screen text-text">
-        {/* calm, static base — a single soft top spotlight, no blue blobs */}
+        {/* calm, static base — a single soft top spotlight */}
         <div aria-hidden className="fixed inset-0 -z-10 bg-black">
           <div className="absolute inset-x-0 top-0 h-[55vh] bg-[radial-gradient(55%_50%_at_50%_0%,rgba(255,255,255,0.045),transparent_72%)]" />
         </div>
         <Header />
         <main>{children}</main>
         <Footer />
+        {/* clearance so the sticky bar never hides footer content on mobile */}
+        <div aria-hidden className="h-24 lg:hidden" />
+        <StickyCTABar />
       </body>
     </html>
   );

@@ -8,6 +8,7 @@ import PaymentCalculator from "@/components/site/PaymentCalculator";
 import HeroVehicle from "@/components/site/HeroVehicle";
 import PhotoLayer from "@/components/site/PhotoLayer";
 import InventorySearchBar from "@/components/site/InventorySearchBar";
+import CategoryScroller from "@/components/site/CategoryScroller";
 import {
   estMonthly,
   featuredVehicles,
@@ -29,6 +30,24 @@ function SpecMini({ label, value }: { label: string; value: string }) {
 }
 
 const financingPoints = ["All credit considered", "Fast application", "Trade-ins welcome"];
+
+const REASON_ICON: Record<string, string> = {
+  shield: "M12 3l7 3v5c0 4-3 7-7 8-4-1-7-4-7-8V6z",
+  card: "M3 7h18v10H3z M3 11h18",
+  swap: "M4 8h13l-3-3 M20 16H7l3 3",
+  umbrella: "M12 3a9 9 0 019 9H3a9 9 0 019-9zM12 12v7a2 2 0 01-4 0",
+  wrench: "M14.7 6.3a4 4 0 00-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 005.4-5.4l-2.3 2.3-2-2 2.3-2.3z",
+  pin: "M12 21s7-6 7-11a7 7 0 10-14 0c0 5 7 11 7 11z M12 10h.01",
+};
+
+const reasons = [
+  { icon: "shield", title: "27-Point Inspection", body: "Every vehicle checked end to end before it's listed." },
+  { icon: "card", title: "Financing Available", body: "All credit considered, with a fast online application." },
+  { icon: "swap", title: "Trade-Ins Welcome", body: "Top-dollar offers, even if you still owe." },
+  { icon: "umbrella", title: "Vehicle Protection", body: "Optional coverage to protect your investment." },
+  { icon: "wrench", title: "In-House Service", body: "Detailing, tint, and mechanical under one roof." },
+  { icon: "pin", title: "Raleigh-Based", body: "Local support across the Triangle." },
+];
 
 export default function Home() {
   const featured = featuredVehicles();
@@ -52,14 +71,14 @@ export default function Home() {
               className="rise display mt-6 text-[3.4rem] leading-[0.95] text-white sm:text-7xl lg:text-[5.5rem]"
               style={{ animationDelay: "0.2s" }}
             >
-              Find Your Next Vehicle.
+              Find your next vehicle.
             </h1>
             <p
               className="rise mt-7 max-w-md text-lg leading-relaxed text-dim"
               style={{ animationDelay: "0.35s" }}
             >
-              Premium vehicles, transparent financing, and a buying experience
-              built around clarity.
+              Premium vehicles, transparent financing, and a cleaner buying
+              experience in Raleigh.
             </p>
             <div
               className="rise mt-9 flex flex-col gap-3 sm:flex-row"
@@ -71,17 +90,6 @@ export default function Home() {
               <Button href="/financing" variant="ghost" className="w-full sm:w-auto">
                 Get Financing
               </Button>
-            </div>
-            <div
-              className="rise mt-10 flex flex-wrap items-center gap-x-7 gap-y-2 text-[11px] uppercase tracking-[0.18em] text-mute"
-              style={{ animationDelay: "0.65s" }}
-            >
-              <span className="inline-flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-white/50" /> 27-Point Inspected
-              </span>
-              <span className="inline-flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-white/50" /> Financing Available
-              </span>
             </div>
           </div>
 
@@ -100,10 +108,14 @@ export default function Home() {
 
       {/* ============ INVENTORY — the star ============ */}
       <section className="relative mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-32">
-        <div className="flex flex-wrap items-end justify-between gap-6">
+        <Reveal>
+          <CategoryScroller />
+        </Reveal>
+
+        <div className="mt-14 flex flex-wrap items-end justify-between gap-6">
           <SectionHeading
             kicker="Inventory"
-            title={<>Available inventory.</>}
+            title={<>Discover what&apos;s available.</>}
             intro="Browse selected vehicles ready for sale in Raleigh."
           />
           <Reveal delay={120}>
@@ -170,6 +182,30 @@ export default function Home() {
           <Button href="/inventory" variant="ghost" className="w-full">
             View all inventory
           </Button>
+        </div>
+      </section>
+
+      {/* ============ FEATURE GRID ============ */}
+      <section className="mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-28">
+        <SectionHeading
+          kicker="Why Diamond"
+          title={<>A few reasons to buy with Diamond.</>}
+          align="center"
+        />
+        <div className="mt-14 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">
+          {reasons.map((r, i) => (
+            <Reveal key={r.title} delay={i * 60}>
+              <div className="h-full rounded-3xl border border-line bg-surface p-6 sm:p-8">
+                <div className="grid h-11 w-11 place-items-center rounded-2xl bg-surface-2 text-silver">
+                  <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+                    <path d={REASON_ICON[r.icon]} />
+                  </svg>
+                </div>
+                <h3 className="mt-5 text-base font-semibold tracking-tight text-white sm:text-lg">{r.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-mute">{r.body}</p>
+              </div>
+            </Reveal>
+          ))}
         </div>
       </section>
 
