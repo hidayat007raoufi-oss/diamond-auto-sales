@@ -15,6 +15,7 @@ export default function Vehicle360({
 }) {
   const [index, setIndex] = useState(0);
   const [dragging, setDragging] = useState(false);
+  const wrap = useRef<HTMLDivElement>(null);
   const start = useRef<{ x: number; idx: number } | null>(null);
 
   const begin = (x: number) => {
@@ -23,9 +24,10 @@ export default function Vehicle360({
   };
   const move = (x: number) => {
     if (!start.current) return;
-    const dx = x - start.current.x;
-    const step = Math.round(dx / 6); // ~6px per frame
     const n = frames.length;
+    const width = wrap.current?.clientWidth ?? 600;
+    // One full-width drag = one full rotation, regardless of frame count.
+    const step = Math.round(((x - start.current.x) / width) * n);
     setIndex((((start.current.idx + step) % n) + n) % n);
   };
   const end = () => {
@@ -35,6 +37,7 @@ export default function Vehicle360({
 
   return (
     <div
+      ref={wrap}
       className={`relative aspect-[4/3] touch-none select-none overflow-hidden rounded-3xl border border-line bg-surface ${
         dragging ? "cursor-grabbing" : "cursor-grab"
       }`}

@@ -23,7 +23,51 @@ export type Vehicle = {
   tone: string;
 };
 
+const CTS = "/vehicles/cadillac-cts-2015";
+
 export const vehicles: Vehicle[] = [
+  {
+    id: "cadillac-cts-2015-36-rwd",
+    make: "Cadillac",
+    model: "CTS",
+    trim: "3.6L RWD · Clean Title",
+    year: 2015,
+    price: 16995,
+    mileage: 84000,
+    bodyType: "Sedan",
+    drivetrain: "RWD",
+    power: "335 hp",
+    zeroToSixty: "5.6s",
+    exterior: "Radiant Silver Metallic",
+    status: "Available",
+    featured: true,
+    image: `${CTS}/2-front-left.jpg`,
+    images: [
+      `${CTS}/2-front-left.jpg`,
+      `${CTS}/1-front.jpg`,
+      `${CTS}/8-front-right.jpg`,
+      `${CTS}/7-right.jpg`,
+      `${CTS}/6-rear-right.jpg`,
+      `${CTS}/5-rear.jpg`,
+      `${CTS}/4-rear-left.jpg`,
+      `${CTS}/3-left.jpg`,
+      `${CTS}/detail-1-roof.jpg`,
+      `${CTS}/detail-2-rear-quarter.jpg`,
+      `${CTS}/detail-3-fuel.jpg`,
+      `${CTS}/detail-4-front-quarter.jpg`,
+    ],
+    frames360: [
+      `${CTS}/1-front.jpg`,
+      `${CTS}/2-front-left.jpg`,
+      `${CTS}/3-left.jpg`,
+      `${CTS}/4-rear-left.jpg`,
+      `${CTS}/5-rear.jpg`,
+      `${CTS}/6-rear-right.jpg`,
+      `${CTS}/7-right.jpg`,
+      `${CTS}/8-front-right.jpg`,
+    ],
+    tone: "radial-gradient(120% 120% at 50% 20%, #5b6068 0%, #20232a 55%, #0a0b0d 100%)",
+  },
   {
     id: "porsche-911-carrera-s",
     make: "Porsche",
@@ -173,6 +217,7 @@ const U = (id: string, w = 1200) =>
 export const HERO_IMAGE = U("1544636331-e26879cd4d9b", 1600);
 
 const images: Record<string, string> = {
+  "cadillac-cts-2015-36-rwd": `${CTS}/2-front-left.jpg`,
   "porsche-911-carrera-s": U("1503376780353-7e6692767b70"),
   "mercedes-amg-gt-53": U("1617814076367-b759c7d7e738"),
   "bmw-m4-competition": U("1555215695-3004980ad54e"),
