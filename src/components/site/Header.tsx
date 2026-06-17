@@ -15,7 +15,7 @@ function Mark() {
   return (
     <Link href="/" className="flex items-center" aria-label="Diamond Auto Sales LLC — home">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/brand/logo-sm.webp" alt="Diamond Auto Sales LLC" className="h-11 w-auto" />
+      <img src="/brand/logo-sm.webp" alt="Diamond Auto Sales LLC" className="logo-header h-11 w-auto" />
     </Link>
   );
 }

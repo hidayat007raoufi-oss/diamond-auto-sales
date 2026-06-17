@@ -316,6 +316,56 @@ body {
   will-change: transform, opacity;
 }
 
+/* ---------- Brand logo treatments ---------- */
+/* Hero logo: black background screens out, leaving a glowing 3D crest */
+@keyframes logoFloat3d {
+  0%,
+  100% {
+    transform: perspective(1300px) rotateX(9deg) rotateZ(0deg) translateY(0);
+  }
+  50% {
+    transform: perspective(1300px) rotateX(9deg) rotateZ(-0.5deg) translateY(-10px);
+  }
+}
+.logo-hero {
+  mix-blend-mode: screen;
+  transform-origin: center 75%;
+  animation: logoFloat3d 8s ease-in-out infinite;
+  filter: drop-shadow(0 22px 55px rgba(40, 92, 184, 0.5))
+    drop-shadow(0 0 26px rgba(130, 175, 255, 0.28));
+}
+.logo-shimmer {
+  mix-blend-mode: screen;
+  background: linear-gradient(
+    104deg,
+    transparent 40%,
+    rgba(220, 236, 255, 0.45) 50%,
+    transparent 60%
+  );
+  animation: crystalSweep 6.5s var(--ease-out-soft) infinite;
+}
+/* Header logo: fades into the dark, subtle 3D tilt that levels on hover */
+.logo-header {
+  mix-blend-mode: screen;
+  filter: drop-shadow(0 4px 12px rgba(80, 140, 255, 0.3));
+  transform: perspective(600px) rotateY(-14deg);
+  transition: transform 0.55s var(--ease-lux), filter 0.55s var(--ease-lux);
+}
+.logo-header:hover {
+  transform: perspective(600px) rotateY(0deg);
+  filter: drop-shadow(0 6px 18px rgba(80, 140, 255, 0.5));
+}
+
+/* ---------- Performance materials ---------- */
+.carbon {
+  background-image:
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.015) 0 1px, transparent 1px 5px),
+    repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.015) 0 1px, transparent 1px 5px);
+}
+.brushed {
+  background: linear-gradient(90deg, transparent, rgba(201, 204, 209, 0.55), transparent);
+}
+
 /* Crystal facet light sweep — slow refraction across the hero */
 @keyframes crystalSweep {
   0% {

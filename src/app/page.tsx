@@ -9,8 +9,10 @@ import PhotoLayer from "@/components/site/PhotoLayer";
 import InventorySearchBar from "@/components/site/InventorySearchBar";
 import CategoryScroller from "@/components/site/CategoryScroller";
 import CrystalScene from "@/components/site/CrystalScene";
+import LogoPresentation from "@/components/site/LogoPresentation";
 import TrustSignals from "@/components/site/TrustSignals";
 import TradeInEstimator from "@/components/site/TradeInEstimator";
+import PerformanceDivision from "@/components/site/PerformanceDivision";
 import {
   estMonthly,
   featuredVehicles,
@@ -64,56 +66,52 @@ export default function Home() {
       <section className="relative flex min-h-[100svh] items-center overflow-hidden">
         <CrystalScene />
 
-        <div className="relative z-10 mx-auto w-full max-w-7xl px-5 pt-28 sm:px-8">
-          <div className="max-w-2xl">
-            <p className="rise kicker" style={{ animationDelay: "0.1s" }}>
-              Raleigh, North Carolina
-            </p>
-            <h1
-              className="rise display mt-5 text-[3rem] leading-[0.96] text-white sm:text-7xl lg:text-[5rem]"
-              style={{ animationDelay: "0.2s" }}
-            >
-              Find your next vehicle.
-            </h1>
-            <p
-              className="rise mt-6 max-w-lg text-lg leading-relaxed text-dim"
-              style={{ animationDelay: "0.35s" }}
-            >
-              Luxury when you want it. Practical when you need it. Financing
-              designed to get you moving.
-            </p>
-            <div
-              className="rise mt-9 flex flex-col gap-3 sm:flex-row"
-              style={{ animationDelay: "0.5s" }}
-            >
-              <Button href="/inventory" className="w-full sm:w-auto">
-                View Inventory
-              </Button>
-              <Button href="/financing" variant="ghost" className="w-full sm:w-auto">
-                Get Pre-Approved
-              </Button>
-            </div>
-            <div
-              className="rise mt-10 flex flex-wrap gap-x-6 gap-y-3"
-              style={{ animationDelay: "0.62s" }}
-            >
-              {["Financing Available", "CARFAX Available", "Quality Inspected Vehicles", "Raleigh, NC"].map(
-                (t) => (
-                  <span key={t} className="inline-flex items-center gap-2 text-[13px] text-dim">
-                    <svg viewBox="0 0 24 24" className="h-4 w-4 text-accent" fill="none" stroke="currentColor" strokeWidth="1.8">
-                      <path d="M5 12l4 4L19 7" />
-                    </svg>
-                    {t}
-                  </span>
-                )
-              )}
-            </div>
+        <div className="relative z-10 mx-auto w-full max-w-3xl px-5 py-28 text-center sm:px-8">
+          <div className="rise" style={{ animationDelay: "0.05s" }}>
+            <LogoPresentation />
           </div>
-        </div>
-
-        <div className="absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-2 sm:flex">
-          <span className="text-[10px] uppercase tracking-[0.3em] text-mute">Scroll</span>
-          <span className="h-10 w-px bg-gradient-to-b from-silver to-transparent" />
+          <p className="rise kicker mt-8" style={{ animationDelay: "0.18s" }}>
+            Raleigh, North Carolina
+          </p>
+          <h1
+            className="rise display mt-4 text-[2.9rem] leading-[0.96] text-white sm:text-6xl lg:text-7xl"
+            style={{ animationDelay: "0.28s" }}
+          >
+            Find your next vehicle.
+          </h1>
+          <p
+            className="rise mx-auto mt-6 max-w-lg text-lg leading-relaxed text-dim"
+            style={{ animationDelay: "0.42s" }}
+          >
+            Luxury when you want it. Practical when you need it. Financing
+            designed to get you moving.
+          </p>
+          <div
+            className="rise mt-9 flex flex-col gap-3 sm:flex-row sm:justify-center"
+            style={{ animationDelay: "0.54s" }}
+          >
+            <Button href="/inventory" className="w-full sm:w-auto">
+              View Inventory
+            </Button>
+            <Button href="/financing" variant="ghost" className="w-full sm:w-auto">
+              Get Pre-Approved
+            </Button>
+          </div>
+          <div
+            className="rise mt-10 flex flex-wrap justify-center gap-x-6 gap-y-3"
+            style={{ animationDelay: "0.66s" }}
+          >
+            {["Financing Available", "CARFAX Available", "Quality Inspected Vehicles", "Raleigh, NC"].map(
+              (t) => (
+                <span key={t} className="inline-flex items-center gap-2 text-[13px] text-dim">
+                  <svg viewBox="0 0 24 24" className="h-4 w-4 text-accent" fill="none" stroke="currentColor" strokeWidth="1.8">
+                    <path d="M5 12l4 4L19 7" />
+                  </svg>
+                  {t}
+                </span>
+              )
+            )}
+          </div>
         </div>
       </section>
 
@@ -325,6 +323,9 @@ export default function Home() {
           </Button>
         </div>
       </section>
+
+      {/* ============ PERFORMANCE DIVISION ============ */}
+      <PerformanceDivision />
 
       {/* ============ REVIEWS / TRUST ============ */}
       <section id="reviews" className="relative scroll-mt-24 overflow-hidden border-y border-line bg-bg-2">

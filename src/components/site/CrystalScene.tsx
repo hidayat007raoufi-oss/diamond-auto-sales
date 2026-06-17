@@ -80,9 +80,9 @@ export default function CrystalScene({ className = "" }: { className?: string })
 
       {/* moving refraction sweep */}
       <div className="crystal-sweep absolute inset-0" />
-      {/* legibility: dark on the left/bottom for hero copy */}
-      <div className="absolute inset-0 bg-[linear-gradient(100deg,#000_6%,rgba(0,0,0,0.62)_40%,transparent_78%)]" />
-      <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black to-transparent" />
+      {/* legibility: soft vertical + center scrim so centered copy reads cleanly */}
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.5),rgba(0,0,0,0.2)_42%,rgba(0,0,0,0.72))]" />
+      <div className="absolute inset-0 bg-[radial-gradient(75%_60%_at_50%_52%,rgba(0,0,0,0.55),transparent_72%)]" />
     </div>
   );
 }
