@@ -316,6 +316,31 @@ body {
   will-change: transform, opacity;
 }
 
+/* Crystal facet light sweep — slow refraction across the hero */
+@keyframes crystalSweep {
+  0% {
+    transform: translateX(-70%) skewX(-12deg);
+    opacity: 0;
+  }
+  45% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateX(180%) skewX(-12deg);
+    opacity: 0;
+  }
+}
+.crystal-sweep {
+  background: linear-gradient(
+    100deg,
+    transparent 42%,
+    rgba(176, 206, 255, 0.12) 50%,
+    transparent 58%
+  );
+  animation: crystalSweep 11s var(--ease-out-soft) infinite;
+  will-change: transform, opacity;
+}
+
 /* Section sheen sweep (slow moving light band) */
 @keyframes sweepX {
   0% {

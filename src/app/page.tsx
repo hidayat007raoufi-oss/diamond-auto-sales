@@ -1,16 +1,14 @@
 import Button from "@/components/site/Button";
 import Reveal from "@/components/motion/Reveal";
-import Parallax from "@/components/motion/Parallax";
 import Counter from "@/components/motion/Counter";
 import SectionHeading from "@/components/site/SectionHeading";
 import VehicleCard from "@/components/site/VehicleCard";
 import LeadForm from "@/components/site/LeadForm";
 import PaymentCalculator from "@/components/site/PaymentCalculator";
-import HeroVehicle from "@/components/site/HeroVehicle";
 import PhotoLayer from "@/components/site/PhotoLayer";
 import InventorySearchBar from "@/components/site/InventorySearchBar";
 import CategoryScroller from "@/components/site/CategoryScroller";
-import DiamondField from "@/components/site/DiamondField";
+import CrystalScene from "@/components/site/CrystalScene";
 import TrustSignals from "@/components/site/TrustSignals";
 import TradeInEstimator from "@/components/site/TradeInEstimator";
 import {
@@ -62,47 +60,30 @@ export default function Home() {
 
   return (
     <>
-      {/* ============ HERO — diamond light burst ============ */}
+      {/* ============ HERO — faceted crystal scene ============ */}
       <section className="relative flex min-h-[100svh] items-center overflow-hidden">
-        {/* diamond light burst + drifting sparkles */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(58%_55%_at_58%_30%,rgba(108,182,255,0.12),transparent_64%)]"
-        />
-        <DiamondField />
-        {/* faint logo watermark */}
-        <div aria-hidden className="pointer-events-none absolute -right-24 top-1/2 hidden -translate-y-1/2 opacity-[0.05] xl:block">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/brand/logo.webp" alt="" className="w-[640px]" />
-        </div>
+        <CrystalScene />
 
-        <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-10 px-5 pt-28 sm:px-8 lg:grid-cols-[1fr_1.05fr] lg:pt-20">
-          <div>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/brand/logo.webp"
-              alt="Diamond Auto Sales LLC"
-              className="rise h-20 w-auto sm:h-24"
-              style={{ animationDelay: "0.05s" }}
-            />
-            <p className="rise kicker mt-6" style={{ animationDelay: "0.12s" }}>
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-5 pt-28 sm:px-8">
+          <div className="max-w-2xl">
+            <p className="rise kicker" style={{ animationDelay: "0.1s" }}>
               Raleigh, North Carolina
             </p>
             <h1
-              className="rise display mt-4 text-[2.9rem] leading-[0.96] text-white sm:text-6xl lg:text-[4.6rem]"
+              className="rise display mt-5 text-[3rem] leading-[0.96] text-white sm:text-7xl lg:text-[5rem]"
               style={{ animationDelay: "0.2s" }}
             >
-              Drive Something <span className="text-azure">That Stands Out.</span>
+              Find your next vehicle.
             </h1>
             <p
-              className="rise mt-6 max-w-md text-lg leading-relaxed text-dim"
+              className="rise mt-6 max-w-lg text-lg leading-relaxed text-dim"
               style={{ animationDelay: "0.35s" }}
             >
-              Premium pre-owned vehicles, flexible financing, and a buying
-              experience built around speed, trust, and style.
+              Luxury when you want it. Practical when you need it. Financing
+              designed to get you moving.
             </p>
             <div
-              className="rise mt-8 flex flex-col gap-3 sm:flex-row"
+              className="rise mt-9 flex flex-col gap-3 sm:flex-row"
               style={{ animationDelay: "0.5s" }}
             >
               <Button href="/inventory" className="w-full sm:w-auto">
@@ -112,31 +93,27 @@ export default function Home() {
                 Get Pre-Approved
               </Button>
             </div>
-            <div className="rise mt-10 flex items-center gap-7" style={{ animationDelay: "0.62s" }}>
-              <div>
-                <p className="display text-3xl text-white"><Counter to={total} /></p>
-                <p className="mt-1 text-[11px] uppercase tracking-widest text-mute">In Inventory</p>
-              </div>
-              <div className="h-9 w-px bg-line" />
-              <div>
-                <p className="display text-3xl text-white">
-                  <Counter to={availableNow} />
-                </p>
-                <p className="mt-1 text-[11px] uppercase tracking-widest text-mute">Available Now</p>
-              </div>
+            <div
+              className="rise mt-10 flex flex-wrap gap-x-6 gap-y-3"
+              style={{ animationDelay: "0.62s" }}
+            >
+              {["Financing Available", "CARFAX Available", "Quality Inspected Vehicles", "Raleigh, NC"].map(
+                (t) => (
+                  <span key={t} className="inline-flex items-center gap-2 text-[13px] text-dim">
+                    <svg viewBox="0 0 24 24" className="h-4 w-4 text-accent" fill="none" stroke="currentColor" strokeWidth="1.8">
+                      <path d="M5 12l4 4L19 7" />
+                    </svg>
+                    {t}
+                  </span>
+                )
+              )}
             </div>
-          </div>
-
-          <div className="rise" style={{ animationDelay: "0.3s" }}>
-            <Parallax speed={0.06}>
-              <HeroVehicle src={vehicleImage(spotlight.id)} alt={`${spotlight.make} ${spotlight.model} at Diamond Auto Sales`} />
-            </Parallax>
           </div>
         </div>
 
         <div className="absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-2 sm:flex">
           <span className="text-[10px] uppercase tracking-[0.3em] text-mute">Scroll</span>
-          <span className="h-10 w-px bg-gradient-to-b from-accent to-transparent" />
+          <span className="h-10 w-px bg-gradient-to-b from-silver to-transparent" />
         </div>
       </section>
 
@@ -159,8 +136,20 @@ export default function Home() {
           </Reveal>
         </div>
 
+        <Reveal delay={60}>
+          <div className="mt-6 flex flex-wrap items-center gap-5 text-sm">
+            <span className="text-white">
+              <Counter to={total} /> <span className="text-mute">in inventory</span>
+            </span>
+            <span className="h-4 w-px bg-line" />
+            <span className="text-white">
+              <Counter to={availableNow} /> <span className="text-mute">available now</span>
+            </span>
+          </div>
+        </Reveal>
+
         <Reveal delay={80}>
-          <div className="mt-10">
+          <div className="mt-8">
             <InventorySearchBar />
           </div>
         </Reveal>
@@ -247,8 +236,9 @@ export default function Home() {
       <TrustSignals />
 
       {/* ============ FINANCING ============ */}
-      <section className="border-y border-line bg-bg-2">
-        <div className="mx-auto grid max-w-7xl gap-14 px-5 py-24 sm:px-8 sm:py-32 lg:grid-cols-[1fr_1.05fr] lg:items-center">
+      <section className="relative overflow-hidden border-y border-line bg-bg-2">
+        <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(72%_70%_at_80%_50%,rgba(20,42,84,0.5),transparent_64%)]" />
+        <div className="relative mx-auto grid max-w-7xl gap-14 px-5 py-24 sm:px-8 sm:py-32 lg:grid-cols-[1fr_1.05fr] lg:items-center">
           <div>
             <SectionHeading
               kicker="Financing"
@@ -337,8 +327,9 @@ export default function Home() {
       </section>
 
       {/* ============ REVIEWS / TRUST ============ */}
-      <section id="reviews" className="scroll-mt-24 border-y border-line bg-bg-2">
-        <div className="mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-32">
+      <section id="reviews" className="relative scroll-mt-24 overflow-hidden border-y border-line bg-bg-2">
+        <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_55%_at_50%_28%,rgba(42,54,82,0.4),transparent_62%)]" />
+        <div className="relative mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-32">
           <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
             <SectionHeading
               kicker="Reviews"
