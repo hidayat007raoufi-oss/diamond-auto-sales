@@ -5,6 +5,7 @@ import Button from "@/components/site/Button";
 import Reveal from "@/components/motion/Reveal";
 import VehicleCard from "@/components/site/VehicleCard";
 import PhotoLayer from "@/components/site/PhotoLayer";
+import Vehicle360 from "@/components/site/Vehicle360";
 import {
   estMonthly,
   formatMileage,
@@ -62,13 +63,20 @@ export default async function VehiclePage(props: PageProps<"/inventory/[id]">) {
         <div className="mt-6 grid gap-10 lg:grid-cols-2">
           {/* Presentation */}
           <Reveal blur>
-            <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-line">
-              <div className="absolute inset-0 kenburns" style={{ background: v.tone }} />
-              <PhotoLayer src={vehicleImage(v.id)} alt={`${v.year} ${v.make} ${v.model} ${v.trim}`} eager />
-              <span className="absolute left-5 top-5 rounded-full border border-line bg-black/40 px-3 py-1 text-[11px] tracking-widest text-white/80 backdrop-blur">
-                27-Point Inspected
-              </span>
-            </div>
+            {v.frames360?.length ? (
+              <Vehicle360 frames={v.frames360} alt={`${v.year} ${v.make} ${v.model} 360° view`} />
+            ) : (
+              <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-line">
+                <div className="absolute inset-0 kenburns" style={{ background: v.tone }} />
+                <PhotoLayer src={vehicleImage(v.id)} alt={`${v.year} ${v.make} ${v.model} ${v.trim}`} eager />
+                <span className="absolute left-5 top-5 rounded-full border border-line bg-black/40 px-3 py-1 text-[11px] tracking-widest text-white/80 backdrop-blur">
+                  27-Point Inspected
+                </span>
+              </div>
+            )}
+            <p className="mt-3 text-center text-[11px] uppercase tracking-widest text-mute">
+              {v.frames360?.length ? "360° View Available — drag to rotate" : "Photo gallery"}
+            </p>
           </Reveal>
 
           {/* Detail */}

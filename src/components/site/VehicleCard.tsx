@@ -32,12 +32,14 @@ export default function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
       {/* details — minimal */}
       <div className="flex items-start justify-between gap-3 p-5 sm:p-6">
         <div>
-          <h3 className="text-base font-semibold leading-tight tracking-tight text-white">
+          <h3 className="text-base font-semibold leading-tight tracking-tight text-white/90 transition-colors duration-300 group-hover:text-white">
             {vehicle.make} {vehicle.model}
           </h3>
           <p className="mt-1.5 text-sm text-mute">{formatMileage(vehicle.mileage)}</p>
         </div>
-        <p className="text-base font-semibold tracking-tight text-white">{formatPrice(vehicle.price)}</p>
+        <p className="text-base font-semibold tracking-tight text-white/90 transition-colors duration-300 group-hover:text-silver-bright">
+          {formatPrice(vehicle.price)}
+        </p>
       </div>
 
       <div className="flex items-center justify-between border-t border-line px-5 py-4 sm:px-6">

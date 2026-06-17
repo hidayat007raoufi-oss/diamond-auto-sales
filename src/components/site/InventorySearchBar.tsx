@@ -31,8 +31,15 @@ export default function InventorySearchBar() {
         </label>
       ))}
       <button
-        onClick={() => router.push("/inventory")}
-        className="btn-sheen flex items-center justify-center gap-2 rounded-xl bg-white py-3 text-sm font-semibold text-black transition-colors hover:bg-silver-bright"
+        onClick={() => {
+          const params = new URLSearchParams();
+          for (const [k, v] of Object.entries(vals)) {
+            if (v && !v.startsWith("Any")) params.set(k, v);
+          }
+          const qs = params.toString();
+          router.push(qs ? `/inventory?${qs}` : "/inventory");
+        }}
+        className="btn-sheen flex items-center justify-center gap-2 rounded-xl bg-white py-3 text-sm font-semibold text-black transition-all duration-300 hover:bg-silver-bright active:scale-[0.98]"
       >
         <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8">
           <circle cx="11" cy="11" r="7" />

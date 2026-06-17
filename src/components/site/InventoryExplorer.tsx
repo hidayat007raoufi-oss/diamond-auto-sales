@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import VehicleCard from "@/components/site/VehicleCard";
 import type { Vehicle } from "@/lib/vehicles";
@@ -7,12 +8,58 @@ import type { Vehicle } from "@/lib/vehicles";
 const bodyFilters = ["All", "Coupe", "Sedan", "SUV", "Truck"] as const;
 const sorts = ["Featured", "Price: Low", "Price: High", "Lowest Miles"] as const;
 
-export default function InventoryExplorer({ vehicles }: { vehicles: Vehicle[] }) {
-  const [body, setBody] = useState<(typeof bodyFilters)[number]>("All");
+function inPrice(p: number, label?: string) {
+  switch (label) {
+    case "Under $50k":
+      return p < 50000;
+    case "$50k–$100k":
+      return p >= 50000 && p < 100000;
+    case "$100k–$150k":
+      return p >= 100000 && p < 150000;
+    case "$150k+":
+      return p >= 150000;
+    default:
+      return true;
+  }
+}
+function inMiles(m: number, label?: string) {
+  switch (label) {
+    case "Under 10k":
+      return m < 10000;
+    case "10k–25k":
+      return m >= 10000 && m < 25000;
+    case "25k–50k":
+      return m >= 25000 && m < 50000;
+    default:
+      return true;
+  }
+}
+
+type Initial = { make?: string; body?: string; price?: string; mileage?: string };
+
+export default function InventoryExplorer({
+  vehicles,
+  initial = {},
+}: {
+  vehicles: Vehicle[];
+  initial?: Initial;
+}) {
+  const startBody = (bodyFilters as readonly string[]).includes(initial.body ?? "")
+    ? (initial.body as (typeof bodyFilters)[number])
+    : "All";
+  const [body, setBody] = useState<(typeof bodyFilters)[number]>(startBody);
   const [sort, setSort] = useState<(typeof sorts)[number]>("Featured");
 
+  const activeChips = [initial.make, initial.price, initial.mileage].filter(Boolean) as string[];
+
   const list = useMemo(() => {
-    let v = vehicles.filter((x) => (body === "All" ? true : x.bodyType === body));
+    let v = vehicles.filter(
+      (x) =>
+        (body === "All" || x.bodyType === body) &&
+        (!initial.make || x.make === initial.make) &&
+        inPrice(x.price, initial.price) &&
+        inMiles(x.mileage, initial.mileage)
+    );
     v = [...v].sort((a, b) => {
       switch (sort) {
         case "Price: Low":
@@ -26,7 +73,7 @@ export default function InventoryExplorer({ vehicles }: { vehicles: Vehicle[] })
       }
     });
     return v;
-  }, [vehicles, body, sort]);
+  }, [vehicles, body, sort, initial.make, initial.price, initial.mileage]);
 
   return (
     <div>
@@ -36,7 +83,7 @@ export default function InventoryExplorer({ vehicles }: { vehicles: Vehicle[] })
             <button
               key={b}
               onClick={() => setBody(b)}
-              className={`rounded-full border px-4 py-2 text-[13px] font-medium transition-all duration-300 ${
+              className={`rounded-full border px-4 py-2 text-[13px] font-medium transition-all duration-300 active:scale-[0.97] ${
                 body === b
                   ? "border-transparent bg-white text-black"
                   : "border-line text-dim hover:border-line-strong hover:text-white"
@@ -62,13 +109,34 @@ export default function InventoryExplorer({ vehicles }: { vehicles: Vehicle[] })
         </div>
       </div>
 
-      <p className="mt-6 text-sm text-mute">{list.length} vehicles</p>
-
-      <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {list.map((v) => (
-          <VehicleCard key={v.id} vehicle={v} />
+      <div className="mt-6 flex flex-wrap items-center gap-3">
+        <p className="text-sm text-mute">{list.length} vehicles</p>
+        {activeChips.map((c) => (
+          <span key={c} className="rounded-full border border-line bg-surface px-3 py-1 text-xs text-dim">
+            {c}
+          </span>
         ))}
+        {activeChips.length > 0 && (
+          <Link href="/inventory" className="text-xs font-medium text-accent hover:underline">
+            Clear filters
+          </Link>
+        )}
       </div>
+
+      {list.length > 0 ? (
+        <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {list.map((v) => (
+            <VehicleCard key={v.id} vehicle={v} />
+          ))}
+        </div>
+      ) : (
+        <div className="mt-10 rounded-3xl border border-line bg-surface/50 p-12 text-center">
+          <p className="text-white">No vehicles match these filters.</p>
+          <Link href="/inventory" className="mt-3 inline-block text-sm font-medium text-accent hover:underline">
+            Clear filters
+          </Link>
+        </div>
+      )}
     </div>
   );
 }
