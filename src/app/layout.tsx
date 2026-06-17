@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/components/site/Header";
 import Footer from "@/components/site/Footer";
 import StickyCTABar from "@/components/site/StickyCTABar";
+import DiamondAssistant from "@/components/site/DiamondAssistant";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://diamondauto.com"),
@@ -52,6 +53,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         {/* clearance so the sticky bar never hides footer content on mobile */}
         <div aria-hidden className="h-24 lg:hidden" />
         <StickyCTABar />
+        <DiamondAssistant />
       </body>
     </html>
   );

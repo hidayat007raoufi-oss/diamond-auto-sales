@@ -274,6 +274,61 @@ body {
   animation: floatSoft 14s ease-in-out infinite;
 }
 
+/* ---------- Diamond field: slow glints + drifting sparkles ---------- */
+@keyframes glint {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.6) rotate(45deg);
+  }
+  50% {
+    opacity: var(--glint-max, 0.5);
+    transform: scale(1) rotate(45deg);
+  }
+}
+.glint {
+  position: absolute;
+  border-radius: 1px;
+  background: linear-gradient(135deg, #eaf3ff, #6cb6ff);
+  box-shadow: 0 0 8px rgba(108, 182, 255, 0.6);
+  animation: glint var(--glint-dur, 7s) ease-in-out infinite;
+  will-change: opacity, transform;
+}
+@keyframes driftUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  15%,
+  85% {
+    opacity: var(--p-max, 0.35);
+  }
+  to {
+    transform: translateY(-60px);
+    opacity: 0;
+  }
+}
+.particle {
+  position: absolute;
+  rotate: 45deg;
+  background: linear-gradient(135deg, rgba(234, 243, 255, 0.9), rgba(108, 182, 255, 0.4));
+  animation: driftUp var(--p-dur, 16s) linear infinite;
+  will-change: transform, opacity;
+}
+
+/* Section sheen sweep (slow moving light band) */
+@keyframes sweepX {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(220%);
+  }
+}
+.sweep {
+  animation: sweepX var(--sweep-dur, 9s) var(--ease-out-soft) infinite;
+}
+
 /* ---------- Diamond logo — quiet, glow only on hover ---------- */
 .diamond-logo {
   transition: filter 0.45s var(--ease-lux);

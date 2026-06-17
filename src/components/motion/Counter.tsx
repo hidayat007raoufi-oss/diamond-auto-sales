@@ -25,8 +25,8 @@ export default function Counter({
     const el = ref.current;
     if (!el) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setValue(to);
-      return;
+      const id = requestAnimationFrame(() => setValue(to));
+      return () => cancelAnimationFrame(id);
     }
     const observer = new IntersectionObserver(
       ([entry]) => {

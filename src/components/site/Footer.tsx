@@ -28,12 +28,31 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8">
         <div className="grid gap-14 lg:grid-cols-[1.4fr_2fr]">
           <div>
-            <p className="display text-3xl text-metal">Diamond</p>
-            <p className="mt-1 text-[10px] tracking-[0.35em] text-mute">RALEIGH · AUTO SALES</p>
-            <p className="mt-6 max-w-xs text-sm leading-relaxed text-dim">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/brand/logo.webp" alt="Diamond Auto Sales LLC" className="h-20 w-auto" />
+            <p className="mt-5 max-w-xs text-sm leading-relaxed text-dim">
               Premium vehicles, transparent financing, and full in-house service
-              — in Raleigh, North Carolina.
+              in Raleigh, North Carolina.
             </p>
+            {/* TODO: replace href="#" with real social/profile URLs */}
+            <div className="mt-6 flex gap-3">
+              {[
+                { label: "Google", d: "M12 11v2.8h4a4 4 0 11-1.2-4.8l2-2A7 7 0 1019 12h-7z" },
+                { label: "Facebook", d: "M13 22v-8h3l1-4h-4V8a1 1 0 011-1h3V3h-3a5 5 0 00-5 5v2H7v4h3v8z" },
+                { label: "Instagram", d: "M7 3h10a4 4 0 014 4v10a4 4 0 01-4 4H7a4 4 0 01-4-4V7a4 4 0 014-4zm5 5a4 4 0 100 8 4 4 0 000-8zm5-1h.01" },
+              ].map((s) => (
+                <a
+                  key={s.label}
+                  href="#"
+                  aria-label={s.label}
+                  className="grid h-9 w-9 place-items-center rounded-full border border-line text-dim transition-colors hover:border-line-strong hover:text-white"
+                >
+                  <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d={s.d} />
+                  </svg>
+                </a>
+              ))}
+            </div>
             <p className="mt-6 text-xs tracking-wide text-mute">
               Raleigh · Durham · Cary · Chapel Hill · The Triangle
             </p>

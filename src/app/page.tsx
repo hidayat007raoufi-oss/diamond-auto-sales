@@ -1,6 +1,7 @@
 import Button from "@/components/site/Button";
 import Reveal from "@/components/motion/Reveal";
 import Parallax from "@/components/motion/Parallax";
+import Counter from "@/components/motion/Counter";
 import SectionHeading from "@/components/site/SectionHeading";
 import VehicleCard from "@/components/site/VehicleCard";
 import LeadForm from "@/components/site/LeadForm";
@@ -9,13 +10,16 @@ import HeroVehicle from "@/components/site/HeroVehicle";
 import PhotoLayer from "@/components/site/PhotoLayer";
 import InventorySearchBar from "@/components/site/InventorySearchBar";
 import CategoryScroller from "@/components/site/CategoryScroller";
+import DiamondField from "@/components/site/DiamondField";
+import TrustSignals from "@/components/site/TrustSignals";
+import TradeInEstimator from "@/components/site/TradeInEstimator";
 import {
   estMonthly,
   featuredVehicles,
   formatMileage,
   formatPrice,
-  HERO_IMAGE,
   vehicleImage,
+  vehicles,
 } from "@/lib/vehicles";
 import { services } from "@/lib/services";
 import { testimonials } from "@/lib/testimonials";
@@ -53,56 +57,86 @@ export default function Home() {
   const featured = featuredVehicles();
   const spotlight = featured[0];
   const supporting = featured.slice(1, 4);
+  const total = vehicles.length;
+  const availableNow = vehicles.filter((v) => v.status !== "Sold").length;
 
   return (
     <>
-      {/* ============ HERO — product launch ============ */}
+      {/* ============ HERO — diamond light burst ============ */}
       <section className="relative flex min-h-[100svh] items-center overflow-hidden">
+        {/* diamond light burst + drifting sparkles */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_55%_at_70%_38%,rgba(255,255,255,0.05),transparent_66%)]"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(58%_55%_at_58%_30%,rgba(108,182,255,0.12),transparent_64%)]"
         />
+        <DiamondField />
+        {/* faint logo watermark */}
+        <div aria-hidden className="pointer-events-none absolute -right-24 top-1/2 hidden -translate-y-1/2 opacity-[0.05] xl:block">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/brand/logo.webp" alt="" className="w-[640px]" />
+        </div>
+
         <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-10 px-5 pt-28 sm:px-8 lg:grid-cols-[1fr_1.05fr] lg:pt-20">
           <div>
-            <p className="rise kicker" style={{ animationDelay: "0.1s" }}>
-              Diamond Auto Sales · Raleigh, NC
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/brand/logo.webp"
+              alt="Diamond Auto Sales LLC"
+              className="rise h-20 w-auto sm:h-24"
+              style={{ animationDelay: "0.05s" }}
+            />
+            <p className="rise kicker mt-6" style={{ animationDelay: "0.12s" }}>
+              Raleigh, North Carolina
             </p>
             <h1
-              className="rise display mt-6 text-[3.4rem] leading-[0.95] text-white sm:text-7xl lg:text-[5.5rem]"
+              className="rise display mt-4 text-[2.9rem] leading-[0.96] text-white sm:text-6xl lg:text-[4.6rem]"
               style={{ animationDelay: "0.2s" }}
             >
-              Find your next vehicle.
+              Drive Something <span className="text-azure">That Stands Out.</span>
             </h1>
             <p
-              className="rise mt-7 max-w-md text-lg leading-relaxed text-dim"
+              className="rise mt-6 max-w-md text-lg leading-relaxed text-dim"
               style={{ animationDelay: "0.35s" }}
             >
-              Premium vehicles, transparent financing, and a cleaner buying
-              experience in Raleigh.
+              Premium pre-owned vehicles, flexible financing, and a buying
+              experience built around speed, trust, and style.
             </p>
             <div
-              className="rise mt-9 flex flex-col gap-3 sm:flex-row"
+              className="rise mt-8 flex flex-col gap-3 sm:flex-row"
               style={{ animationDelay: "0.5s" }}
             >
               <Button href="/inventory" className="w-full sm:w-auto">
                 View Inventory
               </Button>
               <Button href="/financing" variant="ghost" className="w-full sm:w-auto">
-                Get Financing
+                Get Pre-Approved
               </Button>
+            </div>
+            <div className="rise mt-10 flex items-center gap-7" style={{ animationDelay: "0.62s" }}>
+              <div>
+                <p className="display text-3xl text-white"><Counter to={total} /></p>
+                <p className="mt-1 text-[11px] uppercase tracking-widest text-mute">In Inventory</p>
+              </div>
+              <div className="h-9 w-px bg-line" />
+              <div>
+                <p className="display text-3xl text-white">
+                  <Counter to={availableNow} />
+                </p>
+                <p className="mt-1 text-[11px] uppercase tracking-widest text-mute">Available Now</p>
+              </div>
             </div>
           </div>
 
           <div className="rise" style={{ animationDelay: "0.3s" }}>
             <Parallax speed={0.06}>
-              <HeroVehicle src={HERO_IMAGE} alt="Premium vehicle at Diamond Auto Sales, Raleigh" />
+              <HeroVehicle src={vehicleImage(spotlight.id)} alt={`${spotlight.make} ${spotlight.model} at Diamond Auto Sales`} />
             </Parallax>
           </div>
         </div>
 
         <div className="absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-2 sm:flex">
           <span className="text-[10px] uppercase tracking-[0.3em] text-mute">Scroll</span>
-          <span className="h-10 w-px bg-gradient-to-b from-white/40 to-transparent" />
+          <span className="h-10 w-px bg-gradient-to-b from-accent to-transparent" />
         </div>
       </section>
 
@@ -209,6 +243,9 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ============ TRUST SIGNALS ============ */}
+      <TrustSignals />
+
       {/* ============ FINANCING ============ */}
       <section className="border-y border-line bg-bg-2">
         <div className="mx-auto grid max-w-7xl gap-14 px-5 py-24 sm:px-8 sm:py-32 lg:grid-cols-[1fr_1.05fr] lg:items-center">
@@ -236,6 +273,36 @@ export default function Home() {
           </div>
           <Reveal delay={120} blur>
             <PaymentCalculator />
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ============ TRADE-IN ESTIMATOR ============ */}
+      <section className="mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-28">
+        <div className="grid gap-14 lg:grid-cols-[1fr_1.05fr] lg:items-center">
+          <div>
+            <SectionHeading
+              kicker="Trade-In"
+              title={<>Know what your vehicle is worth.</>}
+              intro="Get a real trade value in minutes and put it straight toward your next Diamond vehicle."
+            />
+            <ul className="mt-8 space-y-3.5">
+              {["Top-dollar offers", "Apply your value instantly", "We buy even if you still owe"].map(
+                (p, i) => (
+                  <Reveal key={p} delay={i * 80}>
+                    <li className="flex items-center gap-3 text-[15px] text-dim">
+                      <svg viewBox="0 0 24 24" className="h-5 w-5 shrink-0 text-accent" fill="none" stroke="currentColor" strokeWidth="1.6">
+                        <path d="M5 12l4 4L19 7" />
+                      </svg>
+                      {p}
+                    </li>
+                  </Reveal>
+                )
+              )}
+            </ul>
+          </div>
+          <Reveal delay={120} blur>
+            <TradeInEstimator />
           </Reveal>
         </div>
       </section>
@@ -356,6 +423,17 @@ export default function Home() {
                 </Reveal>
               ))}
             </div>
+            <Reveal delay={120}>
+              <div className="mt-8 overflow-hidden rounded-3xl border border-line">
+                <iframe
+                  title="Diamond Auto Sales — Raleigh location"
+                  className="h-56 w-full grayscale invert-[0.92] contrast-[0.9]"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  src="https://maps.google.com/maps?q=5915%20Triangle%20Drive%20Raleigh%20NC%2027616&z=13&output=embed"
+                />
+              </div>
+            </Reveal>
           </div>
           <Reveal delay={120} blur>
             <LeadForm />

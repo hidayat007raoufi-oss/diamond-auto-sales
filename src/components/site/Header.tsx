@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import DiamondLogo from "@/components/site/DiamondLogo";
 
 const links = [
   { href: "/inventory", label: "Inventory" },
@@ -14,12 +13,9 @@ const links = [
 
 function Mark() {
   return (
-    <Link href="/" className="group flex items-center gap-2.5" aria-label="Diamond home">
-      <DiamondLogo className="h-8 w-8" />
-      <span className="flex flex-col leading-none">
-        <span className="text-[13px] font-semibold tracking-[0.3em] text-white">DIAMOND</span>
-        <span className="text-[8px] font-medium tracking-[0.3em] text-mute">AUTO SALES · LLC</span>
-      </span>
+    <Link href="/" className="flex items-center" aria-label="Diamond Auto Sales LLC — home">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src="/brand/logo-sm.webp" alt="Diamond Auto Sales LLC" className="h-11 w-auto" />
     </Link>
   );
 }

@@ -1,13 +1,23 @@
 "use client";
 
 import { useState } from "react";
+import { submitLead } from "@/lib/leads";
 
 export default function LeadForm() {
   const [sent, setSent] = useState(false);
 
-  // UI-only for now — next step is wiring to a route handler + CRM/email.
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const f = new FormData(e.currentTarget);
+    await submitLead({
+      type: "contact",
+      source: "contact-form",
+      name: String(f.get("name") || ""),
+      phone: String(f.get("phone") || ""),
+      email: String(f.get("email") || ""),
+      vehicle: String(f.get("vehicle") || ""),
+      message: String(f.get("message") || ""),
+    });
     setSent(true);
   }
 
