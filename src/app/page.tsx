@@ -21,7 +21,7 @@ import {
   vehicleImage,
   vehicles,
 } from "@/lib/vehicles";
-import { services } from "@/lib/services";
+import ServicesShowcase from "@/components/site/ServicesShowcase";
 import { testimonials } from "@/lib/testimonials";
 
 function SpecMini({ label, value }: { label: string; value: string }) {
@@ -51,6 +51,13 @@ const reasons = [
   { icon: "umbrella", title: "Vehicle Protection", body: "Optional coverage to protect your investment." },
   { icon: "wrench", title: "In-House Service", body: "Detailing, tint, and mechanical under one roof." },
   { icon: "pin", title: "Raleigh-Based", body: "Local support across the Triangle." },
+];
+
+const pillars = [
+  { n: "01", title: "Buy", body: "Quality vehicles and transparent inventory.", icon: "M5 11l2-5h10l2 5M5 11h14v5H5zM7.5 16v1.5M16.5 16v1.5" },
+  { n: "02", title: "Finance", body: "Fast approvals and flexible options.", icon: "M3 7h18v10H3z M3 11h18" },
+  { n: "03", title: "Protect", body: "Vehicle protection, CARFAX access, and service support.", icon: "M12 3l7 3v5c0 4-3 7-7 8-4-1-7-4-7-8V6z" },
+  { n: "04", title: "Upgrade", body: "Detailing, tint, tires, customization, and performance builds.", icon: "M12 2l3 6 6 1-4.5 4.2L18 20l-6-3.2L6 20l1.5-6.8L3 9l6-1 3-6z" },
 ];
 
 export default function Home() {
@@ -206,6 +213,38 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ============ ONE-STOP ECOSYSTEM ============ */}
+      <section className="relative overflow-hidden border-y border-line bg-bg-2">
+        <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(75%_60%_at_50%_0%,rgba(22,38,70,0.5),transparent_62%)]" />
+        <div className="relative mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-32">
+          <SectionHeading
+            kicker="One Brand. Every Need."
+            title={<>More than a dealership.</>}
+            intro="Sales, financing, service, protection, customization, and performance support under one brand."
+            align="center"
+          />
+          <div className="mt-14 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
+            {pillars.map((p, i) => (
+              <Reveal key={p.title} delay={i * 70}>
+                <div className="group relative h-full overflow-hidden rounded-3xl border border-line bg-surface/50 p-6 transition-all duration-500 hover:-translate-y-1.5 hover:border-line-strong sm:p-7">
+                  <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/8 to-transparent transition-transform duration-[900ms] ease-out group-hover:translate-x-full" />
+                  <div className="flex items-center justify-between">
+                    <div className="grid h-11 w-11 place-items-center rounded-xl border border-line text-silver">
+                      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+                        <path d={p.icon} />
+                      </svg>
+                    </div>
+                    <span className="font-mono text-xs tracking-widest text-mute">{p.n}</span>
+                  </div>
+                  <h3 className="mt-5 text-lg font-semibold tracking-tight text-white">{p.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-mute">{p.body}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ============ FEATURE GRID ============ */}
       <section className="mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-28">
         <SectionHeading
@@ -300,22 +339,10 @@ export default function Home() {
         <SectionHeading
           kicker="Service"
           title={<>Services after the sale.</>}
-          intro="Keep your vehicle at its best with in-house care from our specialists."
+          intro="Tap any service to see what's included. In-house care from our specialists."
         />
-        <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-          {services.map((s, i) => (
-            <Reveal key={s.id} delay={i * 60}>
-              <div className="group h-full rounded-2xl border border-line bg-surface/40 p-5 text-center transition-all duration-500 hover:-translate-y-1 hover:border-line-strong">
-                <div className="mx-auto grid h-11 w-11 place-items-center rounded-xl border border-line">
-                  <svg viewBox="0 0 24 24" className="h-5 w-5 text-silver" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
-                    <path d={s.icon} />
-                  </svg>
-                </div>
-                <p className="mt-4 text-sm font-medium text-white">{s.name}</p>
-                <p className="mt-1 text-[11px] text-mute">{s.tagline}</p>
-              </div>
-            </Reveal>
-          ))}
+        <div className="mt-12">
+          <ServicesShowcase />
         </div>
         <div className="mt-10">
           <Button href="/contact" variant="ghost">

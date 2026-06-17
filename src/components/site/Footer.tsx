@@ -1,4 +1,5 @@
 import Link from "next/link";
+import BrandMark from "@/components/site/BrandMark";
 
 const columns = [
   {
@@ -28,8 +29,7 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8">
         <div className="grid gap-14 lg:grid-cols-[1.4fr_2fr]">
           <div>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/brand/logo.webp" alt="Diamond Auto Sales LLC" className="h-20 w-auto" />
+            <BrandMark size="lg" />
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-dim">
               Premium vehicles, transparent financing, and full in-house service
               in Raleigh, North Carolina.

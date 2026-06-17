@@ -24,9 +24,9 @@ export default function PerformanceDivision() {
 
       <div className="relative mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-32">
         <SectionHeading
-          kicker="Diamond Performance"
-          title={<>Performance Division.</>}
-          intro="Performance upgrades, custom builds, wheel packages, suspension, exhaust systems, detailing, ceramic coating, tint, and enthusiast-focused services."
+          kicker="Diamond Performance Division"
+          title={<>For drivers who want more.</>}
+          intro="For drivers who want more than transportation. Customization, performance styling, wheel packages, suspension upgrades, exhaust work, detailing, tint, and enthusiast-focused services."
           align="center"
         />
 
@@ -50,7 +50,12 @@ export default function PerformanceDivision() {
               A dedicated performance arm of Diamond Auto Sales — engineered for
               enthusiasts, built to a higher standard.
             </p>
-            <Button href="/services">Explore Performance</Button>
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <Button href="/services">Explore Services</Button>
+              <Button href="/contact?intent=build" variant="ghost">
+                Start a Build
+              </Button>
+            </div>
           </div>
         </Reveal>
       </div>

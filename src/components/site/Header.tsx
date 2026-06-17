@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import BrandMark from "@/components/site/BrandMark";
 
 const links = [
   { href: "/inventory", label: "Inventory" },
@@ -13,10 +14,7 @@ const links = [
 
 function Mark() {
   return (
-    <Link href="/" className="flex items-center" aria-label="Diamond Auto Sales LLC — home">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/brand/logo-sm.webp" alt="Diamond Auto Sales LLC" className="logo-header h-11 w-auto" />
-    </Link>
+    <BrandMark size="sm" />
   );
 }
 

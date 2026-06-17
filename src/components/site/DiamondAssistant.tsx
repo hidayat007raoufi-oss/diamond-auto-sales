@@ -52,6 +52,16 @@ export default function DiamondAssistant() {
       window.removeEventListener("scroll", onScroll);
     };
   }, [revealed]);
+
+  // Allow other components (e.g. service modals) to open the assistant.
+  useEffect(() => {
+    const openAI = () => {
+      setRevealed(true);
+      setOpen(true);
+    };
+    window.addEventListener("diamond:open-ai", openAI);
+    return () => window.removeEventListener("diamond:open-ai", openAI);
+  }, []);
   const [steps, setSteps] = useState<{ q: string; field: string }[]>([]);
   const [stepIdx, setStepIdx] = useState(-1);
   const [intent, setIntent] = useState<string>("");
