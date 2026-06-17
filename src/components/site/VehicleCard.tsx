@@ -1,5 +1,12 @@
 import Link from "next/link";
-import { estMonthly, formatMileage, formatPrice, type Vehicle } from "@/lib/vehicles";
+import PhotoLayer from "@/components/site/PhotoLayer";
+import {
+  estMonthly,
+  formatMileage,
+  formatPrice,
+  vehicleImage,
+  type Vehicle,
+} from "@/lib/vehicles";
 
 const statusStyle: Record<Vehicle["status"], string> = {
   Available: "text-emerald-300/80",
@@ -11,26 +18,19 @@ export default function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
   return (
     <Link
       href={`/inventory/${vehicle.id}`}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-line bg-surface/50 transition-all duration-500 hover:-translate-y-1 hover:border-line-strong"
+      className="group flex flex-col overflow-hidden rounded-2xl border border-line bg-surface/50 transition-all duration-500 hover:-translate-y-1.5 hover:border-line-strong hover:shadow-[0_30px_70px_-35px_rgba(0,0,0,0.85)]"
     >
       {/* image — the dominant element */}
       <div className="relative aspect-[16/11] overflow-hidden">
-        <div
-          className="absolute inset-0 transition-transform duration-[1.2s] ease-out group-hover:scale-105"
-          style={{ background: vehicle.tone }}
-        />
-        <div className="absolute inset-0 bg-[radial-gradient(62%_55%_at_60%_22%,rgba(255,255,255,0.14),transparent_62%)]" />
-        <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-surface to-transparent" />
-
-        {/* subtle vehicle glyph */}
-        <svg viewBox="0 0 120 44" className="absolute bottom-5 left-1/2 h-10 w-32 -translate-x-1/2 text-white/15" fill="currentColor" aria-hidden>
-          <path d="M8 30 L14 22 Q17 18 24 18 L46 18 Q52 12 64 12 L82 12 Q92 12 99 20 L108 28 Q112 30 112 33 L112 30 Q100 30 100 30 L20 30 Z" />
-        </svg>
-        <span className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 text-[10px] uppercase tracking-[0.35em] text-white/30">
-          {vehicle.make}
-        </span>
-
-        <span className="absolute left-4 top-4 rounded-full border border-line bg-black/40 px-2.5 py-1 text-[10px] tracking-widest text-white/75 backdrop-blur">
+        <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-[1.03]">
+          <div className="absolute inset-0" style={{ background: vehicle.tone }} />
+          <PhotoLayer
+            src={vehicleImage(vehicle.id)}
+            alt={`${vehicle.year} ${vehicle.make} ${vehicle.model}`}
+          />
+        </div>
+        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-surface/90 to-transparent" />
+        <span className="absolute left-4 top-4 rounded-full border border-line bg-black/45 px-2.5 py-1 text-[10px] tracking-widest text-white/80 backdrop-blur">
           {vehicle.year}
         </span>
       </div>
@@ -57,7 +57,7 @@ export default function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
         </span>
         <span className="inline-flex items-center gap-1.5 text-xs font-medium text-white transition-all group-hover:gap-2.5">
           View Details
-          <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.6">
+          <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5" fill="none" stroke="currentColor" strokeWidth="1.6">
             <path d="M5 12h14M13 6l6 6-6 6" />
           </svg>
         </span>

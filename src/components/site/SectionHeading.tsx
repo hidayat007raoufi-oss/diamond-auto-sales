@@ -15,14 +15,14 @@ export default function SectionHeading({
   const centered = align === "center";
   return (
     <div className={`max-w-2xl ${centered ? "mx-auto text-center" : ""}`}>
-      <Reveal>
+      <Reveal blur>
         <p className="kicker">{kicker}</p>
       </Reveal>
-      <Reveal delay={80}>
+      <Reveal delay={90} blur>
         <h2 className="display mt-4 text-4xl text-white sm:text-5xl text-balance">{title}</h2>
       </Reveal>
       {intro && (
-        <Reveal delay={160}>
+        <Reveal delay={180} blur>
           <p className={`mt-5 text-base leading-relaxed text-dim ${centered ? "mx-auto" : ""}`}>
             {intro}
           </p>

@@ -4,11 +4,13 @@ import { notFound } from "next/navigation";
 import Button from "@/components/site/Button";
 import Reveal from "@/components/motion/Reveal";
 import VehicleCard from "@/components/site/VehicleCard";
+import PhotoLayer from "@/components/site/PhotoLayer";
 import {
   estMonthly,
   formatMileage,
   formatPrice,
   getVehicle,
+  vehicleImage,
   vehicles,
 } from "@/lib/vehicles";
 
@@ -62,12 +64,9 @@ export default async function VehiclePage(props: PageProps<"/inventory/[id]">) {
           <Reveal blur>
             <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-line">
               <div className="absolute inset-0 kenburns" style={{ background: v.tone }} />
-              <div className="absolute inset-0 bg-[radial-gradient(60%_50%_at_70%_15%,rgba(255,255,255,0.18),transparent_60%)]" />
+              <PhotoLayer src={vehicleImage(v.id)} alt={`${v.year} ${v.make} ${v.model} ${v.trim}`} eager />
               <span className="absolute left-5 top-5 rounded-full border border-line bg-black/40 px-3 py-1 text-[11px] tracking-widest text-white/80 backdrop-blur">
-                Diamond Certified
-              </span>
-              <span className="pointer-events-none absolute bottom-6 left-1/2 -translate-x-1/2 text-sm uppercase tracking-[0.4em] text-white/25">
-                {v.make}
+                27-Point Inspected
               </span>
             </div>
           </Reveal>

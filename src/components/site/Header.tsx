@@ -48,7 +48,7 @@ export default function Header() {
         scrolled ? "glass-strong border-b border-line py-2.5" : "border-b border-transparent py-4"
       }`}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-5 sm:px-8">
+      <div className="nav-in mx-auto flex max-w-7xl items-center justify-between px-5 sm:px-8">
         <Mark />
 
         <nav className="hidden items-center gap-10 lg:flex">

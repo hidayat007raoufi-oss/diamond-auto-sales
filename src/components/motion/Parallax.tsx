@@ -21,7 +21,9 @@ export default function Parallax({
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    // Skip on mobile and for reduced-motion users (performance + comfort).
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (window.innerWidth < 768) return;
 
     let raf = 0;
     const update = () => {

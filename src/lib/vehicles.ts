@@ -158,6 +158,29 @@ export const vehicles: Vehicle[] = [
   },
 ];
 
+/**
+ * Real automotive photography (Unsplash). These load in the browser / on
+ * Vercel. Swap any entry for your own inventory photos — the card and hero
+ * fall back to the cinematic gradient if a URL is ever unavailable.
+ */
+const U = (id: string, w = 1200) =>
+  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=80`;
+
+export const HERO_IMAGE = U("1544636331-e26879cd4d9b", 1600);
+
+const images: Record<string, string> = {
+  "porsche-911-carrera-s": U("1503376780353-7e6692767b70"),
+  "mercedes-amg-gt-53": U("1617814076367-b759c7d7e738"),
+  "bmw-m4-competition": U("1555215695-3004980ad54e"),
+  "range-rover-sport-autobiography": U("1606664515524-ed2f786a0bd6"),
+  "audi-rs7-performance": U("1606152421802-db97b9c7a11b"),
+  "tesla-model-s-plaid": U("1560958089-b8a1929cea89"),
+  "lexus-lc-500": U("1614200179396-2bdb77ebf81b"),
+  "cadillac-escalade-v": U("1519641471654-76ce0107ad1b"),
+};
+
+export const vehicleImage = (id: string) => images[id];
+
 export const formatPrice = (value: number) =>
   new Intl.NumberFormat("en-US", {
     style: "currency",

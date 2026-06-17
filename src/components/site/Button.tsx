@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 type Variant = "primary" | "ghost";
 
 const base =
-  "btn-sheen group inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-[13px] font-medium tracking-wide transition-all duration-300";
+  "btn-sheen group inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-[13px] font-medium tracking-wide transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98]";
 
 const variants: Record<Variant, string> = {
   primary: "bg-white text-black hover:bg-silver-bright hover:shadow-[0_0_40px_-8px_rgba(255,255,255,0.45)]",

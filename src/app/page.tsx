@@ -1,16 +1,20 @@
 import Button from "@/components/site/Button";
 import Reveal from "@/components/motion/Reveal";
+import Parallax from "@/components/motion/Parallax";
 import SectionHeading from "@/components/site/SectionHeading";
 import VehicleCard from "@/components/site/VehicleCard";
 import LeadForm from "@/components/site/LeadForm";
 import PaymentCalculator from "@/components/site/PaymentCalculator";
 import HeroVehicle from "@/components/site/HeroVehicle";
+import PhotoLayer from "@/components/site/PhotoLayer";
 import InventorySearchBar from "@/components/site/InventorySearchBar";
 import {
   estMonthly,
   featuredVehicles,
   formatMileage,
   formatPrice,
+  HERO_IMAGE,
+  vehicleImage,
 } from "@/lib/vehicles";
 import { services } from "@/lib/services";
 import { testimonials } from "@/lib/testimonials";
@@ -82,7 +86,9 @@ export default function Home() {
           </div>
 
           <div className="rise" style={{ animationDelay: "0.3s" }}>
-            <HeroVehicle />
+            <Parallax speed={0.06}>
+              <HeroVehicle src={HERO_IMAGE} alt="Premium vehicle at Diamond Auto Sales, Raleigh" />
+            </Parallax>
           </div>
         </div>
 
@@ -118,13 +124,14 @@ export default function Home() {
           <div className="mt-10 grid overflow-hidden rounded-3xl border border-line bg-surface/50 lg:grid-cols-2">
             <div className="relative aspect-[16/11] overflow-hidden lg:aspect-auto">
               <div className="absolute inset-0" style={{ background: spotlight.tone }} />
-              <div className="absolute inset-0 bg-[radial-gradient(60%_55%_at_60%_25%,rgba(255,255,255,0.16),transparent_60%)]" />
+              <PhotoLayer
+                src={vehicleImage(spotlight.id)}
+                alt={`${spotlight.year} ${spotlight.make} ${spotlight.model}`}
+                eager
+              />
               <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/50 to-transparent" />
               <span className="absolute left-5 top-5 rounded-full border border-line bg-black/40 px-3 py-1 text-[11px] tracking-widest text-white/80 backdrop-blur">
                 Featured · {spotlight.year}
-              </span>
-              <span className="pointer-events-none absolute bottom-5 left-1/2 -translate-x-1/2 text-sm uppercase tracking-[0.4em] text-white/25">
-                {spotlight.make}
               </span>
             </div>
             <div className="flex flex-col justify-center gap-6 p-8 sm:p-12">
