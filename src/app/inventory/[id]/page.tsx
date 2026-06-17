@@ -4,8 +4,8 @@ import { notFound } from "next/navigation";
 import Button from "@/components/site/Button";
 import Reveal from "@/components/motion/Reveal";
 import VehicleCard from "@/components/site/VehicleCard";
-import PhotoLayer from "@/components/site/PhotoLayer";
 import Vehicle360 from "@/components/site/Vehicle360";
+import ImageZoom from "@/components/site/ImageZoom";
 import {
   estMonthly,
   formatMileage,
@@ -66,13 +66,11 @@ export default async function VehiclePage(props: PageProps<"/inventory/[id]">) {
             {v.frames360?.length ? (
               <Vehicle360 frames={v.frames360} alt={`${v.year} ${v.make} ${v.model} 360° view`} />
             ) : (
-              <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-line">
-                <div className="absolute inset-0 kenburns" style={{ background: v.tone }} />
-                <PhotoLayer src={vehicleImage(v.id)} alt={`${v.year} ${v.make} ${v.model} ${v.trim}`} eager />
-                <span className="absolute left-5 top-5 rounded-full border border-line bg-black/40 px-3 py-1 text-[11px] tracking-widest text-white/80 backdrop-blur">
-                  27-Point Inspected
-                </span>
-              </div>
+              <ImageZoom
+                src={vehicleImage(v.id)}
+                tone={v.tone}
+                alt={`${v.year} ${v.make} ${v.model} ${v.trim}`}
+              />
             )}
             <p className="mt-3 text-center text-[11px] uppercase tracking-widest text-mute">
               {v.frames360?.length ? "360° View Available — drag to rotate" : "Photo gallery"}

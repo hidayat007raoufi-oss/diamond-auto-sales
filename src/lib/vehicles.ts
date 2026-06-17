@@ -15,7 +15,9 @@ export type Vehicle = {
   featured: boolean;
   /** Optional real photo URL. When absent, a cinematic gradient is rendered. */
   image?: string;
-  /** Ordered frames for a 360° spin viewer. When present, enables 360° view. */
+  /** Gallery images (swipe / fullscreen / zoom). Falls back to `image`. */
+  images?: string[];
+  /** Ordered frames (24 / 36) for a drag-to-rotate 360° viewer. */
   frames360?: string[];
   /** Cinematic gradient used for the presentation surface. */
   tone: string;

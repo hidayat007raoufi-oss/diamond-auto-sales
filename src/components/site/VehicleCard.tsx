@@ -1,5 +1,6 @@
 import Link from "next/link";
 import PhotoLayer from "@/components/site/PhotoLayer";
+import Tilt from "@/components/motion/Tilt";
 import { formatMileage, formatPrice, vehicleImage, type Vehicle } from "@/lib/vehicles";
 
 const statusStyle: Record<Vehicle["status"], string> = {
@@ -10,9 +11,10 @@ const statusStyle: Record<Vehicle["status"], string> = {
 
 export default function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
   return (
+    <Tilt max={4} className="h-full">
     <Link
       href={`/inventory/${vehicle.id}`}
-      className="group flex flex-col overflow-hidden rounded-3xl border border-line bg-surface transition-all duration-500 hover:-translate-y-1.5 hover:border-line-strong hover:shadow-[0_30px_70px_-35px_rgba(0,0,0,0.85)]"
+      className="group flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-surface transition-all duration-500 hover:-translate-y-1.5 hover:border-line-strong hover:shadow-[0_40px_90px_-40px_rgba(0,0,0,0.9)]"
     >
       {/* image — dominant */}
       <div className="relative aspect-[4/3] overflow-hidden">
@@ -24,7 +26,15 @@ export default function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
           />
         </div>
         <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-surface/80 to-transparent" />
-        <span className="absolute left-4 top-4 rounded-full border border-line bg-black/45 px-2.5 py-1 text-[10px] tracking-widest text-white/80 backdrop-blur">
+        {/* interactive shine — follows cursor (vars set by Tilt) */}
+        <div
+          className="pointer-events-none absolute inset-0 z-10 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+          style={{
+            background:
+              "radial-gradient(220px circle at var(--glare-x,50%) var(--glare-y,40%), rgba(255,255,255,0.16), transparent 60%)",
+          }}
+        />
+        <span className="absolute left-4 top-4 z-10 rounded-full border border-line bg-black/45 px-2.5 py-1 text-[10px] tracking-widest text-white/80 backdrop-blur">
           {vehicle.year}
         </span>
       </div>
@@ -54,5 +64,6 @@ export default function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
         </span>
       </div>
     </Link>
+    </Tilt>
   );
 }

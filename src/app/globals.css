@@ -261,6 +261,18 @@ body {
 .floaty {
   animation: floaty 9s ease-in-out infinite;
 }
+@keyframes floatSoft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+.floaty-soft {
+  animation: floatSoft 14s ease-in-out infinite;
+}
 
 /* ---------- Diamond logo — quiet, glow only on hover ---------- */
 .diamond-logo {

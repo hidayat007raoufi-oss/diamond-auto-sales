@@ -40,9 +40,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" className="antialiased">
       <body className="grain min-h-screen text-text">
-        {/* calm, static base — a single soft top spotlight */}
-        <div aria-hidden className="fixed inset-0 -z-10 bg-black">
+        {/* ambient base — soft top light + slow drifting metallic glow (alive, never frozen) */}
+        <div aria-hidden className="fixed inset-0 -z-10 overflow-hidden bg-black">
           <div className="absolute inset-x-0 top-0 h-[55vh] bg-[radial-gradient(55%_50%_at_50%_0%,rgba(255,255,255,0.045),transparent_72%)]" />
+          <div className="drift absolute left-[6%] top-[18%] h-[44vh] w-[44vh] rounded-full bg-[radial-gradient(circle,rgba(201,204,209,0.05),transparent_62%)] blur-3xl" />
+          <div className="drift-slow absolute bottom-[8%] right-[5%] h-[40vh] w-[40vh] rounded-full bg-[radial-gradient(circle,rgba(150,160,175,0.045),transparent_62%)] blur-3xl" />
         </div>
         <Header />
         <main>{children}</main>

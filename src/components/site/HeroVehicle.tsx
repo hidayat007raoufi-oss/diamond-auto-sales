@@ -12,10 +12,12 @@ export default function HeroVehicle({
   alt?: string;
 }) {
   return (
-    <div className="image-in relative aspect-[5/4] w-full select-none overflow-hidden rounded-2xl" role="img" aria-label={alt}>
+    <div className="image-in relative aspect-[5/4] w-full select-none rounded-2xl" role="img" aria-label={alt}>
       {/* dramatic spotlight */}
       <div className="absolute inset-0 bg-[radial-gradient(58%_52%_at_54%_40%,rgba(255,255,255,0.1),transparent_66%)]" />
 
+      {/* gently floating vehicle layer */}
+      <div className="floaty-soft absolute inset-0 overflow-hidden rounded-2xl">
       {/* silhouette fallback (shown if no/failed photo) */}
       <svg viewBox="0 0 480 200" className="absolute inset-0 h-full w-full" aria-hidden>
         <defs>
@@ -54,6 +56,7 @@ export default function HeroVehicle({
 
       {/* real photo on top */}
       <PhotoLayer src={src} alt={alt} eager />
+      </div>
     </div>
   );
 }
