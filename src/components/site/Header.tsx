@@ -94,6 +94,16 @@ export default function Header() {
           open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
         }`}
       >
+        {/* explicit close button */}
+        <button
+          onClick={() => setOpen(false)}
+          aria-label="Close menu"
+          className="absolute right-5 top-6 grid h-11 w-11 place-items-center rounded-full border border-line-strong text-white transition-all duration-300 hover:rotate-90 hover:bg-white hover:text-black active:scale-95"
+        >
+          <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.7">
+            <path d="M6 6l12 12M18 6L6 18" />
+          </svg>
+        </button>
         {links.map((l, i) => (
           <Link
             key={l.href}

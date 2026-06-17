@@ -316,6 +316,37 @@ body {
   will-change: transform, opacity;
 }
 
+/* ---------- Engineering / telemetry motion ---------- */
+@keyframes spin360 {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.spin-slow {
+  animation: spin360 52s linear infinite;
+  transform-origin: center;
+}
+.spin-rev {
+  animation: spin360 74s linear infinite reverse;
+  transform-origin: center;
+}
+/* Soft ambient light reflection drifting across the whole background */
+@keyframes ambientSheen {
+  0% {
+    transform: translate3d(-18%, -8%, 0) rotate(8deg);
+  }
+  50% {
+    transform: translate3d(18%, 8%, 0) rotate(8deg);
+  }
+  100% {
+    transform: translate3d(-18%, -8%, 0) rotate(8deg);
+  }
+}
+.ambient-sheen {
+  animation: ambientSheen 28s ease-in-out infinite;
+  will-change: transform;
+}
+
 /* ---------- Brand logo treatments ---------- */
 /* Hero logo: black background screens out, leaving a glowing 3D crest */
 @keyframes logoFloat3d {

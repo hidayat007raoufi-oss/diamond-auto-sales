@@ -9,7 +9,7 @@ import PhotoLayer from "@/components/site/PhotoLayer";
 import InventorySearchBar from "@/components/site/InventorySearchBar";
 import CategoryScroller from "@/components/site/CategoryScroller";
 import CrystalScene from "@/components/site/CrystalScene";
-import LogoPresentation from "@/components/site/LogoPresentation";
+import HeroCenterpiece from "@/components/site/HeroCenterpiece";
 import TrustSignals from "@/components/site/TrustSignals";
 import TradeInEstimator from "@/components/site/TradeInEstimator";
 import PerformanceDivision from "@/components/site/PerformanceDivision";
@@ -68,7 +68,7 @@ export default function Home() {
 
         <div className="relative z-10 mx-auto w-full max-w-3xl px-5 py-28 text-center sm:px-8">
           <div className="rise" style={{ animationDelay: "0.05s" }}>
-            <LogoPresentation />
+            <HeroCenterpiece />
           </div>
           <p className="rise kicker mt-8" style={{ animationDelay: "0.18s" }}>
             Raleigh, North Carolina

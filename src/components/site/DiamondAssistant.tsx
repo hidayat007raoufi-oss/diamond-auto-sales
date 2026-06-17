@@ -38,7 +38,20 @@ const contactSteps = [
 
 export default function DiamondAssistant() {
   const [open, setOpen] = useState(false);
+  const [revealed, setRevealed] = useState(false);
   const [messages, setMessages] = useState<Msg[]>([{ from: "bot", text: GREETING }]);
+
+  // Reveal elegantly — after the visitor scrolls, or 16s on the page.
+  useEffect(() => {
+    if (revealed) return;
+    const onScroll = () => window.scrollY > 220 && setRevealed(true);
+    const timer = setTimeout(() => setRevealed(true), 16000);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, [revealed]);
   const [steps, setSteps] = useState<{ q: string; field: string }[]>([]);
   const [stepIdx, setStepIdx] = useState(-1);
   const [intent, setIntent] = useState<string>("");
@@ -101,7 +114,9 @@ export default function DiamondAssistant() {
       <button
         onClick={() => setOpen((o) => !o)}
         aria-label="Open Diamond AI Assistant"
-        className="fixed bottom-24 right-5 z-[60] grid h-14 w-14 place-items-center rounded-full border border-line-strong bg-white text-black shadow-[0_10px_40px_-8px_rgba(108,182,255,0.6)] transition-transform duration-300 hover:scale-105 active:scale-95 lg:bottom-6"
+        className={`fixed bottom-24 right-5 z-[60] grid h-14 w-14 place-items-center rounded-full border border-line-strong bg-white text-black shadow-[0_10px_40px_-8px_rgba(108,182,255,0.6)] transition-all duration-500 hover:scale-105 active:scale-95 lg:bottom-6 ${
+          revealed ? "translate-y-0 scale-100 opacity-100" : "pointer-events-none translate-y-3 scale-90 opacity-0"
+        }`}
       >
         {open ? (
           <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.8">
