@@ -19,6 +19,8 @@ export type Vehicle = {
   images?: string[];
   /** Ordered frames (24 / 36) for a drag-to-rotate 360° viewer. */
   frames360?: string[];
+  /** Engine bay photo — enables the tap-to-open-hood reveal. */
+  engineBay?: string;
   /** Cinematic gradient used for the presentation surface. */
   tone: string;
 };
@@ -41,31 +43,32 @@ export const vehicles: Vehicle[] = [
     exterior: "Radiant Silver Metallic",
     status: "Available",
     featured: true,
-    image: `${CTS}/2-front-left.jpg`,
+    image: `${CTS}/cutouts/front-left.webp`,
     images: [
-      `${CTS}/2-front-left.jpg`,
-      `${CTS}/1-front.jpg`,
-      `${CTS}/8-front-right.jpg`,
-      `${CTS}/7-right.jpg`,
-      `${CTS}/6-rear-right.jpg`,
-      `${CTS}/5-rear.jpg`,
-      `${CTS}/4-rear-left.jpg`,
-      `${CTS}/3-left.jpg`,
-      `${CTS}/detail-1-roof.jpg`,
-      `${CTS}/detail-2-rear-quarter.jpg`,
-      `${CTS}/detail-3-fuel.jpg`,
-      `${CTS}/detail-4-front-quarter.jpg`,
+      `${CTS}/cutouts/front-left.webp`,
+      `${CTS}/cutouts/front.webp`,
+      `${CTS}/cutouts/front-right.webp`,
+      `${CTS}/cutouts/right.webp`,
+      `${CTS}/cutouts/rear-right.webp`,
+      `${CTS}/cutouts/rear.webp`,
+      `${CTS}/cutouts/rear-left.webp`,
+      `${CTS}/cutouts/side.webp`,
+      `${CTS}/cutouts/detail-1.webp`,
+      `${CTS}/cutouts/detail-2.webp`,
+      `${CTS}/cutouts/detail-3.webp`,
+      `${CTS}/cutouts/detail-4.webp`,
     ],
     frames360: [
-      `${CTS}/1-front.jpg`,
-      `${CTS}/2-front-left.jpg`,
-      `${CTS}/3-left.jpg`,
-      `${CTS}/4-rear-left.jpg`,
-      `${CTS}/5-rear.jpg`,
-      `${CTS}/6-rear-right.jpg`,
-      `${CTS}/7-right.jpg`,
-      `${CTS}/8-front-right.jpg`,
+      `${CTS}/cutouts/front.webp`,
+      `${CTS}/cutouts/front-left.webp`,
+      `${CTS}/cutouts/side.webp`,
+      `${CTS}/cutouts/rear-left.webp`,
+      `${CTS}/cutouts/rear.webp`,
+      `${CTS}/cutouts/rear-right.webp`,
+      `${CTS}/cutouts/right.webp`,
+      `${CTS}/cutouts/front-right.webp`,
     ],
+    engineBay: `${CTS}/cutouts/engine-bay.webp`,
     tone: "radial-gradient(120% 120% at 50% 20%, #5b6068 0%, #20232a 55%, #0a0b0d 100%)",
   },
   {
@@ -217,7 +220,7 @@ const U = (id: string, w = 1200) =>
 export const HERO_IMAGE = U("1544636331-e26879cd4d9b", 1600);
 
 const images: Record<string, string> = {
-  "cadillac-cts-2015-36-rwd": `${CTS}/2-front-left.jpg`,
+  "cadillac-cts-2015-36-rwd": `${CTS}/cutouts/front-left.webp`,
   "porsche-911-carrera-s": U("1503376780353-7e6692767b70"),
   "mercedes-amg-gt-53": U("1617814076367-b759c7d7e738"),
   "bmw-m4-competition": U("1555215695-3004980ad54e"),

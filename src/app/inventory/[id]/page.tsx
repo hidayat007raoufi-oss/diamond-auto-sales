@@ -6,6 +6,7 @@ import Reveal from "@/components/motion/Reveal";
 import VehicleCard from "@/components/site/VehicleCard";
 import Vehicle360 from "@/components/site/Vehicle360";
 import ImageZoom from "@/components/site/ImageZoom";
+import HoodReveal from "@/components/site/HoodReveal";
 import {
   estMonthly,
   formatMileage,
@@ -125,6 +126,23 @@ export default async function VehiclePage(props: PageProps<"/inventory/[id]">) {
             </Reveal>
           </div>
         </div>
+
+        {/* Under the hood */}
+        {v.engineBay && (
+          <Reveal blur>
+            <div className="mt-24 border-t border-line pt-16">
+              <h2 className="display text-2xl text-white sm:text-3xl">Under the hood.</h2>
+              <p className="mt-2 text-dim">Tap to lift the hood and view the engine bay.</p>
+              <div className="mt-8 max-w-2xl">
+                <HoodReveal
+                  front={v.frames360?.[0] ?? v.image ?? ""}
+                  engineBay={v.engineBay}
+                  alt={`${v.year} ${v.make} ${v.model}`}
+                />
+              </div>
+            </div>
+          </Reveal>
+        )}
 
         {/* Related */}
         <div className="mt-28 border-t border-line pt-16">

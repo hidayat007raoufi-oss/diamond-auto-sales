@@ -56,7 +56,7 @@ export default function Vehicle360({
         src={frames[index]}
         alt={alt}
         draggable={false}
-        className="absolute inset-0 h-full w-full object-cover"
+        className="absolute inset-0 h-full w-full object-contain p-2"
       />
 
       <span className="pointer-events-none absolute left-5 top-5 inline-flex items-center gap-2 rounded-full border border-line bg-black/45 px-3 py-1 text-[11px] font-medium tracking-widest text-white/85 backdrop-blur">
