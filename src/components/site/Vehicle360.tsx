@@ -38,7 +38,7 @@ export default function Vehicle360({
   return (
     <div
       ref={wrap}
-      className={`relative aspect-[4/3] touch-none select-none overflow-hidden rounded-3xl border border-line bg-surface ${
+      className={`relative aspect-[4/3] touch-none select-none ${
         dragging ? "cursor-grabbing" : "cursor-grab"
       }`}
       onPointerDown={(e) => {
@@ -51,6 +51,8 @@ export default function Vehicle360({
       role="img"
       aria-label={alt}
     >
+      {/* soft ground shadow keeps the floating car grounded */}
+      <div className="pointer-events-none absolute inset-x-[14%] bottom-[10%] h-7 rounded-[50%] bg-[radial-gradient(ellipse,rgba(0,0,0,0.55),transparent_70%)] blur-md" />
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={frames[index]}

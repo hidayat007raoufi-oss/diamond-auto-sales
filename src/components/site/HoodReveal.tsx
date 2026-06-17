@@ -22,7 +22,7 @@ export default function HoodReveal({
       onClick={() => setOpen((o) => !o)}
       aria-pressed={open}
       aria-label={open ? "Close hood" : "Open hood to view engine bay"}
-      className="group relative block aspect-[4/3] w-full overflow-hidden rounded-3xl border border-line bg-surface"
+      className="group relative block aspect-[4/3] w-full overflow-hidden rounded-3xl"
       style={{ perspective: "1200px" }}
     >
       {/* engine bay — revealed underneath */}
