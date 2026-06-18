@@ -8,22 +8,30 @@ const PHONE = "+19198878666";
 /** Floating mobile action bar — appears after ~35% scroll, hides near the top. */
 export default function StickyCTABar() {
   const [show, setShow] = useState(false);
+  const [overlay, setOverlay] = useState(0);
 
   useEffect(() => {
     const onScroll = () => {
       const max = document.documentElement.scrollHeight - window.innerHeight;
       const pct = max > 0 ? window.scrollY / max : 0;
-      setShow(window.scrollY > 240 && pct > 0.32);
+      setShow(window.scrollY > 240 && pct > 0.3);
     };
     onScroll();
+    const onOverlay = (e: Event) => setOverlay((n) => Math.max(0, n + (e as CustomEvent).detail));
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("diamond:overlay", onOverlay);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("diamond:overlay", onOverlay);
+    };
   }, []);
+
+  const visible = show && overlay === 0;
 
   return (
     <div
       className={`fixed inset-x-0 bottom-0 z-40 px-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] transition-all duration-500 lg:hidden ${
-        show ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-6 opacity-0"
+        visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-6 opacity-0"
       }`}
     >
       <div className="glass-strong mx-auto flex max-w-md items-center gap-2 rounded-full border border-line-strong p-2 shadow-[0_14px_44px_-12px_rgba(0,0,0,0.85)]">

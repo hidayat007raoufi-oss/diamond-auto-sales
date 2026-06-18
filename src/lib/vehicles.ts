@@ -21,6 +21,8 @@ export type Vehicle = {
   frames360?: string[];
   /** Engine bay photo — enables the tap-to-open-hood reveal. */
   engineBay?: string;
+  /** Categorized photo gallery. Only categories with photos are shown. */
+  media?: { label: string; images: string[] }[];
   /** Cinematic gradient used for the presentation surface. */
   tone: string;
 };
@@ -69,6 +71,31 @@ export const vehicles: Vehicle[] = [
       `${CTS}/cutouts/front-right.webp`,
     ],
     engineBay: `${CTS}/cutouts/engine-bay.webp`,
+    media: [
+      {
+        label: "Exterior",
+        images: [
+          `${CTS}/cutouts/front-left.webp`,
+          `${CTS}/cutouts/front.webp`,
+          `${CTS}/cutouts/front-right.webp`,
+          `${CTS}/cutouts/right.webp`,
+          `${CTS}/cutouts/rear-right.webp`,
+          `${CTS}/cutouts/rear.webp`,
+          `${CTS}/cutouts/rear-left.webp`,
+          `${CTS}/cutouts/side.webp`,
+        ],
+      },
+      { label: "Engine Bay", images: [`${CTS}/cutouts/engine-bay.webp`] },
+      {
+        label: "Details",
+        images: [
+          `${CTS}/cutouts/detail-1.webp`,
+          `${CTS}/cutouts/detail-2.webp`,
+          `${CTS}/cutouts/detail-3.webp`,
+          `${CTS}/cutouts/detail-4.webp`,
+        ],
+      },
+    ],
     tone: "radial-gradient(120% 120% at 50% 20%, #5b6068 0%, #20232a 55%, #0a0b0d 100%)",
   },
   {

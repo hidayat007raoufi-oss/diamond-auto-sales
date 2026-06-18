@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import BrandMark from "@/components/site/BrandMark";
+import { pushOverlay, popOverlay } from "@/lib/overlay";
 
 const links = [
   { href: "/inventory", label: "Inventory" },
@@ -31,8 +32,10 @@ export default function Header() {
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
+    if (open) pushOverlay();
     return () => {
       document.body.style.overflow = "";
+      if (open) popOverlay();
     };
   }, [open]);
 
@@ -86,40 +89,59 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Mobile overlay */}
+      {/* Mobile overlay — opaque full-screen, above everything */}
       <div
-        className={`glass-strong fixed inset-0 top-0 z-40 flex flex-col gap-2 px-6 pt-28 transition-all duration-500 lg:hidden ${
+        className={`fixed inset-0 z-[70] flex flex-col bg-black/95 px-6 pb-10 pt-7 backdrop-blur-2xl transition-all duration-400 lg:hidden ${
           open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
         }`}
       >
-        {/* explicit close button */}
-        <button
-          onClick={() => setOpen(false)}
-          aria-label="Close menu"
-          className="absolute right-5 top-6 grid h-11 w-11 place-items-center rounded-full border border-line-strong text-white transition-all duration-300 hover:rotate-90 hover:bg-white hover:text-black active:scale-95"
-        >
-          <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.7">
-            <path d="M6 6l12 12M18 6L6 18" />
-          </svg>
-        </button>
-        {links.map((l, i) => (
-          <Link
-            key={l.href}
-            href={l.href}
+        <div className="flex items-center justify-between">
+          <BrandMark size="sm" />
+          <button
             onClick={() => setOpen(false)}
-            className="border-b border-line py-5 text-3xl font-semibold tracking-tight text-white transition-transform"
-            style={{
-              transitionDelay: open ? `${120 + i * 60}ms` : "0ms",
-              transform: open ? "translateY(0)" : "translateY(12px)",
-              opacity: open ? 1 : 0,
-            }}
+            aria-label="Close menu"
+            className="grid h-11 w-11 place-items-center rounded-full border border-line-strong text-white transition-all duration-300 hover:rotate-90 hover:bg-white hover:text-black active:scale-95"
           >
-            {l.label}
+            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.7">
+              <path d="M6 6l12 12M18 6L6 18" />
+            </svg>
+          </button>
+        </div>
+
+        <nav className="mt-8 flex flex-col">
+          {links.map((l, i) => (
+            <Link
+              key={l.href}
+              href={l.href}
+              onClick={() => setOpen(false)}
+              className="border-b border-line py-5 text-3xl font-semibold tracking-tight text-white transition-transform"
+              style={{
+                transitionDelay: open ? `${100 + i * 55}ms` : "0ms",
+                transform: open ? "translateY(0)" : "translateY(12px)",
+                opacity: open ? 1 : 0,
+              }}
+            >
+              {l.label}
+            </Link>
+          ))}
+        </nav>
+
+        <div className="mt-auto space-y-3 pt-8">
+          <Link href="/inventory" onClick={() => setOpen(false)} className="block rounded-full bg-white py-3.5 text-center text-sm font-semibold text-black active:scale-[0.98]">
+            View Inventory
           </Link>
-        ))}
-        <a href="tel:+19198878666" className="mt-8 text-sm tracking-widest text-dim">
-          (919) 887-8666
-        </a>
+          <div className="grid grid-cols-2 gap-3">
+            <Link href="/financing" onClick={() => setOpen(false)} className="rounded-full border border-line-strong py-3.5 text-center text-sm font-medium text-white active:scale-[0.98]">
+              Get Pre-Approved
+            </Link>
+            <Link href="/contact" onClick={() => setOpen(false)} className="rounded-full border border-line-strong py-3.5 text-center text-sm font-medium text-white active:scale-[0.98]">
+              Schedule Service
+            </Link>
+          </div>
+          <a href="tel:+19198878666" className="block pt-4 text-center text-sm tracking-widest text-dim">
+            (919) 887-8666
+          </a>
+        </div>
       </div>
     </header>
   );

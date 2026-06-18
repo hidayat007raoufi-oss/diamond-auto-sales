@@ -62,6 +62,15 @@ export default function DiamondAssistant() {
     window.addEventListener("diamond:open-ai", openAI);
     return () => window.removeEventListener("diamond:open-ai", openAI);
   }, []);
+
+  // Hide the launcher while a full-screen overlay (menu/modal) is open.
+  const [overlay, setOverlay] = useState(0);
+  useEffect(() => {
+    const onOverlay = (e: Event) => setOverlay((n) => Math.max(0, n + (e as CustomEvent).detail));
+    window.addEventListener("diamond:overlay", onOverlay);
+    return () => window.removeEventListener("diamond:overlay", onOverlay);
+  }, []);
+  const launcherVisible = revealed && (overlay === 0 || open);
   const [steps, setSteps] = useState<{ q: string; field: string }[]>([]);
   const [stepIdx, setStepIdx] = useState(-1);
   const [intent, setIntent] = useState<string>("");
@@ -125,7 +134,7 @@ export default function DiamondAssistant() {
         onClick={() => setOpen((o) => !o)}
         aria-label="Open Diamond AI Assistant"
         className={`fixed bottom-24 right-5 z-[60] grid h-14 w-14 place-items-center rounded-full border border-line-strong bg-white text-black shadow-[0_10px_40px_-8px_rgba(108,182,255,0.6)] transition-all duration-500 hover:scale-105 active:scale-95 lg:bottom-6 ${
-          revealed ? "translate-y-0 scale-100 opacity-100" : "pointer-events-none translate-y-3 scale-90 opacity-0"
+          launcherVisible ? "translate-y-0 scale-100 opacity-100" : "pointer-events-none translate-y-3 scale-90 opacity-0"
         }`}
       >
         {open ? (

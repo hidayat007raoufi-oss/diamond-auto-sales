@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { services, type Service } from "@/lib/services";
+import { pushOverlay, popOverlay } from "@/lib/overlay";
 
 export default function ServicesShowcase() {
   const [active, setActive] = useState<Service | null>(null);
@@ -26,9 +27,11 @@ export default function ServicesShowcase() {
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && close();
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
+    pushOverlay();
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
+      popOverlay();
     };
   }, [active]);
 

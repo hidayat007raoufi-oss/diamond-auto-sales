@@ -6,7 +6,7 @@ import Reveal from "@/components/motion/Reveal";
 import VehicleCard from "@/components/site/VehicleCard";
 import Vehicle360 from "@/components/site/Vehicle360";
 import ImageZoom from "@/components/site/ImageZoom";
-import HoodReveal from "@/components/site/HoodReveal";
+import VehicleGallery from "@/components/site/VehicleGallery";
 import {
   estMonthly,
   formatMileage,
@@ -54,6 +54,13 @@ export default async function VehiclePage(props: PageProps<"/inventory/[id]">) {
   const fallback = vehicles.filter((x) => x.id !== v.id).slice(0, 3);
   const related = (similar.length ? similar : fallback).slice(0, 3);
 
+  const heroPhoto = vehicleImage(v.id);
+  const media = v.media ?? (heroPhoto ? [{ label: "Exterior", images: [heroPhoto] }] : []);
+  const hasEngine = media.some((m) => m.label === "Engine Bay");
+  const hotspots = hasEngine
+    ? [{ frame: 0, label: "Engine Bay", x: "52%", y: "40%", caption: "Tap to view engine bay" }]
+    : [];
+
   return (
     <div className="pt-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
@@ -65,7 +72,11 @@ export default async function VehiclePage(props: PageProps<"/inventory/[id]">) {
           {/* Presentation */}
           <Reveal blur>
             {v.frames360?.length ? (
-              <Vehicle360 frames={v.frames360} alt={`${v.year} ${v.make} ${v.model} 360° view`} />
+              <Vehicle360
+                frames={v.frames360}
+                alt={`${v.year} ${v.make} ${v.model} 360° view`}
+                hotspots={hotspots}
+              />
             ) : (
               <ImageZoom
                 src={vehicleImage(v.id)}
@@ -127,18 +138,14 @@ export default async function VehiclePage(props: PageProps<"/inventory/[id]">) {
           </div>
         </div>
 
-        {/* Under the hood */}
-        {v.engineBay && (
+        {/* Vehicle gallery */}
+        {media.length > 0 && (
           <Reveal blur>
             <div className="mt-24 border-t border-line pt-16">
-              <h2 className="display text-2xl text-white sm:text-3xl">Under the hood.</h2>
-              <p className="mt-2 text-dim">Tap to lift the hood and view the engine bay.</p>
-              <div className="mt-8 max-w-2xl">
-                <HoodReveal
-                  front={v.frames360?.[0] ?? v.image ?? ""}
-                  engineBay={v.engineBay}
-                  alt={`${v.year} ${v.make} ${v.model}`}
-                />
+              <h2 className="display text-2xl text-white sm:text-3xl">Vehicle gallery.</h2>
+              <p className="mt-2 text-dim">Browse every angle in a premium studio presentation.</p>
+              <div className="mt-8">
+                <VehicleGallery media={media} alt={`${v.year} ${v.make} ${v.model}`} />
               </div>
             </div>
           </Reveal>
