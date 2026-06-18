@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Button from "@/components/site/Button";
 import Reveal from "@/components/motion/Reveal";
 import Counter from "@/components/motion/Counter";
@@ -36,10 +37,10 @@ function SpecMini({ label, value }: { label: string; value: string }) {
 const financingPoints = ["All credit considered", "Fast application", "Trade-ins welcome"];
 
 const pillars = [
-  { n: "01", title: "Buy", body: "Quality vehicles and transparent inventory.", icon: "M5 11l2-5h10l2 5M5 11h14v5H5zM7.5 16v1.5M16.5 16v1.5" },
-  { n: "02", title: "Finance", body: "Fast approvals and flexible options.", icon: "M3 7h18v10H3z M3 11h18" },
-  { n: "03", title: "Protect", body: "Vehicle protection, CARFAX access, and service support.", icon: "M12 3l7 3v5c0 4-3 7-7 8-4-1-7-4-7-8V6z" },
-  { n: "04", title: "Upgrade", body: "Detailing, tint, tires, customization, and performance builds.", icon: "M12 2l3 6 6 1-4.5 4.2L18 20l-6-3.2L6 20l1.5-6.8L3 9l6-1 3-6z" },
+  { n: "01", title: "Buy", body: "Quality vehicles and transparent inventory.", href: "/inventory", icon: "M5 11l2-5h10l2 5M5 11h14v5H5zM7.5 16v1.5M16.5 16v1.5" },
+  { n: "02", title: "Finance", body: "Fast approvals and flexible options.", href: "/financing", icon: "M3 7h18v10H3z M3 11h18" },
+  { n: "03", title: "Protect", body: "Vehicle protection, CARFAX access, and service support.", href: "/contact?intent=protection", icon: "M12 3l7 3v5c0 4-3 7-7 8-4-1-7-4-7-8V6z" },
+  { n: "04", title: "Upgrade", body: "Detailing, tint, tires, customization, and performance builds.", href: "/services", icon: "M12 2l3 6 6 1-4.5 4.2L18 20l-6-3.2L6 20l1.5-6.8L3 9l6-1 3-6z" },
 ];
 
 export default function Home() {
@@ -55,51 +56,53 @@ export default function Home() {
       <section className="relative flex min-h-[100svh] items-center overflow-hidden">
         <CrystalScene />
 
-        <div className="relative z-10 mx-auto w-full max-w-3xl px-5 py-28 text-center sm:px-8">
-          <div className="rise" style={{ animationDelay: "0.05s" }}>
-            <HeroCenterpiece />
+        <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-8 px-5 pb-16 pt-28 sm:px-8 lg:grid-cols-[1.05fr_0.95fr]">
+          <div className="text-center lg:text-left">
+            <p className="rise kicker" style={{ animationDelay: "0.16s" }}>
+              Raleigh · North Carolina
+            </p>
+            <h1
+              className="rise display mt-5 text-[clamp(3rem,9vw,6.2rem)] leading-[0.9] text-white"
+              style={{ animationDelay: "0.26s" }}
+            >
+              Find your<br className="hidden sm:block" /> <span className="text-metal">next vehicle.</span>
+            </h1>
+            <p
+              className="rise mx-auto mt-6 max-w-md text-lg leading-relaxed text-dim lg:mx-0"
+              style={{ animationDelay: "0.4s" }}
+            >
+              Luxury when you want it. Practical when you need it. Financing
+              designed to get you moving.
+            </p>
+            <div
+              className="rise mt-9 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start"
+              style={{ animationDelay: "0.52s" }}
+            >
+              <Button href="/inventory" className="w-full sm:w-auto">
+                View Inventory
+              </Button>
+              <Button href="/financing" variant="ghost" className="w-full sm:w-auto">
+                Get Pre-Approved
+              </Button>
+            </div>
+            <div
+              className="rise mt-10 flex flex-wrap justify-center gap-x-6 gap-y-3 lg:justify-start"
+              style={{ animationDelay: "0.64s" }}
+            >
+              {["Financing Available", "CARFAX Available", "Quality Inspected Vehicles", "Raleigh, NC"].map(
+                (t) => (
+                  <span key={t} className="inline-flex items-center gap-2 text-[13px] text-dim">
+                    <svg viewBox="0 0 24 24" className="h-4 w-4 text-accent" fill="none" stroke="currentColor" strokeWidth="1.8">
+                      <path d="M5 12l4 4L19 7" />
+                    </svg>
+                    {t}
+                  </span>
+                )
+              )}
+            </div>
           </div>
-          <p className="rise kicker mt-8" style={{ animationDelay: "0.18s" }}>
-            Raleigh, North Carolina
-          </p>
-          <h1
-            className="rise display mt-4 text-[2.9rem] leading-[0.96] text-white sm:text-6xl lg:text-7xl"
-            style={{ animationDelay: "0.28s" }}
-          >
-            Find your next vehicle.
-          </h1>
-          <p
-            className="rise mx-auto mt-6 max-w-lg text-lg leading-relaxed text-dim"
-            style={{ animationDelay: "0.42s" }}
-          >
-            Luxury when you want it. Practical when you need it. Financing
-            designed to get you moving.
-          </p>
-          <div
-            className="rise mt-9 flex flex-col gap-3 sm:flex-row sm:justify-center"
-            style={{ animationDelay: "0.54s" }}
-          >
-            <Button href="/inventory" className="w-full sm:w-auto">
-              View Inventory
-            </Button>
-            <Button href="/financing" variant="ghost" className="w-full sm:w-auto">
-              Get Pre-Approved
-            </Button>
-          </div>
-          <div
-            className="rise mt-10 flex flex-wrap justify-center gap-x-6 gap-y-3"
-            style={{ animationDelay: "0.66s" }}
-          >
-            {["Financing Available", "CARFAX Available", "Quality Inspected Vehicles", "Raleigh, NC"].map(
-              (t) => (
-                <span key={t} className="inline-flex items-center gap-2 text-[13px] text-dim">
-                  <svg viewBox="0 0 24 24" className="h-4 w-4 text-accent" fill="none" stroke="currentColor" strokeWidth="1.8">
-                    <path d="M5 12l4 4L19 7" />
-                  </svg>
-                  {t}
-                </span>
-              )
-            )}
+          <div className="rise order-first lg:order-last" style={{ animationDelay: "0.08s" }}>
+            <HeroCenterpiece className="lg:scale-110" />
           </div>
         </div>
       </section>
@@ -141,16 +144,21 @@ export default function Home() {
           </div>
         </Reveal>
 
-        {/* spotlight — large hero tile */}
+        {/* spotlight — large hero tile (entire tile is clickable) */}
         <Reveal>
-          <div className="mt-10 grid overflow-hidden rounded-3xl border border-line bg-surface/50 lg:grid-cols-2">
+          <Link
+            href={`/inventory/${spotlight.id}`}
+            className="group mt-10 grid overflow-hidden rounded-3xl border border-line bg-surface/50 transition-colors duration-500 hover:border-line-strong lg:grid-cols-2"
+          >
             <div className="relative aspect-[16/11] overflow-hidden lg:aspect-auto">
-              <div className="absolute inset-0" style={{ background: spotlight.tone }} />
-              <PhotoLayer
-                src={vehicleImage(spotlight.id)}
-                alt={`${spotlight.year} ${spotlight.make} ${spotlight.model}`}
-                eager
-              />
+              <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-[1.03]">
+                <div className="absolute inset-0" style={{ background: spotlight.tone }} />
+                <PhotoLayer
+                  src={vehicleImage(spotlight.id)}
+                  alt={`${spotlight.year} ${spotlight.make} ${spotlight.model}`}
+                  eager
+                />
+              </div>
               <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/50 to-transparent" />
               <span className="absolute left-5 top-5 rounded-full border border-line bg-black/40 px-3 py-1 text-[11px] tracking-widest text-white/80 backdrop-blur">
                 Featured · {spotlight.year}
@@ -173,10 +181,15 @@ export default function Home() {
                   <p className="display text-3xl text-metal">{formatPrice(spotlight.price)}</p>
                   <p className="mt-1 text-xs text-mute">est. {estMonthly(spotlight.price)} · 72mo</p>
                 </div>
-                <Button href={`/inventory/${spotlight.id}`}>View Details</Button>
+                <span className="btn-sheen inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-[13px] font-medium text-black transition-all duration-300 group-hover:bg-silver-bright">
+                  View Details
+                  <svg viewBox="0 0 24 24" className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="1.6">
+                    <path d="M5 12h14M13 6l6 6-6 6" />
+                  </svg>
+                </span>
               </div>
             </div>
-          </div>
+          </Link>
         </Reveal>
 
         {/* supporting tiles */}
@@ -208,7 +221,10 @@ export default function Home() {
           <div className="mt-14 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
             {pillars.map((p, i) => (
               <Reveal key={p.title} delay={i * 70}>
-                <div className="group relative h-full overflow-hidden rounded-3xl border border-line bg-surface/50 p-6 transition-all duration-500 hover:-translate-y-1.5 hover:border-line-strong sm:p-7">
+                <Link
+                  href={p.href}
+                  className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-surface/50 p-6 transition-all duration-500 hover:-translate-y-1.5 hover:border-line-strong sm:p-7"
+                >
                   <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/8 to-transparent transition-transform duration-[900ms] ease-out group-hover:translate-x-full" />
                   <div className="flex items-center justify-between">
                     <div className="grid h-11 w-11 place-items-center rounded-xl border border-line text-silver">
@@ -220,7 +236,13 @@ export default function Home() {
                   </div>
                   <h3 className="mt-5 text-lg font-semibold tracking-tight text-white">{p.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-mute">{p.body}</p>
-                </div>
+                  <span className="mt-4 inline-flex items-center gap-1.5 text-xs font-medium text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    Explore
+                    <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.6">
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </span>
+                </Link>
               </Reveal>
             ))}
           </div>
