@@ -46,7 +46,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <div className="absolute inset-0 bg-[radial-gradient(120%_75%_at_50%_-12%,rgba(18,30,54,0.6),transparent_58%)]" />
           <div className="absolute inset-x-0 bottom-0 h-[55vh] bg-[radial-gradient(80%_60%_at_50%_120%,rgba(14,22,40,0.5),transparent_60%)]" />
           <div className="absolute inset-x-0 top-0 h-[45vh] bg-[radial-gradient(50%_50%_at_50%_0%,rgba(255,255,255,0.04),transparent_72%)]" />
-          <div className="ambient-sheen absolute -inset-1/3 bg-[linear-gradient(112deg,transparent_44%,rgba(96,150,235,0.06)_50%,transparent_56%)]" />
+          <div className="ambient-sheen absolute -inset-1/3 bg-[linear-gradient(112deg,transparent_44%,rgba(196,208,226,0.05)_50%,transparent_56%)]" />
         </div>
         <Header />
         <main>{children}</main>

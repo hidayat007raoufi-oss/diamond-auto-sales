@@ -48,7 +48,7 @@ export default function PaymentCalculator() {
   return (
     <div className="glass rounded-3xl border border-line p-7 sm:p-9">
       <p className="kicker">Estimated Monthly Payment</p>
-      <p className="display mt-3 text-6xl text-azure">
+      <p className="display mt-3 text-6xl text-metal">
         {money(monthly)}
         <span className="text-2xl text-dim">/mo</span>
       </p>
@@ -61,15 +61,15 @@ export default function PaymentCalculator() {
         <svg viewBox="0 0 300 90" preserveAspectRatio="none" className="h-24 w-full" aria-hidden>
           <defs>
             <linearGradient id="pc-fill" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stopColor="#3b82f6" stopOpacity="0.45" />
-              <stop offset="1" stopColor="#3b82f6" stopOpacity="0" />
+              <stop offset="0" stopColor="#b9c4d2" stopOpacity="0.45" />
+              <stop offset="1" stopColor="#b9c4d2" stopOpacity="0" />
             </linearGradient>
           </defs>
           <path d={areaPath} fill="url(#pc-fill)" />
           <path
             d={linePath}
             fill="none"
-            stroke="#60a5fa"
+            stroke="#dfe6ee"
             strokeWidth="1.5"
             vectorEffect="non-scaling-stroke"
           />
@@ -149,7 +149,7 @@ function Slider({
         onChange={(e) => onChange(Number(e.target.value))}
         className="lux-range w-full"
         style={{
-          background: `linear-gradient(90deg, #3b82f6 ${pct}%, rgba(255,255,255,0.1) ${pct}%)`,
+          background: `linear-gradient(90deg, #b9c4d2 ${pct}%, rgba(255,255,255,0.1) ${pct}%)`,
         }}
       />
     </div>

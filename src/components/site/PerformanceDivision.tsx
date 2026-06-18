@@ -16,7 +16,7 @@ const items = [
 
 export default function PerformanceDivision() {
   return (
-    <section className="relative overflow-hidden border-y border-line bg-black">
+    <section className="relative overflow-hidden bg-black">
       {/* subtle carbon weave + cool depth + brushed-metal top edge */}
       <div aria-hidden className="carbon absolute inset-0" />
       <div aria-hidden className="absolute inset-0 bg-[radial-gradient(80%_60%_at_50%_115%,rgba(28,46,84,0.5),transparent_60%)]" />

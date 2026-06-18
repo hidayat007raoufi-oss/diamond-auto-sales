@@ -55,9 +55,9 @@ export default function CrystalScene({ className = "" }: { className?: string })
       <svg viewBox="0 0 1200 820" preserveAspectRatio="xMidYMid slice" className="absolute inset-0 h-full w-full">
         {tris.map((t, i) => {
           const b = Math.min(1, t.b + (t.v - 0.5) * 0.12);
-          const R = Math.round(12 + (168 - 12) * b);
-          const G = Math.round(20 + (186 - 20) * b);
-          const B = Math.round(42 + (210 - 42) * b);
+          const R = Math.round(14 + (198 - 14) * b);
+          const G = Math.round(20 + (206 - 20) * b);
+          const B = Math.round(30 + (216 - 30) * b);
           const op = (0.16 + 0.6 * b).toFixed(2);
           return (
             <path

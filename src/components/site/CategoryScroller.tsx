@@ -25,14 +25,14 @@ export default function CategoryScroller() {
         <Link
           key={c.label}
           href={c.href}
-          className="group flex min-w-[100px] shrink-0 flex-col items-center gap-3 rounded-2xl border border-line bg-surface px-4 py-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-line-strong"
+          className="group flex min-w-[118px] shrink-0 flex-col items-center gap-3.5 rounded-2xl border border-line bg-surface px-5 py-6 transition-all duration-300 hover:-translate-y-1 hover:border-line-strong sm:min-w-[136px]"
         >
-          <span className="grid h-10 w-10 place-items-center rounded-full bg-surface-2 text-silver transition-colors group-hover:text-white">
-            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+          <span className="grid h-12 w-12 place-items-center rounded-full bg-surface-2 text-silver transition-colors group-hover:text-white">
+            <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
               <path d={ICON[c.icon]} />
             </svg>
           </span>
-          <span className="whitespace-nowrap text-xs font-medium text-white">{c.label}</span>
+          <span className="whitespace-nowrap text-sm font-medium text-white">{c.label}</span>
         </Link>
       ))}
     </div>

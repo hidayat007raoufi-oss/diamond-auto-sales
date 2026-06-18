@@ -35,24 +35,6 @@ function SpecMini({ label, value }: { label: string; value: string }) {
 
 const financingPoints = ["All credit considered", "Fast application", "Trade-ins welcome"];
 
-const REASON_ICON: Record<string, string> = {
-  shield: "M12 3l7 3v5c0 4-3 7-7 8-4-1-7-4-7-8V6z",
-  card: "M3 7h18v10H3z M3 11h18",
-  swap: "M4 8h13l-3-3 M20 16H7l3 3",
-  umbrella: "M12 3a9 9 0 019 9H3a9 9 0 019-9zM12 12v7a2 2 0 01-4 0",
-  wrench: "M14.7 6.3a4 4 0 00-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 005.4-5.4l-2.3 2.3-2-2 2.3-2.3z",
-  pin: "M12 21s7-6 7-11a7 7 0 10-14 0c0 5 7 11 7 11z M12 10h.01",
-};
-
-const reasons = [
-  { icon: "shield", title: "27-Point Inspection", body: "Every vehicle checked end to end before it's listed." },
-  { icon: "card", title: "Financing Available", body: "All credit considered, with a fast online application." },
-  { icon: "swap", title: "Trade-Ins Welcome", body: "Top-dollar offers, even if you still owe." },
-  { icon: "umbrella", title: "Vehicle Protection", body: "Optional coverage to protect your investment." },
-  { icon: "wrench", title: "In-House Service", body: "Detailing, tint, and mechanical under one roof." },
-  { icon: "pin", title: "Raleigh-Based", body: "Local support across the Triangle." },
-];
-
 const pillars = [
   { n: "01", title: "Buy", body: "Quality vehicles and transparent inventory.", icon: "M5 11l2-5h10l2 5M5 11h14v5H5zM7.5 16v1.5M16.5 16v1.5" },
   { n: "02", title: "Finance", body: "Fast approvals and flexible options.", icon: "M3 7h18v10H3z M3 11h18" },
@@ -214,7 +196,7 @@ export default function Home() {
       </section>
 
       {/* ============ ONE-STOP ECOSYSTEM ============ */}
-      <section className="relative overflow-hidden border-y border-line bg-bg-2">
+      <section className="relative overflow-hidden bg-bg-2">
         <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(75%_60%_at_50%_0%,rgba(22,38,70,0.5),transparent_62%)]" />
         <div className="relative mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-32">
           <SectionHeading
@@ -245,35 +227,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ============ FEATURE GRID ============ */}
-      <section className="mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-28">
-        <SectionHeading
-          kicker="Why Diamond"
-          title={<>A few reasons to buy with Diamond.</>}
-          align="center"
-        />
-        <div className="mt-14 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">
-          {reasons.map((r, i) => (
-            <Reveal key={r.title} delay={i * 60}>
-              <div className="h-full rounded-3xl border border-line bg-surface p-6 sm:p-8">
-                <div className="grid h-11 w-11 place-items-center rounded-2xl bg-surface-2 text-silver">
-                  <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
-                    <path d={REASON_ICON[r.icon]} />
-                  </svg>
-                </div>
-                <h3 className="mt-5 text-base font-semibold tracking-tight text-white sm:text-lg">{r.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-mute">{r.body}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
       {/* ============ TRUST SIGNALS ============ */}
       <TrustSignals />
 
       {/* ============ FINANCING ============ */}
-      <section className="relative overflow-hidden border-y border-line bg-bg-2">
+      <section className="relative overflow-hidden bg-bg-2">
         <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(72%_70%_at_80%_50%,rgba(20,42,84,0.5),transparent_64%)]" />
         <div className="relative mx-auto grid max-w-7xl gap-14 px-5 py-24 sm:px-8 sm:py-32 lg:grid-cols-[1fr_1.05fr] lg:items-center">
           <div>
@@ -355,7 +313,7 @@ export default function Home() {
       <PerformanceDivision />
 
       {/* ============ REVIEWS / TRUST ============ */}
-      <section id="reviews" className="relative scroll-mt-24 overflow-hidden border-y border-line bg-bg-2">
+      <section id="reviews" className="relative scroll-mt-24 overflow-hidden bg-bg-2">
         <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_55%_at_50%_28%,rgba(42,54,82,0.4),transparent_62%)]" />
         <div className="relative mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-32">
           <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">

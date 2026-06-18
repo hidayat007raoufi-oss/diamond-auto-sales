@@ -23,7 +23,7 @@ const badges = [
 
 export default function TrustSignals() {
   return (
-    <section className="relative border-y border-line bg-bg-2">
+    <section className="relative bg-bg-2">
       <div className="mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-28">
         <SectionHeading
           kicker="Verified & Trusted"
