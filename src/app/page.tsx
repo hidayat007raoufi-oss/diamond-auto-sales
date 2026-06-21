@@ -3,36 +3,18 @@ import Button from "@/components/site/Button";
 import Reveal from "@/components/motion/Reveal";
 import Counter from "@/components/motion/Counter";
 import SectionHeading from "@/components/site/SectionHeading";
-import VehicleCard from "@/components/site/VehicleCard";
 import LeadForm from "@/components/site/LeadForm";
 import PaymentCalculator from "@/components/site/PaymentCalculator";
-import PhotoLayer from "@/components/site/PhotoLayer";
-import InventorySearchBar from "@/components/site/InventorySearchBar";
 import VehicleSelector from "@/components/site/VehicleSelector";
+import InventoryShowcase from "@/components/site/InventoryShowcase";
 import CrystalScene from "@/components/site/CrystalScene";
 import HeroCenterpiece from "@/components/site/HeroCenterpiece";
 import TrustLedger from "@/components/site/TrustLedger";
 import TradeInEstimator from "@/components/site/TradeInEstimator";
 import PerformanceDivision from "@/components/site/PerformanceDivision";
-import {
-  estMonthly,
-  featuredVehicles,
-  formatMileage,
-  formatPrice,
-  vehicleImage,
-  vehicles,
-} from "@/lib/vehicles";
 import ServiceRows from "@/components/site/ServiceRows";
+import { vehicles } from "@/lib/vehicles";
 import { testimonials } from "@/lib/testimonials";
-
-function SpecMini({ label, value }: { label: string; value: string }) {
-  return (
-    <div>
-      <p className="text-lg font-semibold text-white">{value}</p>
-      <p className="mt-1 text-[10px] uppercase tracking-widest text-mute">{label}</p>
-    </div>
-  );
-}
 
 const financingPoints = ["All credit considered", "Fast application", "Trade-ins welcome"];
 
@@ -44,9 +26,6 @@ const pillars = [
 ];
 
 export default function Home() {
-  const featured = featuredVehicles();
-  const spotlight = featured[0];
-  const supporting = featured.slice(1, 4);
   const total = vehicles.length;
   const availableNow = vehicles.filter((v) => v.status !== "Sold").length;
 
@@ -147,70 +126,13 @@ export default function Home() {
         </Reveal>
 
         <Reveal delay={80}>
-          <div className="mt-8">
-            <InventorySearchBar />
+          <div className="mt-10">
+            <InventoryShowcase />
           </div>
         </Reveal>
 
-        {/* spotlight — large hero tile (entire tile is clickable) */}
-        <Reveal>
-          <Link
-            href={`/inventory/${spotlight.id}`}
-            className="group mt-10 grid overflow-hidden rounded-3xl border border-line bg-surface/50 transition-colors duration-500 hover:border-line-strong lg:grid-cols-2"
-          >
-            <div className="relative aspect-[16/11] overflow-hidden lg:aspect-auto">
-              <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-[1.03]">
-                <div className="absolute inset-0" style={{ background: spotlight.tone }} />
-                <PhotoLayer
-                  src={vehicleImage(spotlight.id)}
-                  alt={`${spotlight.year} ${spotlight.make} ${spotlight.model}`}
-                  eager
-                />
-              </div>
-              <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/50 to-transparent" />
-              <span className="absolute left-5 top-5 rounded-full border border-line bg-black/40 px-3 py-1 text-[11px] tracking-widest text-white/80 backdrop-blur">
-                Featured · {spotlight.year}
-              </span>
-            </div>
-            <div className="flex flex-col justify-center gap-6 p-8 sm:p-12">
-              <div>
-                <h3 className="display text-3xl text-white sm:text-4xl">
-                  {spotlight.make} {spotlight.model}
-                </h3>
-                <p className="mt-1 text-dim">{spotlight.trim}</p>
-              </div>
-              <div className="grid grid-cols-3 gap-4 border-y border-line py-6">
-                <SpecMini label="Power" value={spotlight.power} />
-                <SpecMini label="0–60" value={spotlight.zeroToSixty} />
-                <SpecMini label="Miles" value={formatMileage(spotlight.mileage).replace(" mi", "")} />
-              </div>
-              <div className="flex flex-wrap items-end justify-between gap-4">
-                <div>
-                  <p className="display text-3xl text-metal">{formatPrice(spotlight.price)}</p>
-                  <p className="mt-1 text-xs text-mute">est. {estMonthly(spotlight.price)} · 72mo</p>
-                </div>
-                <span className="btn-sheen inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-[13px] font-medium text-black transition-all duration-300 group-hover:bg-silver-bright">
-                  View Details
-                  <svg viewBox="0 0 24 24" className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="1.6">
-                    <path d="M5 12h14M13 6l6 6-6 6" />
-                  </svg>
-                </span>
-              </div>
-            </div>
-          </Link>
-        </Reveal>
-
-        {/* supporting tiles */}
-        <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {supporting.map((v, i) => (
-            <Reveal key={v.id} delay={i * 90}>
-              <VehicleCard vehicle={v} />
-            </Reveal>
-          ))}
-        </div>
-
-        <div className="mt-10 text-center sm:hidden">
-          <Button href="/inventory" variant="ghost" className="w-full">
+        <div className="mt-10">
+          <Button href="/inventory" variant="ghost">
             View all inventory
           </Button>
         </div>

@@ -30,17 +30,15 @@ export default function PerformanceDivision() {
           align="center"
         />
 
-        <div className="mt-14 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3">
+        <div className="mx-auto mt-14 max-w-3xl border-t border-line/50">
           {items.map((name, i) => (
-            <Reveal key={name} delay={i * 50}>
-              <div className="group relative h-full rounded-2xl border border-line bg-surface/40 p-6 transition-all duration-500 hover:-translate-y-1 hover:border-line-strong">
-                <span className="font-mono text-xs tracking-widest text-mute">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <p className="mt-3 text-base font-semibold tracking-tight text-white">{name}</p>
-                <span className="mt-4 block h-px w-8 bg-accent/70 transition-all duration-500 group-hover:w-16" />
-              </div>
-            </Reveal>
+            <div key={name} className="flex items-center gap-5 border-b border-line/50 py-4 sm:gap-8">
+              <span className="font-mono text-xs tracking-widest text-mute">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <span className="display flex-1 text-lg tracking-tight text-white/85 sm:text-xl">{name}</span>
+              <span className="h-px w-8 bg-accent/60" />
+            </div>
           ))}
         </div>
 
