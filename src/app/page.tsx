@@ -8,7 +8,7 @@ import LeadForm from "@/components/site/LeadForm";
 import PaymentCalculator from "@/components/site/PaymentCalculator";
 import PhotoLayer from "@/components/site/PhotoLayer";
 import InventorySearchBar from "@/components/site/InventorySearchBar";
-import CategoryScroller from "@/components/site/CategoryScroller";
+import VehicleSelector from "@/components/site/VehicleSelector";
 import CrystalScene from "@/components/site/CrystalScene";
 import HeroCenterpiece from "@/components/site/HeroCenterpiece";
 import TrustSignals from "@/components/site/TrustSignals";
@@ -22,7 +22,7 @@ import {
   vehicleImage,
   vehicles,
 } from "@/lib/vehicles";
-import ServicesShowcase from "@/components/site/ServicesShowcase";
+import ServicesAccordion from "@/components/site/ServicesAccordion";
 import { testimonials } from "@/lib/testimonials";
 
 function SpecMini({ label, value }: { label: string; value: string }) {
@@ -110,10 +110,18 @@ export default function Home() {
       {/* ============ INVENTORY — the star ============ */}
       <section className="relative mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-32">
         <Reveal>
-          <CategoryScroller />
+          <p className="kicker">Browse the lineup</p>
+          <h2 className="display mt-3 text-[2.4rem] leading-[1.04] text-white sm:text-5xl">
+            Find your category.
+          </h2>
+        </Reveal>
+        <Reveal delay={80}>
+          <div className="mt-10">
+            <VehicleSelector />
+          </div>
         </Reveal>
 
-        <div className="mt-14 flex flex-wrap items-end justify-between gap-6">
+        <div className="mt-24 flex flex-wrap items-end justify-between gap-6">
           <SectionHeading
             kicker="Inventory"
             title={<>Discover what&apos;s available.</>}
@@ -322,7 +330,7 @@ export default function Home() {
           intro="Tap any service to see what's included. In-house care from our specialists."
         />
         <div className="mt-12">
-          <ServicesShowcase />
+          <ServicesAccordion />
         </div>
         <div className="mt-10">
           <Button href="/contact" variant="ghost">

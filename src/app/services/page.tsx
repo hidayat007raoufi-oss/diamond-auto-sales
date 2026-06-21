@@ -2,39 +2,31 @@ import type { Metadata } from "next";
 import Button from "@/components/site/Button";
 import Reveal from "@/components/motion/Reveal";
 import SectionHeading from "@/components/site/SectionHeading";
-import ServiceCard from "@/components/site/ServiceCard";
-import { services } from "@/lib/services";
+import ServicesAccordion from "@/components/site/ServicesAccordion";
 
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Detailing, window tint, mechanical, tire, and customization — premium in-house automotive services at Diamond Auto, Raleigh NC.",
+    "Detailing, window tint, ceramic, mechanical, tire, customization, performance, and protection — premium in-house automotive services at Diamond Auto, Raleigh NC.",
 };
 
 export default function ServicesPage() {
   return (
     <>
       <section className="cinematic vignette relative overflow-hidden">
-        <div className="mx-auto max-w-7xl px-5 pb-20 pt-36 sm:px-8">
+        <div className="mx-auto max-w-7xl px-5 pb-16 pt-36 sm:px-8">
           <SectionHeading
             kicker="Service"
-            title={<>Services after the sale.</>}
-            intro="Keep your vehicle at its best with in-house care from our specialists."
+            title={<>Everything your vehicle needs.</>}
+            intro="One roof for detailing, protection, mechanical, and performance — tap any service to see what's included."
           />
         </div>
       </section>
 
       <section className="mx-auto max-w-7xl px-5 pb-28 sm:px-8">
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {services.map((s, i) => (
-            <Reveal key={s.id} delay={i * 80}>
-              <ServiceCard service={s} />
-            </Reveal>
-          ))}
-        </div>
-
+        <ServicesAccordion />
         <Reveal>
-          <div className="glass mt-10 flex flex-col items-start justify-between gap-6 rounded-3xl border border-line p-9 sm:flex-row sm:items-center">
+          <div className="mt-14 flex flex-col items-start justify-between gap-6 border-t border-line pt-10 sm:flex-row sm:items-center">
             <div>
               <h3 className="text-2xl font-semibold text-white">Ready to book a service?</h3>
               <p className="mt-2 text-sm text-dim">Pickup and return available across the Triangle.</p>
