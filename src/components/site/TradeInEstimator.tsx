@@ -24,7 +24,7 @@ export default function TradeInEstimator() {
   }
 
   return (
-    <div className="glass rounded-3xl border border-line p-6 sm:p-8">
+    <div className="sm:pl-8 lg:border-l lg:border-line/60">
       {sent ? (
         <div className="flex flex-col items-center justify-center py-10 text-center">
           <div className="grid h-14 w-14 place-items-center rounded-full border border-line-strong">

@@ -11,7 +11,7 @@ import InventorySearchBar from "@/components/site/InventorySearchBar";
 import VehicleSelector from "@/components/site/VehicleSelector";
 import CrystalScene from "@/components/site/CrystalScene";
 import HeroCenterpiece from "@/components/site/HeroCenterpiece";
-import TrustSignals from "@/components/site/TrustSignals";
+import TrustLedger from "@/components/site/TrustLedger";
 import TradeInEstimator from "@/components/site/TradeInEstimator";
 import PerformanceDivision from "@/components/site/PerformanceDivision";
 import {
@@ -22,7 +22,7 @@ import {
   vehicleImage,
   vehicles,
 } from "@/lib/vehicles";
-import ServicesAccordion from "@/components/site/ServicesAccordion";
+import ServiceRows from "@/components/site/ServiceRows";
 import { testimonials } from "@/lib/testimonials";
 
 function SpecMini({ label, value }: { label: string; value: string }) {
@@ -226,39 +226,42 @@ export default function Home() {
             intro="Sales, financing, service, protection, customization, and performance support under one brand."
             align="center"
           />
-          <div className="mt-14 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
-            {pillars.map((p, i) => (
-              <Reveal key={p.title} delay={i * 70}>
-                <Link
-                  href={p.href}
-                  className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-surface/50 p-6 transition-all duration-500 hover:-translate-y-1.5 hover:border-line-strong sm:p-7"
-                >
-                  <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/8 to-transparent transition-transform duration-[900ms] ease-out group-hover:translate-x-full" />
-                  <div className="flex items-center justify-between">
-                    <div className="grid h-11 w-11 place-items-center rounded-xl border border-line text-silver">
-                      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
-                        <path d={p.icon} />
-                      </svg>
-                    </div>
-                    <span className="font-mono text-xs tracking-widest text-mute">{p.n}</span>
-                  </div>
-                  <h3 className="mt-5 text-lg font-semibold tracking-tight text-white">{p.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-mute">{p.body}</p>
-                  <span className="mt-4 inline-flex items-center gap-1.5 text-xs font-medium text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                    Explore
-                    <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.6">
-                      <path d="M5 12h14M13 6l6 6-6 6" />
-                    </svg>
+          <div className="mx-auto mt-12 max-w-3xl">
+            {pillars.map((p) => (
+              <Link
+                key={p.title}
+                href={p.href}
+                className="group flex items-center gap-5 border-b border-line/50 py-7 sm:gap-8"
+              >
+                <span className="font-mono text-xs tracking-widest text-mute">{p.n}</span>
+                <span className="flex-1">
+                  <span className="display block text-2xl tracking-tight text-white/80 transition-colors duration-300 group-hover:text-white sm:text-3xl">
+                    {p.title}
                   </span>
-                </Link>
-              </Reveal>
+                  <span className="mt-1 block text-sm text-mute">{p.body}</span>
+                </span>
+                <svg viewBox="0 0 24 24" className="h-5 w-5 shrink-0 text-mute transition-all duration-300 group-hover:translate-x-1 group-hover:text-white" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ============ TRUST SIGNALS ============ */}
-      <TrustSignals />
+      {/* ============ TRUST LEDGER ============ */}
+      <section className="bg-bg-2">
+        <div className="mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-28">
+          <SectionHeading
+            kicker="Verified & Trusted"
+            title={<>Shop with confidence.</>}
+            intro="Vehicle history, inspections, financing, and trust — all on the record."
+          />
+          <div className="mt-12">
+            <TrustLedger />
+          </div>
+        </div>
+      </section>
 
       {/* ============ FINANCING ============ */}
       <section className="relative overflow-hidden bg-bg-2">
@@ -330,7 +333,7 @@ export default function Home() {
           intro="Tap any service to see what's included. In-house care from our specialists."
         />
         <div className="mt-12">
-          <ServicesAccordion />
+          <ServiceRows />
         </div>
         <div className="mt-10">
           <Button href="/contact" variant="ghost">
@@ -365,28 +368,15 @@ export default function Home() {
             </Reveal>
           </div>
 
-          <div className="mt-12 grid gap-6 md:grid-cols-2">
+          <div className="mt-16 space-y-12">
             {testimonials.map((t, i) => (
               <Reveal key={t.name} delay={i * 80}>
-                <figure className="h-full rounded-2xl border border-line bg-surface/40 p-8">
-                  <div className="flex gap-0.5 text-white/80">
-                    {Array.from({ length: 5 }).map((_, s) => (
-                      <svg key={s} viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="currentColor">
-                        <path d="M12 3l2.5 5L20 9l-4 4 1 6-5-3-5 3 1-6L4 9l5.5-1L12 3z" />
-                      </svg>
-                    ))}
-                  </div>
-                  <blockquote className="mt-5 text-lg leading-relaxed text-white/90">
+                <figure className="max-w-3xl border-l border-line/60 pl-6 sm:pl-8">
+                  <blockquote className="display text-2xl leading-snug text-white/90 sm:text-[2rem]">
                     “{t.quote}”
                   </blockquote>
-                  <figcaption className="mt-6 flex items-center gap-3">
-                    <span className="grid h-10 w-10 place-items-center rounded-full border border-line bg-surface text-xs font-semibold text-silver">
-                      {t.initials}
-                    </span>
-                    <span>
-                      <span className="block text-sm font-medium text-white">{t.name}</span>
-                      <span className="block text-xs text-mute">{t.detail}</span>
-                    </span>
+                  <figcaption className="mt-4 text-sm tracking-wide text-mute">
+                    {t.name} · {t.detail}
                   </figcaption>
                 </figure>
               </Reveal>

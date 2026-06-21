@@ -46,7 +46,7 @@ export default function PaymentCalculator() {
   }, [price, down, apr, term, monthly]);
 
   return (
-    <div className="glass rounded-3xl border border-line p-7 sm:p-9">
+    <div className="sm:pl-8 lg:border-l lg:border-line/60">
       <p className="kicker">Estimated Monthly Payment</p>
       <p className="display mt-3 text-6xl text-metal">
         {money(monthly)}

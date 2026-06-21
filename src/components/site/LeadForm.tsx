@@ -39,7 +39,7 @@ export default function LeadForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="glass rounded-2xl border border-line p-6 sm:p-8">
+    <form onSubmit={handleSubmit} className="">
       <div className="grid gap-4 sm:grid-cols-2">
         <Field label="Name" name="name" type="text" required />
         <Field label="Phone" name="phone" type="tel" required />

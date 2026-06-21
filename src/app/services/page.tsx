@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Button from "@/components/site/Button";
 import Reveal from "@/components/motion/Reveal";
 import SectionHeading from "@/components/site/SectionHeading";
-import ServicesAccordion from "@/components/site/ServicesAccordion";
+import ServiceRows from "@/components/site/ServiceRows";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -24,7 +24,7 @@ export default function ServicesPage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-5 pb-28 sm:px-8">
-        <ServicesAccordion />
+        <ServiceRows />
         <Reveal>
           <div className="mt-14 flex flex-col items-start justify-between gap-6 border-t border-line pt-10 sm:flex-row sm:items-center">
             <div>
