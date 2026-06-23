@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import BrandMark from "@/components/site/BrandMark";
+import DiamondLogo from "@/components/site/DiamondLogo";
 import { pushOverlay, popOverlay } from "@/lib/overlay";
 
 const links = [
@@ -13,9 +13,19 @@ const links = [
   { href: "/contact", label: "Contact" },
 ];
 
-function Mark() {
+function Mark({ dark }: { dark: boolean }) {
   return (
-    <BrandMark size="sm" />
+    <Link href="/" className="flex items-center gap-2.5" aria-label="Diamond Auto Sales — home">
+      <DiamondLogo className="h-7 w-7" />
+      <span className="flex flex-col leading-none">
+        <span className={`text-[13px] font-bold tracking-[0.22em] ${dark ? "text-zinc-900" : "text-white"}`}>
+          DIAMOND
+        </span>
+        <span className={`text-[8px] font-medium tracking-[0.3em] ${dark ? "text-zinc-500" : "text-white/60"}`}>
+          AUTO SALES
+        </span>
+      </span>
+    </Link>
   );
 }
 
@@ -24,7 +34,7 @@ export default function Header() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 16);
+    const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -39,24 +49,27 @@ export default function Header() {
     };
   }, [open]);
 
+  const dark = scrolled; // dark text when header is white
+
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-        scrolled ? "glass-strong border-b border-line py-2.5" : "border-b border-transparent py-4"
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        scrolled ? "border-b border-zinc-200 bg-white/95 py-3 backdrop-blur" : "border-b border-transparent py-5"
       }`}
     >
-      <div className="nav-in mx-auto flex max-w-7xl items-center justify-between px-5 sm:px-8">
-        <Mark />
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-5 sm:px-8">
+        <Mark dark={dark} />
 
-        <nav className="hidden items-center gap-10 lg:flex">
+        <nav className="hidden items-center gap-9 lg:flex">
           {links.map((l) => (
             <Link
               key={l.href}
               href={l.href}
-              className="group relative text-[13px] font-medium tracking-wide text-dim transition-colors hover:text-white"
+              className={`text-sm font-medium transition-colors ${
+                dark ? "text-zinc-600 hover:text-zinc-900" : "text-white/80 hover:text-white"
+              }`}
             >
               {l.label}
-              <span className="absolute -bottom-1.5 left-0 h-px w-0 bg-silver transition-all duration-500 group-hover:w-full" />
             </Link>
           ))}
         </nav>
@@ -64,18 +77,17 @@ export default function Header() {
         <div className="flex items-center gap-4">
           <a
             href="tel:+19198878666"
-            className="hidden items-center gap-2 text-[13px] font-medium text-dim transition-colors hover:text-white md:flex"
+            className={`hidden text-sm font-semibold md:block ${dark ? "text-zinc-900" : "text-white"}`}
           >
-            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <path d="M5 4h4l2 5-3 2a11 11 0 005 5l2-3 5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z" />
-            </svg>
             (919) 887-8666
           </a>
           <Link
-            href="/inventory"
-            className="btn-sheen hidden rounded-full bg-white px-5 py-2 text-[13px] font-semibold text-black transition-colors hover:bg-silver-bright sm:inline-flex"
+            href="/financing"
+            className={`hidden rounded-full px-5 py-2 text-sm font-semibold transition-colors sm:inline-flex ${
+              dark ? "bg-zinc-900 text-white hover:bg-zinc-700" : "bg-white text-zinc-900 hover:bg-zinc-100"
+            }`}
           >
-            View Inventory
+            Get Pre-Approved
           </Link>
           <button
             onClick={() => setOpen((v) => !v)}
@@ -83,62 +95,50 @@ export default function Header() {
             aria-expanded={open}
             className="relative grid h-10 w-10 place-items-center lg:hidden"
           >
-            <span className={`absolute h-px w-6 bg-white transition-all duration-300 ${open ? "rotate-45" : "-translate-y-1.5"}`} />
-            <span className={`absolute h-px w-6 bg-white transition-all duration-300 ${open ? "-rotate-45" : "translate-y-1.5"}`} />
+            <span className={`absolute h-0.5 w-6 rounded transition-all duration-300 ${dark ? "bg-zinc-900" : "bg-white"} ${open ? "rotate-45" : "-translate-y-1.5"}`} />
+            <span className={`absolute h-0.5 w-6 rounded transition-all duration-300 ${dark ? "bg-zinc-900" : "bg-white"} ${open ? "-rotate-45" : "translate-y-1.5"}`} />
           </button>
         </div>
       </div>
 
-      {/* Mobile overlay — opaque full-screen, above everything */}
+      {/* Mobile menu */}
       <div
-        className={`fixed inset-0 z-[70] flex flex-col bg-black/95 px-6 pb-10 pt-7 backdrop-blur-2xl transition-all duration-400 lg:hidden ${
+        className={`fixed inset-0 z-[70] flex flex-col bg-white px-6 pb-10 pt-7 transition-all duration-300 lg:hidden ${
           open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
         }`}
       >
         <div className="flex items-center justify-between">
-          <BrandMark size="sm" />
+          <Mark dark />
           <button
             onClick={() => setOpen(false)}
             aria-label="Close menu"
-            className="grid h-11 w-11 place-items-center rounded-full border border-line-strong text-white transition-all duration-300 hover:rotate-90 hover:bg-white hover:text-black active:scale-95"
+            className="grid h-11 w-11 place-items-center rounded-full border border-zinc-200 text-zinc-900 transition-all hover:bg-zinc-900 hover:text-white"
           >
             <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.7">
               <path d="M6 6l12 12M18 6L6 18" />
             </svg>
           </button>
         </div>
-
         <nav className="mt-8 flex flex-col">
-          {links.map((l, i) => (
+          {links.map((l) => (
             <Link
               key={l.href}
               href={l.href}
               onClick={() => setOpen(false)}
-              className="border-b border-line py-5 text-3xl font-semibold tracking-tight text-white transition-transform"
-              style={{
-                transitionDelay: open ? `${100 + i * 55}ms` : "0ms",
-                transform: open ? "translateY(0)" : "translateY(12px)",
-                opacity: open ? 1 : 0,
-              }}
+              className="border-b border-zinc-100 py-5 text-2xl font-semibold tracking-tight text-zinc-900"
             >
               {l.label}
             </Link>
           ))}
         </nav>
-
         <div className="mt-auto space-y-3 pt-8">
-          <Link href="/inventory" onClick={() => setOpen(false)} className="block rounded-full bg-white py-3.5 text-center text-sm font-semibold text-black active:scale-[0.98]">
+          <Link href="/inventory" onClick={() => setOpen(false)} className="block rounded-full bg-zinc-900 py-3.5 text-center text-sm font-semibold text-white">
             View Inventory
           </Link>
-          <div className="grid grid-cols-2 gap-3">
-            <Link href="/financing" onClick={() => setOpen(false)} className="rounded-full border border-line-strong py-3.5 text-center text-sm font-medium text-white active:scale-[0.98]">
-              Get Pre-Approved
-            </Link>
-            <Link href="/contact" onClick={() => setOpen(false)} className="rounded-full border border-line-strong py-3.5 text-center text-sm font-medium text-white active:scale-[0.98]">
-              Schedule Service
-            </Link>
-          </div>
-          <a href="tel:+19198878666" className="block pt-4 text-center text-sm tracking-widest text-dim">
+          <Link href="/financing" onClick={() => setOpen(false)} className="block rounded-full border border-zinc-300 py-3.5 text-center text-sm font-semibold text-zinc-900">
+            Get Pre-Approved
+          </Link>
+          <a href="tel:+19198878666" className="block pt-3 text-center text-sm font-semibold text-zinc-900">
             (919) 887-8666
           </a>
         </div>

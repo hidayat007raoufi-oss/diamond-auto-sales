@@ -1,14 +1,14 @@
 import Link from "next/link";
-import BrandMark from "@/components/site/BrandMark";
+import DiamondLogo from "@/components/site/DiamondLogo";
 
 const columns = [
   {
-    title: "Vehicles",
+    title: "Shop",
     links: [
       { href: "/inventory", label: "All Inventory" },
+      { href: "/inventory", label: "Recent Arrivals" },
       { href: "/financing", label: "Financing" },
-      { href: "/financing", label: "Trade-In" },
-      { href: "/#reviews", label: "Reviews" },
+      { href: "/contact?intent=trade", label: "Value Your Trade" },
     ],
   },
   {
@@ -17,55 +17,38 @@ const columns = [
       { href: "/services", label: "Detailing" },
       { href: "/services", label: "Window Tint" },
       { href: "/services", label: "Mechanical" },
-      { href: "/services", label: "Tire Services" },
-      { href: "/services", label: "Customization" },
+      { href: "/services", label: "Protection" },
     ],
   },
 ];
 
 export default function Footer() {
   return (
-    <footer className="relative border-t border-line bg-black">
-      <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8">
-        <div className="grid gap-14 lg:grid-cols-[1.4fr_2fr]">
+    <footer className="border-t border-zinc-200 bg-white">
+      <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8">
+        <div className="grid gap-12 lg:grid-cols-[1.4fr_2fr]">
           <div>
-            <BrandMark size="lg" />
-            <p className="mt-5 max-w-xs text-sm leading-relaxed text-dim">
-              Premium vehicles, transparent financing, and full in-house service
-              in Raleigh, North Carolina.
-            </p>
-            {/* TODO: replace href="#" with real social/profile URLs */}
-            <div className="mt-6 flex gap-3">
-              {[
-                { label: "Google", d: "M12 11v2.8h4a4 4 0 11-1.2-4.8l2-2A7 7 0 1019 12h-7z" },
-                { label: "Facebook", d: "M13 22v-8h3l1-4h-4V8a1 1 0 011-1h3V3h-3a5 5 0 00-5 5v2H7v4h3v8z" },
-                { label: "Instagram", d: "M7 3h10a4 4 0 014 4v10a4 4 0 01-4 4H7a4 4 0 01-4-4V7a4 4 0 014-4zm5 5a4 4 0 100 8 4 4 0 000-8zm5-1h.01" },
-              ].map((s) => (
-                <a
-                  key={s.label}
-                  href="#"
-                  aria-label={s.label}
-                  className="grid h-9 w-9 place-items-center rounded-full border border-line text-dim transition-colors hover:border-line-strong hover:text-white"
-                >
-                  <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d={s.d} />
-                  </svg>
-                </a>
-              ))}
-            </div>
-            <p className="mt-6 text-xs tracking-wide text-mute">
-              Raleigh · Durham · Cary · Chapel Hill · The Triangle
+            <Link href="/" className="flex items-center gap-2.5">
+              <DiamondLogo className="h-8 w-8" />
+              <span className="flex flex-col leading-none">
+                <span className="text-sm font-bold tracking-[0.22em] text-zinc-900">DIAMOND</span>
+                <span className="text-[9px] font-medium tracking-[0.3em] text-zinc-500">AUTO SALES</span>
+              </span>
+            </Link>
+            <p className="mt-5 max-w-xs text-sm leading-relaxed text-zinc-600">
+              A trusted independent dealership in Raleigh, NC — quality vehicles,
+              honest pricing, and financing for every situation.
             </p>
           </div>
 
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
             {columns.map((col) => (
               <div key={col.title}>
-                <p className="kicker mb-4">{col.title}</p>
-                <ul className="space-y-3">
+                <p className="text-xs font-semibold uppercase tracking-widest text-zinc-400">{col.title}</p>
+                <ul className="mt-4 space-y-3">
                   {col.links.map((l, i) => (
                     <li key={`${col.title}-${i}`}>
-                      <Link href={l.href} className="text-sm text-dim transition-colors hover:text-white">
+                      <Link href={l.href} className="text-sm text-zinc-600 transition-colors hover:text-zinc-900">
                         {l.label}
                       </Link>
                     </li>
@@ -74,28 +57,23 @@ export default function Footer() {
               </div>
             ))}
             <div>
-              <p className="kicker mb-4">Visit Us</p>
-              <ul className="space-y-3 text-sm text-dim">
+              <p className="text-xs font-semibold uppercase tracking-widest text-zinc-400">Visit</p>
+              <ul className="mt-4 space-y-3 text-sm text-zinc-600">
                 <li>5915 Triangle Drive<br />Raleigh, NC 27616</li>
                 <li>
-                  <a href="tel:+19198878666" className="text-white transition-colors hover:text-silver">
+                  <a href="tel:+19198878666" className="font-semibold text-zinc-900 hover:underline">
                     (919) 887-8666
                   </a>
                 </li>
-                <li>
-                  <a href="mailto:hello@diamondautonc.com" className="transition-colors hover:text-white">
-                    hello@diamondautonc.com
-                  </a>
-                </li>
-                <li className="text-mute">Mon–Fri 9–7 · Sat 9–5</li>
+                <li>Mon–Fri 9–7 · Sat 9–5</li>
               </ul>
             </div>
           </div>
         </div>
 
-        <div className="mt-16 flex flex-col items-start justify-between gap-4 border-t border-line pt-8 text-xs text-mute sm:flex-row sm:items-center">
-          <p>© {new Date().getFullYear()} Diamond Auto Sales LLC. All rights reserved.</p>
-          <p className="tracking-widest">RALEIGH · NORTH CAROLINA</p>
+        <div className="mt-14 flex flex-col items-start justify-between gap-3 border-t border-zinc-200 pt-7 text-xs text-zinc-500 sm:flex-row sm:items-center">
+          <p>© {new Date().getFullYear()} Diamond Auto Sales LLC · NC Dealer License #00000000</p>
+          <p className="tracking-wide">Raleigh · Durham · Cary · The Triangle</p>
         </div>
       </div>
     </footer>

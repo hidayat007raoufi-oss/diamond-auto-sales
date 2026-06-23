@@ -39,14 +39,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className="antialiased">
-      <body className="grain min-h-screen text-text">
-        {/* layered atmosphere — depth + a slow drifting light reflection (no particles) */}
-        <div aria-hidden className="fixed inset-0 -z-10 overflow-hidden bg-black">
-          <div className="absolute inset-0 bg-[radial-gradient(120%_75%_at_50%_-12%,rgba(18,30,54,0.6),transparent_58%)]" />
-          <div className="absolute inset-x-0 bottom-0 h-[55vh] bg-[radial-gradient(80%_60%_at_50%_120%,rgba(14,22,40,0.5),transparent_60%)]" />
-          <div className="absolute inset-x-0 top-0 h-[45vh] bg-[radial-gradient(50%_50%_at_50%_0%,rgba(255,255,255,0.04),transparent_72%)]" />
-          <div className="ambient-sheen absolute -inset-1/3 bg-[linear-gradient(112deg,transparent_44%,rgba(196,208,226,0.05)_50%,transparent_56%)]" />
-        </div>
+      <body className="min-h-screen bg-zinc-950 text-zinc-100">
         <Header />
         <main>{children}</main>
         <Footer />
