@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Button from "@/components/site/Button";
 import Reveal from "@/components/motion/Reveal";
-import Counter from "@/components/motion/Counter";
 import SectionHeading from "@/components/site/SectionHeading";
 import LeadForm from "@/components/site/LeadForm";
 import PaymentCalculator from "@/components/site/PaymentCalculator";
@@ -116,11 +115,11 @@ export default function Home() {
         <Reveal delay={60}>
           <div className="mt-6 flex flex-wrap items-center gap-5 text-sm">
             <span className="text-white">
-              <Counter to={total} /> <span className="text-mute">in inventory</span>
+              {total} <span className="text-mute">in inventory</span>
             </span>
             <span className="h-4 w-px bg-line" />
             <span className="text-white">
-              <Counter to={availableNow} /> <span className="text-mute">available now</span>
+              {availableNow} <span className="text-mute">available now</span>
             </span>
           </div>
         </Reveal>
