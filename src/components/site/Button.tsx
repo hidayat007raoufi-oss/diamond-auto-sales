@@ -4,11 +4,11 @@ import type { ReactNode } from "react";
 type Variant = "primary" | "ghost";
 
 const base =
-  "btn-sheen group inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-[13px] font-medium tracking-wide transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98]";
+  "group inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold tracking-wide transition-all duration-300 active:scale-[0.98]";
 
 const variants: Record<Variant, string> = {
-  primary: "bg-white text-black hover:bg-silver-bright hover:shadow-[0_0_40px_-8px_rgba(255,255,255,0.45)]",
-  ghost: "border border-line-strong bg-white/[0.03] text-white hover:bg-white/[0.08]",
+  primary: "bg-zinc-900 text-white hover:bg-zinc-700",
+  ghost: "border border-zinc-300 text-zinc-900 hover:bg-zinc-50",
 };
 
 export default function Button({

@@ -2,21 +2,26 @@
 
 import { useState } from "react";
 import { submitLead } from "@/lib/leads";
+import { rentals } from "@/lib/rentals";
 
-export default function LeadForm() {
+/** Light rental availability / reservation request form. */
+export default function RentalInquiryForm() {
   const [sent, setSent] = useState(false);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const f = new FormData(e.currentTarget);
+    const vehicleClass = String(f.get("class") || "");
+    const pickup = String(f.get("pickup") || "");
+    const ret = String(f.get("return") || "");
     await submitLead({
-      type: "contact",
-      source: "contact-form",
+      type: "rental",
+      source: "rental-form",
       name: String(f.get("name") || ""),
       phone: String(f.get("phone") || ""),
       email: String(f.get("email") || ""),
-      vehicle: String(f.get("vehicle") || ""),
-      message: String(f.get("message") || ""),
+      vehicle: vehicleClass,
+      message: `Pickup: ${pickup} · Return: ${ret} · ${String(f.get("message") || "")}`,
     });
     setSent(true);
   }
@@ -31,7 +36,7 @@ export default function LeadForm() {
         </div>
         <h3 className="mt-6 text-xl font-semibold text-zinc-900">Request received</h3>
         <p className="mt-2 max-w-sm text-sm text-zinc-600">
-          A Diamond specialist will confirm availability and follow up with you shortly.
+          We&apos;ll confirm availability and pricing for your dates and follow up shortly.
         </p>
       </div>
     );
@@ -39,22 +44,43 @@ export default function LeadForm() {
 
   return (
     <form onSubmit={handleSubmit} className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-zinc-200 sm:p-8">
-      <div className="grid gap-4 sm:grid-cols-2">
+      <h3 className="text-xl font-bold text-zinc-900">Check availability</h3>
+      <p className="mt-1 text-sm text-zinc-500">Tell us your dates and we&apos;ll confirm a vehicle.</p>
+
+      <div className="mt-6 grid gap-4 sm:grid-cols-2">
         <Field label="Name" name="name" type="text" required />
         <Field label="Phone" name="phone" type="tel" required />
       </div>
       <div className="mt-4">
         <Field label="Email" name="email" type="email" required />
       </div>
-      <div className="mt-4">
-        <Field label="Interested Vehicle" name="vehicle" type="text" placeholder="e.g. 2015 Cadillac CTS" />
+      <div className="mt-4 grid gap-4 sm:grid-cols-2">
+        <Field label="Pickup date" name="pickup" type="date" required />
+        <Field label="Return date" name="return" type="date" required />
       </div>
       <div className="mt-4">
-        <label htmlFor="msg" className="mb-2 block text-xs font-medium uppercase tracking-widest text-zinc-500">
-          Message
+        <label htmlFor="class" className="mb-2 block text-xs font-medium uppercase tracking-widest text-zinc-500">
+          Vehicle class
+        </label>
+        <select
+          id="class"
+          name="class"
+          defaultValue={rentals[0].name}
+          className="w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 text-base text-zinc-900 outline-none transition-colors focus:border-zinc-900"
+        >
+          {rentals.map((r) => (
+            <option key={r.id} value={r.name}>
+              {r.name} — from ${r.dailyFrom}/day
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="mt-4">
+        <label htmlFor="rmsg" className="mb-2 block text-xs font-medium uppercase tracking-widest text-zinc-500">
+          Notes
         </label>
         <textarea
-          id="msg"
+          id="rmsg"
           name="message"
           rows={3}
           placeholder="Anything we should know?"
@@ -67,12 +93,9 @@ export default function LeadForm() {
         className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-zinc-900 py-4 text-sm font-semibold text-white transition-colors hover:bg-zinc-700"
       >
         Request Availability
-        <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.7">
-          <path d="M5 12h14M13 6l6 6-6 6" />
-        </svg>
       </button>
       <p className="mt-4 text-center text-[11px] text-zinc-400">
-        No spam. Your details stay private and are never sold.
+        A valid driver&apos;s license and insurance are required at pickup.
       </p>
     </form>
   );
@@ -83,13 +106,11 @@ function Field({
   name,
   type,
   required,
-  placeholder,
 }: {
   label: string;
   name: string;
   type: string;
   required?: boolean;
-  placeholder?: string;
 }) {
   return (
     <div>
@@ -101,7 +122,6 @@ function Field({
         name={name}
         type={type}
         required={required}
-        placeholder={placeholder}
         className="w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 text-base text-zinc-900 placeholder:text-zinc-400 outline-none transition-colors focus:border-zinc-900"
       />
     </div>

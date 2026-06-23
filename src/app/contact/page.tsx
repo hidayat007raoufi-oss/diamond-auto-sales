@@ -18,7 +18,7 @@ const rows = [
 
 export default function ContactPage() {
   return (
-    <section className="cinematic vignette relative overflow-hidden">
+    <div className="bg-white">
       <div className="mx-auto grid max-w-7xl gap-14 px-5 pb-28 pt-36 sm:px-8 lg:grid-cols-[1fr_1.05fr]">
         <div>
           <SectionHeading
@@ -30,14 +30,14 @@ export default function ContactPage() {
           <div className="mt-12 space-y-6">
             {rows.map((row) => (
               <Reveal key={row.label}>
-                <div className="flex items-center gap-6 border-b border-line pb-6">
-                  <span className="w-16 shrink-0 text-[11px] uppercase tracking-widest text-mute">{row.label}</span>
+                <div className="flex items-center gap-6 border-b border-zinc-200 pb-6">
+                  <span className="w-16 shrink-0 text-[11px] font-medium uppercase tracking-widest text-zinc-400">{row.label}</span>
                   {row.href ? (
-                    <a href={row.href} className="text-lg text-white transition-colors hover:text-silver">
+                    <a href={row.href} className="text-lg text-zinc-900 transition-colors hover:text-zinc-500">
                       {row.value}
                     </a>
                   ) : (
-                    <span className="text-lg text-white">{row.value}</span>
+                    <span className="text-lg text-zinc-900">{row.value}</span>
                   )}
                 </div>
               </Reveal>
@@ -45,10 +45,10 @@ export default function ContactPage() {
           </div>
 
           <Reveal delay={120}>
-            <div className="mt-10 overflow-hidden rounded-3xl border border-line">
+            <div className="mt-10 overflow-hidden rounded-2xl ring-1 ring-zinc-200">
               <iframe
                 title="Diamond Auto location"
-                className="h-64 w-full grayscale invert-[0.92] contrast-[0.9]"
+                className="h-64 w-full"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 src="https://maps.google.com/maps?q=5915%20Triangle%20Drive%20Raleigh%20NC%2027616&t=&z=13&ie=UTF8&iwloc=&output=embed"
@@ -61,6 +61,6 @@ export default function ContactPage() {
           <LeadForm />
         </Reveal>
       </div>
-    </section>
+    </div>
   );
 }

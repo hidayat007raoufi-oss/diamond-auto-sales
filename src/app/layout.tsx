@@ -32,14 +32,14 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#000000",
-  colorScheme: "dark",
+  themeColor: "#ffffff",
+  colorScheme: "light",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className="antialiased">
-      <body className="min-h-screen bg-zinc-950 text-zinc-100">
+      <body className="min-h-screen bg-white text-zinc-900">
         <Header />
         <main>{children}</main>
         <Footer />

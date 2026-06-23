@@ -6,7 +6,7 @@ const columns = [
     title: "Shop",
     links: [
       { href: "/inventory", label: "All Inventory" },
-      { href: "/inventory", label: "Recent Arrivals" },
+      { href: "/rentals", label: "Vehicle Rentals" },
       { href: "/financing", label: "Financing" },
       { href: "/contact?intent=trade", label: "Value Your Trade" },
     ],
@@ -14,9 +14,9 @@ const columns = [
   {
     title: "Services",
     links: [
-      { href: "/services", label: "Detailing" },
+      { href: "/services", label: "Detailing & Service" },
+      { href: "/services", label: "Customization" },
       { href: "/services", label: "Window Tint" },
-      { href: "/services", label: "Mechanical" },
       { href: "/services", label: "Protection" },
     ],
   },
@@ -36,8 +36,8 @@ export default function Footer() {
               </span>
             </Link>
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-zinc-600">
-              A trusted independent dealership in Raleigh, NC — quality vehicles,
-              honest pricing, and financing for every situation.
+              North Carolina&apos;s premier automotive destination — vehicle sales,
+              rentals, financing, and full-service care, all in Raleigh.
             </p>
           </div>
 
@@ -72,7 +72,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-14 flex flex-col items-start justify-between gap-3 border-t border-zinc-200 pt-7 text-xs text-zinc-500 sm:flex-row sm:items-center">
-          <p>© {new Date().getFullYear()} Diamond Auto Sales LLC · NC Dealer License #00000000</p>
+          <p>© {new Date().getFullYear()} Diamond Auto Sales LLC · Raleigh, North Carolina</p>
           <p className="tracking-wide">Raleigh · Durham · Cary · The Triangle</p>
         </div>
       </div>

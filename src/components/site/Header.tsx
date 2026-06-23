@@ -7,9 +7,9 @@ import { pushOverlay, popOverlay } from "@/lib/overlay";
 
 const links = [
   { href: "/inventory", label: "Inventory" },
+  { href: "/rentals", label: "Rentals" },
   { href: "/financing", label: "Financing" },
   { href: "/services", label: "Services" },
-  { href: "/#reviews", label: "Reviews" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -133,7 +133,10 @@ export default function Header() {
         </nav>
         <div className="mt-auto space-y-3 pt-8">
           <Link href="/inventory" onClick={() => setOpen(false)} className="block rounded-full bg-zinc-900 py-3.5 text-center text-sm font-semibold text-white">
-            View Inventory
+            Browse Inventory
+          </Link>
+          <Link href="/rentals" onClick={() => setOpen(false)} className="block rounded-full border border-zinc-300 py-3.5 text-center text-sm font-semibold text-zinc-900">
+            Rent a Vehicle
           </Link>
           <Link href="/financing" onClick={() => setOpen(false)} className="block rounded-full border border-zinc-300 py-3.5 text-center text-sm font-semibold text-zinc-900">
             Get Pre-Approved

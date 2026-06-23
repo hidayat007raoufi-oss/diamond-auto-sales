@@ -37,10 +37,10 @@ export default function StickyCTABar() {
           </svg>
         </a>
         <Link href="/financing" className="flex-1 rounded-full bg-zinc-900 py-3 text-center text-[13px] font-semibold text-white active:scale-[0.98]">
-          Get Pre-Approved
+          Financing
         </Link>
-        <Link href="/inventory" className="flex-1 rounded-full border border-zinc-300 py-3 text-center text-[13px] font-semibold text-zinc-900 active:scale-[0.98]">
-          Inventory
+        <Link href="/rentals" className="flex-1 rounded-full border border-zinc-300 py-3 text-center text-[13px] font-semibold text-zinc-900 active:scale-[0.98]">
+          Rentals
         </Link>
       </div>
     </div>

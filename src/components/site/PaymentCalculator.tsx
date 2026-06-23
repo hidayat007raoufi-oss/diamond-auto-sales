@@ -46,13 +46,13 @@ export default function PaymentCalculator() {
   }, [price, down, apr, term, monthly]);
 
   return (
-    <div className="sm:pl-8 lg:border-l lg:border-line/60">
-      <p className="kicker">Estimated Monthly Payment</p>
-      <p className="display mt-3 text-6xl text-metal">
+    <div className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-zinc-200 sm:p-8">
+      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">Estimated Monthly Payment</p>
+      <p className="mt-3 text-6xl font-bold tracking-tight text-zinc-900">
         {money(monthly)}
-        <span className="text-2xl text-dim">/mo</span>
+        <span className="text-2xl font-semibold text-zinc-400">/mo</span>
       </p>
-      <p className="mt-2 text-xs text-mute">
+      <p className="mt-2 text-xs text-zinc-500">
         {term} months · {apr.toFixed(1)}% APR · {money(down)} down
       </p>
 
@@ -61,20 +61,20 @@ export default function PaymentCalculator() {
         <svg viewBox="0 0 300 90" preserveAspectRatio="none" className="h-24 w-full" aria-hidden>
           <defs>
             <linearGradient id="pc-fill" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stopColor="#b9c4d2" stopOpacity="0.45" />
-              <stop offset="1" stopColor="#b9c4d2" stopOpacity="0" />
+              <stop offset="0" stopColor="#18181b" stopOpacity="0.18" />
+              <stop offset="1" stopColor="#18181b" stopOpacity="0" />
             </linearGradient>
           </defs>
           <path d={areaPath} fill="url(#pc-fill)" />
           <path
             d={linePath}
             fill="none"
-            stroke="#dfe6ee"
+            stroke="#18181b"
             strokeWidth="1.5"
             vectorEffect="non-scaling-stroke"
           />
         </svg>
-        <div className="mt-1 flex justify-between text-[10px] uppercase tracking-widest text-mute">
+        <div className="mt-1 flex justify-between text-[10px] uppercase tracking-widest text-zinc-400">
           <span>Today</span>
           <span>Balance over {term} mo</span>
           <span>Paid off</span>
@@ -88,8 +88,8 @@ export default function PaymentCalculator() {
 
         <div>
           <div className="mb-3 flex items-center justify-between">
-            <span className="text-xs uppercase tracking-widest text-mute">Term length</span>
-            <span className="text-sm font-medium text-white">{term} mo</span>
+            <span className="text-xs uppercase tracking-widest text-zinc-500">Term length</span>
+            <span className="text-sm font-medium text-zinc-900">{term} mo</span>
           </div>
           <div className="grid grid-cols-4 gap-2">
             {[48, 60, 72, 84].map((t) => (
@@ -98,8 +98,8 @@ export default function PaymentCalculator() {
                 onClick={() => setTerm(t)}
                 className={`rounded-full border py-2.5 text-[13px] font-medium transition-all duration-300 ${
                   term === t
-                    ? "border-transparent bg-white text-black"
-                    : "border-line text-dim hover:border-line-strong hover:text-white"
+                    ? "border-transparent bg-zinc-900 text-white"
+                    : "border-zinc-300 text-zinc-600 hover:border-zinc-900 hover:text-zinc-900"
                 }`}
               >
                 {t} mo
@@ -109,7 +109,7 @@ export default function PaymentCalculator() {
         </div>
       </div>
 
-      <p className="mt-8 text-[11px] leading-relaxed text-mute">
+      <p className="mt-8 text-[11px] leading-relaxed text-zinc-400">
         Estimate only. Actual terms subject to credit approval, taxes, and fees.
       </p>
     </div>
@@ -137,8 +137,8 @@ function Slider({
   return (
     <div>
       <div className="mb-3 flex items-center justify-between">
-        <span className="text-xs uppercase tracking-widest text-mute">{label}</span>
-        <span className="text-sm font-medium text-white">{value}</span>
+        <span className="text-xs uppercase tracking-widest text-zinc-500">{label}</span>
+        <span className="text-sm font-medium text-zinc-900">{value}</span>
       </div>
       <input
         type="range"
@@ -149,7 +149,7 @@ function Slider({
         onChange={(e) => onChange(Number(e.target.value))}
         className="lux-range w-full"
         style={{
-          background: `linear-gradient(90deg, #b9c4d2 ${pct}%, rgba(255,255,255,0.1) ${pct}%)`,
+          background: `linear-gradient(90deg, #18181b ${pct}%, #e4e4e7 ${pct}%)`,
         }}
       />
     </div>

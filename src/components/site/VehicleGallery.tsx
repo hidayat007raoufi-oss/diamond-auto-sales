@@ -56,7 +56,7 @@ export default function VehicleGallery({ media, alt }: { media: Media[]; alt: st
                 setIdx(0);
               }}
               className={`rounded-full border px-4 py-2 text-[13px] font-medium transition-all duration-300 active:scale-95 ${
-                i === cat ? "border-transparent bg-white text-black" : "border-line text-dim hover:border-line-strong hover:text-white"
+                i === cat ? "border-transparent bg-zinc-900 text-white" : "border-zinc-300 text-zinc-600 hover:border-zinc-400 hover:text-zinc-900"
               }`}
             >
               {c.label}
@@ -67,16 +67,16 @@ export default function VehicleGallery({ media, alt }: { media: Media[]; alt: st
       )}
 
       {/* studio preview */}
-      <div className="relative mt-6 aspect-[16/10] overflow-hidden rounded-3xl border border-line bg-[radial-gradient(72%_62%_at_50%_28%,#181a20,#000)]">
-        <div aria-hidden className="absolute inset-x-0 top-0 h-1/2 bg-[radial-gradient(60%_80%_at_50%_0%,rgba(255,255,255,0.06),transparent_70%)]" />
+      <div className="relative mt-6 aspect-[16/10] overflow-hidden rounded-2xl bg-zinc-100 ring-1 ring-zinc-200">
+        <div aria-hidden className="absolute inset-x-0 top-0 h-1/2 bg-[radial-gradient(60%_80%_at_50%_0%,rgba(255,255,255,0.6),transparent_70%)]" />
         <button onClick={() => setFull(true)} className="absolute inset-0 cursor-zoom-in" aria-label="View full screen">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={current} alt={`${alt} — ${cats[cat]?.label}`} loading="lazy" className="absolute inset-0 h-full w-full object-contain p-6" />
           {/* floor reflection */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={current} aria-hidden alt="" className="absolute inset-x-0 top-[60%] mx-auto h-[36%] w-full scale-y-[-1] object-contain opacity-[0.14] [mask-image:linear-gradient(to_bottom,#000,transparent_72%)]" />
-          <div aria-hidden className="pointer-events-none absolute inset-x-[20%] bottom-[11%] h-6 rounded-[50%] bg-[radial-gradient(ellipse,rgba(0,0,0,0.6),transparent_70%)] blur-md" />
-          <span className="absolute bottom-4 right-4 grid h-9 w-9 place-items-center rounded-full border border-line bg-black/45 text-white/85 backdrop-blur">
+          <img src={current} aria-hidden alt="" className="absolute inset-x-0 top-[60%] mx-auto h-[36%] w-full scale-y-[-1] object-contain opacity-[0.10] [mask-image:linear-gradient(to_bottom,#000,transparent_72%)]" />
+          <div aria-hidden className="pointer-events-none absolute inset-x-[20%] bottom-[11%] h-6 rounded-[50%] bg-[radial-gradient(ellipse,rgba(0,0,0,0.18),transparent_70%)] blur-md" />
+          <span className="absolute bottom-4 right-4 grid h-9 w-9 place-items-center rounded-full border border-zinc-200 bg-white/80 text-zinc-700 shadow-sm backdrop-blur">
             <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.6">
               <path d="M9 4H5v4M15 4h4v4M9 20H5v-4M15 20h4v-4" />
             </svg>
@@ -90,8 +90,8 @@ export default function VehicleGallery({ media, alt }: { media: Media[]; alt: st
           <button
             key={im}
             onClick={() => setIdx(i)}
-            className={`relative aspect-[4/3] w-24 shrink-0 overflow-hidden rounded-xl border bg-surface transition-colors ${
-              i === idx ? "border-line-strong" : "border-line hover:border-line-strong"
+            className={`relative aspect-[4/3] w-24 shrink-0 overflow-hidden rounded-lg border bg-zinc-50 transition-colors ${
+              i === idx ? "border-zinc-400" : "border-zinc-200 hover:border-zinc-300"
             }`}
             aria-label={`Photo ${i + 1}`}
           >
@@ -108,7 +108,7 @@ export default function VehicleGallery({ media, alt }: { media: Media[]; alt: st
           <img src={current} alt={alt} onClick={(e) => e.stopPropagation()} className="max-h-[80vh] max-w-[92vw] object-contain" />
           <div className="no-scrollbar flex max-w-full gap-2 overflow-x-auto" onClick={(e) => e.stopPropagation()}>
             {images.map((im, i) => (
-              <button key={im} onClick={() => setIdx(i)} className={`h-12 w-16 shrink-0 overflow-hidden rounded-md border ${i === idx ? "border-white" : "border-line"}`}>
+              <button key={im} onClick={() => setIdx(i)} className={`h-12 w-16 shrink-0 overflow-hidden rounded-md border ${i === idx ? "border-white" : "border-white/30"}`}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={im} alt="" className="h-full w-full object-contain" />
               </button>
@@ -117,7 +117,7 @@ export default function VehicleGallery({ media, alt }: { media: Media[]; alt: st
           <button
             onClick={() => setFull(false)}
             aria-label="Close"
-            className="absolute right-5 top-5 grid h-11 w-11 place-items-center rounded-full border border-line-strong bg-black/50 text-white transition-colors hover:bg-white hover:text-black"
+            className="absolute right-5 top-5 grid h-11 w-11 place-items-center rounded-full border border-white/30 bg-white/10 text-white transition-colors hover:bg-white hover:text-zinc-900"
           >
             <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.6">
               <path d="M6 6l12 12M18 6L6 18" />

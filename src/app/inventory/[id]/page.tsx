@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import Button from "@/components/site/Button";
 import Reveal from "@/components/motion/Reveal";
-import VehicleCard from "@/components/site/VehicleCard";
+import ListingCard from "@/components/site/ListingCard";
 import Vehicle360 from "@/components/site/Vehicle360";
 import ImageZoom from "@/components/site/ImageZoom";
 import VehicleGallery from "@/components/site/VehicleGallery";
@@ -62,9 +61,9 @@ export default async function VehiclePage(props: PageProps<"/inventory/[id]">) {
     : [];
 
   return (
-    <div className="pt-28">
+    <div className="bg-white pt-28 text-zinc-900">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <Link href="/inventory" className="text-sm text-dim transition-colors hover:text-white">
+        <Link href="/inventory" className="text-sm text-zinc-500 transition-colors hover:text-zinc-900">
           ← Back to inventory
         </Link>
 
@@ -84,7 +83,7 @@ export default async function VehiclePage(props: PageProps<"/inventory/[id]">) {
                 alt={`${v.year} ${v.make} ${v.model} ${v.trim}`}
               />
             )}
-            <p className="mt-3 text-center text-[11px] uppercase tracking-widest text-mute">
+            <p className="mt-3 text-center text-[11px] uppercase tracking-widest text-zinc-400">
               {v.frames360?.length ? "360° View Available — drag to rotate" : "Photo gallery"}
             </p>
           </Reveal>
@@ -92,36 +91,36 @@ export default async function VehiclePage(props: PageProps<"/inventory/[id]">) {
           {/* Detail */}
           <div className="flex flex-col">
             <Reveal>
-              <p className="kicker">{v.year} · {v.bodyType}</p>
-              <h1 className="display mt-3 text-4xl text-white sm:text-5xl">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">{v.year} · {v.bodyType}</p>
+              <h1 className="mt-3 text-4xl font-bold tracking-tight text-zinc-900 sm:text-5xl">
                 {v.make} {v.model}
               </h1>
-              <p className="mt-2 text-lg text-dim">{v.trim}</p>
+              <p className="mt-2 text-lg text-zinc-600">{v.trim}</p>
             </Reveal>
 
             <Reveal delay={100}>
-              <div className="mt-7 flex items-end gap-5 border-y border-line py-6">
+              <div className="mt-7 flex items-end gap-5 border-y border-zinc-200 py-6">
                 <div>
-                  <p className="display text-4xl text-metal">{formatPrice(v.price)}</p>
-                  <p className="mt-1 text-xs text-mute">est. {estMonthly(v.price)} · 72mo</p>
+                  <p className="text-4xl font-bold tracking-tight text-zinc-900">{formatPrice(v.price)}</p>
+                  <p className="mt-1 text-xs text-zinc-500">est. {estMonthly(v.price)} · 72mo</p>
                 </div>
               </div>
             </Reveal>
 
             <Reveal delay={160}>
-              <dl className="mt-7 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-4">
+              <dl className="mt-7 grid grid-cols-2 gap-3 sm:grid-cols-4">
                 {specs.slice(0, 4).map(([k, val]) => (
-                  <div key={k} className="bg-bg p-4">
-                    <dt className="text-[10px] uppercase tracking-widest text-mute">{k}</dt>
-                    <dd className="mt-1 text-sm font-semibold text-white">{val}</dd>
+                  <div key={k} className="rounded-lg bg-zinc-50 p-4">
+                    <dt className="text-[10px] uppercase tracking-widest text-zinc-400">{k}</dt>
+                    <dd className="mt-1 text-sm font-semibold text-zinc-900">{val}</dd>
                   </div>
                 ))}
               </dl>
-              <dl className="mt-px grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-4">
+              <dl className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
                 {specs.slice(4).map(([k, val]) => (
-                  <div key={k} className="bg-bg p-4">
-                    <dt className="text-[10px] uppercase tracking-widest text-mute">{k}</dt>
-                    <dd className="mt-1 text-sm font-semibold text-white">{val}</dd>
+                  <div key={k} className="rounded-lg bg-zinc-50 p-4">
+                    <dt className="text-[10px] uppercase tracking-widest text-zinc-400">{k}</dt>
+                    <dd className="mt-1 text-sm font-semibold text-zinc-900">{val}</dd>
                   </div>
                 ))}
               </dl>
@@ -129,10 +128,18 @@ export default async function VehiclePage(props: PageProps<"/inventory/[id]">) {
 
             <Reveal delay={220}>
               <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-                <Button href="/contact">Ask About This Vehicle</Button>
-                <Button href="/financing" variant="ghost">
+                <Link
+                  href="/contact"
+                  className="rounded-full bg-zinc-900 px-7 py-3.5 text-center text-sm font-semibold text-white transition-colors hover:bg-zinc-700"
+                >
+                  Ask About This Vehicle
+                </Link>
+                <Link
+                  href="/financing"
+                  className="rounded-full border border-zinc-300 px-7 py-3.5 text-center text-sm font-semibold text-zinc-900 transition-colors hover:bg-zinc-50"
+                >
                   Estimate Payments
-                </Button>
+                </Link>
               </div>
             </Reveal>
           </div>
@@ -141,9 +148,9 @@ export default async function VehiclePage(props: PageProps<"/inventory/[id]">) {
         {/* Vehicle gallery */}
         {media.length > 0 && (
           <Reveal blur>
-            <div className="mt-24 border-t border-line pt-16">
-              <h2 className="display text-2xl text-white sm:text-3xl">Vehicle gallery.</h2>
-              <p className="mt-2 text-dim">Browse every angle in a premium studio presentation.</p>
+            <div className="mt-24 border-t border-zinc-200 pt-16">
+              <h2 className="text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl">Vehicle gallery.</h2>
+              <p className="mt-2 text-zinc-600">Browse every angle in a premium studio presentation.</p>
               <div className="mt-8">
                 <VehicleGallery media={media} alt={`${v.year} ${v.make} ${v.model}`} />
               </div>
@@ -152,11 +159,11 @@ export default async function VehiclePage(props: PageProps<"/inventory/[id]">) {
         )}
 
         {/* Related */}
-        <div className="mt-28 border-t border-line pt-16">
-          <h2 className="display text-2xl text-white sm:text-3xl">More from the collection</h2>
+        <div className="mt-28 border-t border-zinc-200 pt-16 pb-24">
+          <h2 className="text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl">More from the collection</h2>
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {related.map((r) => (
-              <VehicleCard key={r.id} vehicle={r} />
+              <ListingCard key={r.id} vehicle={r} />
             ))}
           </div>
         </div>
