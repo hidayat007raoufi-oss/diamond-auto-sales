@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import DiamondLogo from "@/components/site/DiamondLogo";
 import { pushOverlay, popOverlay } from "@/lib/overlay";
+import { SOCIAL_LINKS } from "@/lib/social";
 
 const links = [
   { href: "/", label: "Home" },
@@ -15,18 +16,12 @@ const links = [
   { href: "/contact", label: "Contact" },
 ];
 
-const socials = [
-  {
-    label: "Instagram",
-    href: "https://instagram.com",
-    path: "M12 2.2c3.2 0 3.6 0 4.9.07 1.2.06 1.8.25 2.2.42.6.2 1 .46 1.4.86.4.4.66.8.86 1.4.17.4.36 1 .42 2.2.07 1.3.07 1.7.07 4.9s0 3.6-.07 4.9c-.06 1.2-.25 1.8-.42 2.2a3.8 3.8 0 01-.86 1.4 3.8 3.8 0 01-1.4.86c-.4.17-1 .36-2.2.42-1.3.07-1.7.07-4.9.07s-3.6 0-4.9-.07c-1.2-.06-1.8-.25-2.2-.42a3.8 3.8 0 01-1.4-.86 3.8 3.8 0 01-.86-1.4c-.17-.4-.36-1-.42-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.9c.06-1.2.25-1.8.42-2.2.2-.6.46-1 .86-1.4.4-.4.8-.66 1.4-.86.4-.17 1-.36 2.2-.42C8.4 2.2 8.8 2.2 12 2.2zm0 3.4a6.4 6.4 0 100 12.8 6.4 6.4 0 000-12.8zm0 2.2a4.2 4.2 0 110 8.4 4.2 4.2 0 010-8.4zm6.6-.4a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z",
-  },
-  {
-    label: "Facebook",
-    href: "https://facebook.com",
-    path: "M22 12a10 10 0 10-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7A10 10 0 0022 12z",
-  },
-];
+const ICONS: Record<string, string> = {
+  instagram:
+    "M12 2.2c3.2 0 3.6 0 4.9.07 1.2.06 1.8.25 2.2.42.6.2 1 .46 1.4.86.4.4.66.8.86 1.4.17.4.36 1 .42 2.2.07 1.3.07 1.7.07 4.9s0 3.6-.07 4.9c-.06 1.2-.25 1.8-.42 2.2a3.8 3.8 0 01-.86 1.4 3.8 3.8 0 01-1.4.86c-.4.17-1 .36-2.2.42-1.3.07-1.7.07-4.9.07s-3.6 0-4.9-.07c-1.2-.06-1.8-.25-2.2-.42a3.8 3.8 0 01-1.4-.86 3.8 3.8 0 01-.86-1.4c-.17-.4-.36-1-.42-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.9c.06-1.2.25-1.8.42-2.2.2-.6.46-1 .86-1.4.4-.4.8-.66 1.4-.86.4-.17 1-.36 2.2-.42C8.4 2.2 8.8 2.2 12 2.2zm0 3.4a6.4 6.4 0 100 12.8 6.4 6.4 0 000-12.8zm0 2.2a4.2 4.2 0 110 8.4 4.2 4.2 0 010-8.4zm6.6-.4a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z",
+  facebook:
+    "M22 12a10 10 0 10-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7A10 10 0 0022 12z",
+};
 
 function Mark({ light = false }: { light?: boolean }) {
   return (
@@ -165,7 +160,7 @@ export default function Header() {
           </div>
 
           <div className="mt-6 flex items-center justify-center gap-4">
-            {socials.map((s) => (
+            {SOCIAL_LINKS.map((s) => (
               <a
                 key={s.label}
                 href={s.href}
@@ -175,7 +170,7 @@ export default function Header() {
                 className="grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/[0.04] text-white/70 transition-colors hover:text-white"
               >
                 <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
-                  <path d={s.path} />
+                  <path d={ICONS[s.icon]} />
                 </svg>
               </a>
             ))}
