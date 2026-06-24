@@ -28,14 +28,14 @@ export default function RentalInquiryForm() {
 
   if (sent) {
     return (
-      <div className="flex flex-col items-center justify-center rounded-2xl bg-white p-12 text-center shadow-sm ring-1 ring-zinc-200">
-        <div className="grid h-14 w-14 place-items-center rounded-full bg-zinc-900 text-white">
+      <div className="flex flex-col items-center justify-center rounded-2xl border border-white/10 bg-white/[0.03] p-12 text-center backdrop-blur-xl">
+        <div className="grid h-14 w-14 place-items-center rounded-full bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-[0_0_40px_-10px_rgba(59,130,246,0.5)]">
           <svg viewBox="0 0 24 24" className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth="1.6">
             <path d="M5 12l4 4L19 7" />
           </svg>
         </div>
-        <h3 className="mt-6 text-xl font-semibold text-zinc-900">Request received</h3>
-        <p className="mt-2 max-w-sm text-sm text-zinc-600">
+        <h3 className="mt-6 text-xl font-semibold tracking-tight text-white">Request received</h3>
+        <p className="mt-2 max-w-sm text-sm text-white/60">
           We&apos;ll confirm availability and pricing for your dates and follow up shortly.
         </p>
       </div>
@@ -43,9 +43,9 @@ export default function RentalInquiryForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-zinc-200 sm:p-8">
-      <h3 className="text-xl font-bold text-zinc-900">Check availability</h3>
-      <p className="mt-1 text-sm text-zinc-500">Tell us your dates and we&apos;ll confirm a vehicle.</p>
+    <form onSubmit={handleSubmit} className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-xl sm:p-8">
+      <h3 className="text-xl font-bold tracking-tight text-white">Check availability</h3>
+      <p className="mt-1 text-sm text-white/60">Tell us your dates and we&apos;ll confirm a vehicle.</p>
 
       <div className="mt-6 grid gap-4 sm:grid-cols-2">
         <Field label="Name" name="name" type="text" required />
@@ -59,24 +59,24 @@ export default function RentalInquiryForm() {
         <Field label="Return date" name="return" type="date" required />
       </div>
       <div className="mt-4">
-        <label htmlFor="class" className="mb-2 block text-xs font-medium uppercase tracking-widest text-zinc-500">
+        <label htmlFor="class" className="mb-2 block text-xs font-medium uppercase tracking-widest text-white/40">
           Vehicle class
         </label>
         <select
           id="class"
           name="class"
           defaultValue={rentals[0].name}
-          className="w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 text-base text-zinc-900 outline-none transition-colors focus:border-zinc-900"
+          className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-base text-white outline-none transition-colors focus:border-blue-500/60"
         >
           {rentals.map((r) => (
-            <option key={r.id} value={r.name}>
+            <option key={r.id} value={r.name} className="bg-zinc-900 text-white">
               {r.name} — from ${r.dailyFrom}/day
             </option>
           ))}
         </select>
       </div>
       <div className="mt-4">
-        <label htmlFor="rmsg" className="mb-2 block text-xs font-medium uppercase tracking-widest text-zinc-500">
+        <label htmlFor="rmsg" className="mb-2 block text-xs font-medium uppercase tracking-widest text-white/40">
           Notes
         </label>
         <textarea
@@ -84,17 +84,17 @@ export default function RentalInquiryForm() {
           name="message"
           rows={3}
           placeholder="Anything we should know?"
-          className="w-full resize-none rounded-xl border border-zinc-300 bg-white px-4 py-3 text-base text-zinc-900 placeholder:text-zinc-400 outline-none transition-colors focus:border-zinc-900"
+          className="w-full resize-none rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-base text-white placeholder:text-white/40 outline-none transition-colors focus:border-blue-500/60"
         />
       </div>
 
       <button
         type="submit"
-        className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-zinc-900 py-4 text-sm font-semibold text-white transition-colors hover:bg-zinc-700"
+        className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-blue-500 py-4 text-sm font-semibold text-white shadow-[0_10px_40px_-12px_rgba(47,128,255,0.7)] transition-all hover:-translate-y-0.5 hover:shadow-[0_14px_48px_-10px_rgba(47,128,255,0.9)]"
       >
         Request Availability
       </button>
-      <p className="mt-4 text-center text-[11px] text-zinc-400">
+      <p className="mt-4 text-center text-[11px] text-white/40">
         A valid driver&apos;s license and insurance are required at pickup.
       </p>
     </form>
@@ -114,7 +114,7 @@ function Field({
 }) {
   return (
     <div>
-      <label htmlFor={name} className="mb-2 block text-xs font-medium uppercase tracking-widest text-zinc-500">
+      <label htmlFor={name} className="mb-2 block text-xs font-medium uppercase tracking-widest text-white/40">
         {label}
       </label>
       <input
@@ -122,7 +122,7 @@ function Field({
         name={name}
         type={type}
         required={required}
-        className="w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 text-base text-zinc-900 placeholder:text-zinc-400 outline-none transition-colors focus:border-zinc-900"
+        className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-base text-white placeholder:text-white/40 outline-none transition-colors focus:border-blue-500/60 [color-scheme:dark]"
       />
     </div>
   );

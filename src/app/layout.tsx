@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/components/site/Header";
 import Footer from "@/components/site/Footer";
 import StickyCTABar from "@/components/site/StickyCTABar";
+import IntroOverlay from "@/components/site/IntroOverlay";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://diamondauto.com"),
@@ -32,14 +33,15 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#ffffff",
-  colorScheme: "light",
+  themeColor: "#000000",
+  colorScheme: "dark",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className="antialiased">
-      <body className="min-h-screen bg-white text-zinc-900">
+      <body className="min-h-screen bg-black text-white">
+        <IntroOverlay />
         <Header />
         <main>{children}</main>
         <Footer />

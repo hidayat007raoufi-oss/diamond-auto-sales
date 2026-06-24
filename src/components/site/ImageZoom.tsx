@@ -37,14 +37,14 @@ export default function ImageZoom({
         type="button"
         onClick={() => setOpen(true)}
         aria-label={`View ${alt} fullscreen`}
-        className="group relative block aspect-[4/3] w-full cursor-zoom-in overflow-hidden rounded-2xl bg-zinc-100 ring-1 ring-zinc-200"
+        className="group relative block aspect-[4/3] w-full cursor-zoom-in overflow-hidden rounded-2xl bg-[#0c0c0e] ring-1 ring-white/10"
       >
         <div className="absolute inset-0" style={{ background: tone }} />
         <PhotoLayer src={src} alt={alt} eager />
-        <span className="absolute left-5 top-5 rounded-full border border-zinc-200 bg-white/80 px-3 py-1 text-[11px] tracking-widest text-zinc-700 shadow-sm backdrop-blur">
+        <span className="absolute left-5 top-5 rounded-full border border-white/15 bg-black/50 px-3 py-1 text-[11px] tracking-widest text-white/80 shadow-sm backdrop-blur">
           27-Point Inspected
         </span>
-        <span className="absolute bottom-5 right-5 grid h-9 w-9 place-items-center rounded-full border border-zinc-200 bg-white/80 text-zinc-700 shadow-sm backdrop-blur transition-transform duration-300 group-hover:scale-110">
+        <span className="absolute bottom-5 right-5 grid h-9 w-9 place-items-center rounded-full border border-white/15 bg-black/50 text-white/80 shadow-sm backdrop-blur transition-transform duration-300 group-hover:scale-110">
           <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.6">
             <path d="M9 4H5v4M15 4h4v4M9 20H5v-4M15 20h4v-4" />
           </svg>

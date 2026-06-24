@@ -56,7 +56,7 @@ export default function VehicleGallery({ media, alt }: { media: Media[]; alt: st
                 setIdx(0);
               }}
               className={`rounded-full border px-4 py-2 text-[13px] font-medium transition-all duration-300 active:scale-95 ${
-                i === cat ? "border-transparent bg-zinc-900 text-white" : "border-zinc-300 text-zinc-600 hover:border-zinc-400 hover:text-zinc-900"
+                i === cat ? "border-transparent bg-white text-black" : "border-white/15 text-white/60 hover:border-white/40 hover:text-white"
               }`}
             >
               {c.label}
@@ -67,16 +67,16 @@ export default function VehicleGallery({ media, alt }: { media: Media[]; alt: st
       )}
 
       {/* studio preview */}
-      <div className="relative mt-6 aspect-[16/10] overflow-hidden rounded-2xl bg-zinc-100 ring-1 ring-zinc-200">
-        <div aria-hidden className="absolute inset-x-0 top-0 h-1/2 bg-[radial-gradient(60%_80%_at_50%_0%,rgba(255,255,255,0.6),transparent_70%)]" />
+      <div className="relative mt-6 aspect-[16/10] overflow-hidden rounded-2xl bg-[#0c0c0e] ring-1 ring-white/10">
+        <div aria-hidden className="absolute inset-x-0 top-0 h-1/2 bg-[radial-gradient(60%_80%_at_50%_0%,rgba(47,128,255,0.10),transparent_70%)]" />
         <button onClick={() => setFull(true)} className="absolute inset-0 cursor-zoom-in" aria-label="View full screen">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={current} alt={`${alt} — ${cats[cat]?.label}`} loading="lazy" className="absolute inset-0 h-full w-full object-contain p-6" />
           {/* floor reflection */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={current} aria-hidden alt="" className="absolute inset-x-0 top-[60%] mx-auto h-[36%] w-full scale-y-[-1] object-contain opacity-[0.10] [mask-image:linear-gradient(to_bottom,#000,transparent_72%)]" />
-          <div aria-hidden className="pointer-events-none absolute inset-x-[20%] bottom-[11%] h-6 rounded-[50%] bg-[radial-gradient(ellipse,rgba(0,0,0,0.18),transparent_70%)] blur-md" />
-          <span className="absolute bottom-4 right-4 grid h-9 w-9 place-items-center rounded-full border border-zinc-200 bg-white/80 text-zinc-700 shadow-sm backdrop-blur">
+          <div aria-hidden className="pointer-events-none absolute inset-x-[20%] bottom-[11%] h-6 rounded-[50%] bg-[radial-gradient(ellipse,rgba(0,0,0,0.55),transparent_70%)] blur-md" />
+          <span className="absolute bottom-4 right-4 grid h-9 w-9 place-items-center rounded-full border border-white/15 bg-black/50 text-white/80 shadow-sm backdrop-blur">
             <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.6">
               <path d="M9 4H5v4M15 4h4v4M9 20H5v-4M15 20h4v-4" />
             </svg>
@@ -90,8 +90,8 @@ export default function VehicleGallery({ media, alt }: { media: Media[]; alt: st
           <button
             key={im}
             onClick={() => setIdx(i)}
-            className={`relative aspect-[4/3] w-24 shrink-0 overflow-hidden rounded-lg border bg-zinc-50 transition-colors ${
-              i === idx ? "border-zinc-400" : "border-zinc-200 hover:border-zinc-300"
+            className={`relative aspect-[4/3] w-24 shrink-0 overflow-hidden rounded-lg border bg-[#0c0c0e] transition-colors ${
+              i === idx ? "border-blue-500/60" : "border-white/10 hover:border-white/30"
             }`}
             aria-label={`Photo ${i + 1}`}
           >

@@ -46,7 +46,7 @@ export default function Vehicle360({
   return (
     <div
       ref={wrap}
-      className={`relative aspect-[4/3] touch-none select-none overflow-hidden rounded-2xl bg-zinc-100 ring-1 ring-zinc-200 ${dragging ? "cursor-grabbing" : "cursor-grab"}`}
+      className={`relative aspect-[4/3] touch-none select-none overflow-hidden rounded-2xl bg-[#0c0c0e] ring-1 ring-white/10 ${dragging ? "cursor-grabbing" : "cursor-grab"}`}
       onPointerDown={(e) => {
         (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
         start.current = { x: e.clientX, idx: index };
@@ -65,7 +65,7 @@ export default function Vehicle360({
       aria-label={alt}
     >
       {/* studio ground shadow */}
-      <div className="pointer-events-none absolute inset-x-[14%] bottom-[10%] h-7 rounded-[50%] bg-[radial-gradient(ellipse,rgba(0,0,0,0.18),transparent_70%)] blur-md" />
+      <div className="pointer-events-none absolute inset-x-[14%] bottom-[10%] h-7 rounded-[50%] bg-[radial-gradient(ellipse,rgba(0,0,0,0.55),transparent_70%)] blur-md" />
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={frames[index]} alt={alt} draggable={false} className="absolute inset-0 h-full w-full object-contain p-2" />
 
@@ -82,21 +82,21 @@ export default function Vehicle360({
           style={{ left: h.x, top: h.y }}
           aria-label={`View ${h.caption}`}
         >
-          <span className="absolute left-1/2 top-1/2 h-7 w-7 -translate-x-1/2 -translate-y-1/2 animate-ping rounded-full border border-zinc-900/40" />
-          <span className="relative block h-2.5 w-2.5 rounded-full bg-zinc-900 shadow-[0_0_12px_rgba(0,0,0,0.35)]" />
-          <span className="absolute left-1/2 top-5 -translate-x-1/2 whitespace-nowrap rounded-full border border-zinc-200 bg-white/90 px-2.5 py-1 text-[10px] tracking-widest text-zinc-900 opacity-0 shadow-sm backdrop-blur transition-opacity duration-300 group-hover:opacity-100">
+          <span className="absolute left-1/2 top-1/2 h-7 w-7 -translate-x-1/2 -translate-y-1/2 animate-ping rounded-full border border-blue-400/60" />
+          <span className="relative block h-2.5 w-2.5 rounded-full bg-blue-500 shadow-[0_0_14px_rgba(47,128,255,0.8)]" />
+          <span className="absolute left-1/2 top-5 -translate-x-1/2 whitespace-nowrap rounded-full border border-white/15 bg-black/70 px-2.5 py-1 text-[10px] tracking-widest text-white opacity-0 shadow-sm backdrop-blur transition-opacity duration-300 group-hover:opacity-100">
             {h.caption}
           </span>
         </button>
       ))}
 
-      <span className="pointer-events-none absolute left-5 top-5 inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white/80 px-3 py-1 text-[11px] font-medium tracking-widest text-zinc-700 shadow-sm backdrop-blur">
+      <span className="pointer-events-none absolute left-5 top-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/50 px-3 py-1 text-[11px] font-medium tracking-widest text-white/80 shadow-sm backdrop-blur">
         <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.5">
           <path d="M21 12a9 9 0 11-3-6.7M21 4v4h-4" />
         </svg>
         360°
       </span>
-      <span className="pointer-events-none absolute bottom-5 left-1/2 -translate-x-1/2 rounded-full border border-zinc-200 bg-white/80 px-3 py-1 text-[11px] text-zinc-600 shadow-sm backdrop-blur">
+      <span className="pointer-events-none absolute bottom-5 left-1/2 -translate-x-1/2 rounded-full border border-white/15 bg-black/50 px-3 py-1 text-[11px] text-white/60 shadow-sm backdrop-blur">
         Drag to rotate{hotspots.length ? " · tap the markers" : ""}
       </span>
     </div>
