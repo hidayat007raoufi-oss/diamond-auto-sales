@@ -3,6 +3,7 @@ import Button from "@/components/site/Button";
 import Reveal from "@/components/motion/Reveal";
 import SectionHeading from "@/components/site/SectionHeading";
 import ServiceRows from "@/components/site/ServiceRows";
+import PlanSelector from "@/components/site/PlanSelector";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -46,16 +47,12 @@ const detailIncludes = [
 
 export default function ServicesPage() {
   return (
-    <div className="bg-black text-white">
-      <section className="cinematic">
+    <div className="bg-white">
+      <section className="bg-white">
         <div className="mx-auto max-w-7xl px-5 pb-16 pt-36 sm:px-8">
           <SectionHeading
             kicker="Service & Customization"
-            title={
-              <>
-                Everything your vehicle needs.
-              </>
-            }
+            title={<>Everything your vehicle needs.</>}
             intro="One roof for detailing, protection, mechanical, customization, and performance — tap any service to see what's included."
           />
         </div>
@@ -65,42 +62,52 @@ export default function ServicesPage() {
       <section className="mx-auto max-w-7xl px-5 pb-24 sm:px-8">
         <ServiceRows />
         <Reveal>
-          <div className="mt-14 flex flex-col items-start justify-between gap-6 border-t border-white/10 pt-10 sm:flex-row sm:items-center">
+          <div className="mt-14 flex flex-col items-start justify-between gap-6 border-t border-black/10 pt-10 sm:flex-row sm:items-center">
             <div>
-              <h3 className="text-2xl font-semibold tracking-tight text-white">Ready to book a service?</h3>
-              <p className="mt-2 text-sm text-white/60">Pickup and return available across the Triangle.</p>
+              <h3 className="text-2xl font-semibold tracking-tight text-[#1d1d1f]">Ready to book a service?</h3>
+              <p className="mt-2 text-sm text-[#6e6e73]">Pickup and return available across the Triangle.</p>
             </div>
             <Button href="/contact?intent=service">Schedule Service</Button>
           </div>
         </Reveal>
       </section>
 
+      {/* SUBSCRIPTION PLANS */}
+      <section className="bg-[#f5f5f7]">
+        <div className="mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-28">
+          <SectionHeading
+            kicker="Subscription Plans"
+            title={<>Care on a schedule.</>}
+            intro="Keep your vehicles their best year-round. Choose a plan, pay monthly, and let us handle the upkeep — switch tiers anytime."
+          />
+          <div className="mt-12">
+            <PlanSelector />
+          </div>
+        </div>
+      </section>
+
       {/* DETAILING DETAILS */}
-      <section className="bg-[#0a0a0c]">
+      <section className="bg-white">
         <div className="mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-28">
           <SectionHeading
             kicker="In-House Detailing"
-            title={
-              <>
-                Detailing, <span className="text-chrome">done right.</span>
-              </>
-            }
+            title={<>Detailing, done right.</>}
             intro="Pick exactly what your vehicle needs. Every detail is performed in-house by hand — no rushed conveyor jobs, no surprises."
           />
 
           <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {detailing.map((d, i) => (
               <Reveal key={d.title} delay={i * 70} blur>
-                <div className="h-full rounded-2xl border border-white/10 bg-white/[0.03] p-7 backdrop-blur-xl transition-all duration-300 hover:border-white/20 hover:bg-white/[0.05]">
+                <div className="bento h-full bg-[#f5f5f7] p-7 ring-1 ring-black/[0.06]">
                   <div className="flex items-start gap-3">
-                    <span className="mt-1 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-blue-500/15 ring-1 ring-blue-500/30">
-                      <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 text-blue-300" fill="none" stroke="currentColor" strokeWidth="2.2">
+                    <span className="mt-1 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[#0071e3]">
+                      <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 text-white" fill="none" stroke="currentColor" strokeWidth="2.2">
                         <path d="M5 12l4 4L19 7" />
                       </svg>
                     </span>
-                    <h3 className="text-lg font-semibold tracking-tight text-white">{d.title}</h3>
+                    <h3 className="text-lg font-semibold tracking-tight text-[#1d1d1f]">{d.title}</h3>
                   </div>
-                  <p className="mt-3 text-sm leading-relaxed text-white/60">{d.body}</p>
+                  <p className="mt-3 text-sm leading-relaxed text-[#6e6e73]">{d.body}</p>
                 </div>
               </Reveal>
             ))}
@@ -108,13 +115,13 @@ export default function ServicesPage() {
 
           {/* WHAT'S INCLUDED */}
           <Reveal blur>
-            <div className="mt-12 grid gap-8 rounded-3xl border border-white/10 bg-[radial-gradient(120%_120%_at_50%_-10%,rgba(47,128,255,0.10),transparent_55%)] p-10 backdrop-blur-xl sm:p-12 lg:grid-cols-[1fr_1fr] lg:items-center">
+            <div className="bento mt-12 grid gap-8 bg-[#f5f5f7] p-10 ring-1 ring-black/[0.06] sm:p-12 lg:grid-cols-[1fr_1fr] lg:items-center">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-blue-400/90">What&apos;s included</p>
-                <h3 className="mt-4 text-2xl font-semibold tracking-tight text-white sm:text-3xl">
+                <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-[#0071e3]">What&apos;s included</p>
+                <h3 className="mt-4 text-2xl font-semibold tracking-tight text-[#1d1d1f] sm:text-3xl">
                   Every detail starts with an honest assessment.
                 </h3>
-                <p className="mt-4 text-base leading-relaxed text-white/60">
+                <p className="mt-4 text-base leading-relaxed text-[#6e6e73]">
                   We look the vehicle over, tell you what it actually needs, and quote a clear price — then deliver a finish that looks and feels brand new.
                 </p>
                 <div className="mt-8">
@@ -123,8 +130,8 @@ export default function ServicesPage() {
               </div>
               <ul className="grid gap-3">
                 {detailIncludes.map((item) => (
-                  <li key={item} className="flex items-start gap-3 text-[15px] text-white/70">
-                    <svg viewBox="0 0 24 24" className="mt-0.5 h-5 w-5 shrink-0 text-blue-400" fill="none" stroke="currentColor" strokeWidth="2">
+                  <li key={item} className="flex items-start gap-3 text-[15px] text-[#1d1d1f]">
+                    <svg viewBox="0 0 24 24" className="mt-0.5 h-5 w-5 shrink-0 text-[#0071e3]" fill="none" stroke="currentColor" strokeWidth="2">
                       <path d="M5 12l4 4L19 7" />
                     </svg>
                     {item}

@@ -21,18 +21,14 @@ const values = [
 
 export default function OurStoryPage() {
   return (
-    <div className="bg-black text-white">
-      {/* HERO */}
-      <section className="cinematic relative overflow-hidden">
-        <div aria-hidden className="absolute -left-24 top-10 h-96 w-96 rounded-full bg-blue-600/15 blur-3xl" />
-        <div className="relative mx-auto max-w-7xl px-5 pb-16 pt-36 sm:px-8">
+    <div className="bg-white">
+      {/* HERO — black feature band */}
+      <section className="bg-black">
+        <div className="mx-auto max-w-7xl px-5 pb-24 pt-28 sm:px-8 sm:pb-28">
           <SectionHeading
+            tone="dark"
             kicker="Our Story"
-            title={
-              <>
-                Built in Raleigh. <span className="text-electric">Driven by you.</span>
-              </>
-            }
+            title={<>Built in Raleigh. Driven by you.</>}
             intro="Diamond Auto Sales started as one local dealership with a simple idea: treat people right, price vehicles fairly, and handle everything under one roof. That idea grew into North Carolina's full-service automotive destination."
           />
         </div>
@@ -42,7 +38,7 @@ export default function OurStoryPage() {
       <section className="mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-28">
         <div className="grid gap-14 lg:grid-cols-2 lg:items-center">
           <Reveal blur>
-            <div className="space-y-5 text-base leading-relaxed text-white/60">
+            <div className="space-y-5 text-base leading-relaxed text-[#6e6e73]">
               <p>
                 We&apos;re a family-minded, independent dealership in Raleigh, North
                 Carolina — not a faceless chain. From the first hello to the keys in
@@ -68,7 +64,7 @@ export default function OurStoryPage() {
               label="Dealership Exterior"
               dimensions="1600×1000"
               filename="/dealership/exterior.jpg"
-              className="aspect-[4/3] rounded-2xl ring-1 ring-white/10"
+              className="aspect-[4/3] rounded-2xl ring-1 ring-black/[0.06]"
             />
           </Reveal>
         </div>
@@ -81,7 +77,7 @@ export default function OurStoryPage() {
               label="Showroom / Lot"
               dimensions="1200×900"
               filename="/dealership/showroom.jpg"
-              className="aspect-[4/3] rounded-2xl ring-1 ring-white/10"
+              className="aspect-[4/3] rounded-2xl ring-1 ring-black/[0.06]"
             />
           </Reveal>
           <Reveal delay={100} blur>
@@ -91,14 +87,14 @@ export default function OurStoryPage() {
               label="Our Team"
               dimensions="1200×900"
               filename="/dealership/team.jpg"
-              className="aspect-[4/3] rounded-2xl ring-1 ring-white/10"
+              className="aspect-[4/3] rounded-2xl ring-1 ring-black/[0.06]"
             />
           </Reveal>
         </div>
       </section>
 
       {/* VALUES */}
-      <section className="bg-[#0a0a0c]">
+      <section className="bg-[#f5f5f7]">
         <div className="mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-28">
           <SectionHeading
             kicker="What we stand for"
@@ -108,16 +104,16 @@ export default function OurStoryPage() {
           <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {values.map((v, i) => (
               <Reveal key={v.title} delay={i * 70} blur>
-                <div className="h-full rounded-2xl border border-white/10 bg-white/[0.03] p-7 backdrop-blur-xl transition-all duration-300 hover:border-white/20 hover:bg-white/[0.05]">
+                <div className="bento bento-hover h-full bg-white p-7 ring-1 ring-black/[0.06]">
                   <div className="flex items-start gap-3">
-                    <span className="mt-1 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-blue-500/15 ring-1 ring-blue-500/30">
-                      <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 text-blue-300" fill="none" stroke="currentColor" strokeWidth="2.2">
+                    <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[#0071e3] text-white">
+                      <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2.2">
                         <path d="M5 12l4 4L19 7" />
                       </svg>
                     </span>
-                    <h3 className="text-lg font-semibold tracking-tight text-white">{v.title}</h3>
+                    <h3 className="text-lg font-semibold tracking-tight text-[#1d1d1f]">{v.title}</h3>
                   </div>
-                  <p className="mt-3 text-sm leading-relaxed text-white/60">{v.body}</p>
+                  <p className="mt-3 text-sm leading-relaxed text-[#6e6e73]">{v.body}</p>
                 </div>
               </Reveal>
             ))}
@@ -126,25 +122,22 @@ export default function OurStoryPage() {
       </section>
 
       {/* CTA BAND */}
-      <section className="bg-black">
+      <section className="bg-white">
         <div className="mx-auto max-w-7xl px-5 py-24 sm:px-8">
           <Reveal blur>
-            <div className="flex flex-col items-start justify-between gap-8 rounded-3xl border border-white/10 bg-[radial-gradient(120%_120%_at_50%_-10%,rgba(47,128,255,0.12),transparent_55%)] p-10 backdrop-blur-xl sm:p-14 lg:flex-row lg:items-center">
+            <div className="bento flex flex-col items-start justify-between gap-8 bg-black p-10 text-white sm:p-14 lg:flex-row lg:items-center">
               <div className="max-w-xl">
                 <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
                   Come see the difference in person.
                 </h2>
-                <p className="mt-4 text-base leading-relaxed text-white/60">
+                <p className="mt-4 text-base leading-relaxed text-white/65">
                   Browse the current inventory online, or stop by our Raleigh
                   location and let our team take care of the rest.
                 </p>
               </div>
               <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
                 <Button href="/inventory">View Inventory</Button>
-                <a
-                  href="tel:+19198878666"
-                  className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/[0.04] px-7 py-3.5 text-sm font-semibold text-white backdrop-blur transition-colors hover:bg-white/[0.09]"
-                >
+                <a href="tel:+19198878666" className="pill pill-dark">
                   Call (919) 887-8666
                 </a>
               </div>

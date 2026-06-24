@@ -1,253 +1,206 @@
 import Link from "next/link";
-import HeroStage from "@/components/site/HeroStage";
+import SubNav from "@/components/site/SubNav";
 import ListingCard from "@/components/site/ListingCard";
-import RentalCard from "@/components/site/RentalCard";
+import ImagePlaceholder from "@/components/site/ImagePlaceholder";
+import PhotoLayer from "@/components/site/PhotoLayer";
 import Reveal from "@/components/motion/Reveal";
-import Button from "@/components/site/Button";
-import LeadForm from "@/components/site/LeadForm";
-import { vehicles } from "@/lib/vehicles";
+import { vehicles, getVehicle, vehicleImage, formatPrice } from "@/lib/vehicles";
 import { rentals } from "@/lib/rentals";
+import { FEATURED_PERFORMANCE_ID } from "@/lib/featured";
 
-const detailing = [
-  "Exterior hand wash",
-  "Interior deep cleaning",
-  "Full vacuuming",
-  "Carpet & upholstery shampoo",
-  "Wax & polish options",
-  "Odor removal",
+const subnavLinks = [
+  { label: "Inventory", href: "#inventory" },
+  { label: "Rentals", href: "#rentals" },
+  { label: "Financing", href: "#financing" },
+  { label: "Services", href: "#services" },
 ];
 
-const why = [
-  { title: "Quality vehicles", body: "Hand-selected, inspected, and reconditioned before they ever list." },
-  { title: "Financing available", body: "Every credit situation — good, bad, none, or rebuilding." },
-  { title: "Trade-ins welcome", body: "Real top-dollar offers applied straight to your next vehicle." },
-  { title: "Rentals available", body: "Daily, weekly, and long-term when you need a vehicle now." },
-  { title: "Local support", body: "A Raleigh team that knows your name, not a faceless chain." },
-  { title: "Customer-first process", body: "Honest numbers, no pressure, no surprise fees." },
-];
-
-const contact = [
-  { label: "Visit", value: "5915 Triangle Drive, Raleigh, NC 27616" },
-  { label: "Call", value: "(919) 887-8666", href: "tel:+19198878666" },
-  { label: "Hours", value: "Mon–Fri 9am–7pm · Sat 9am–5pm · Sun closed" },
+const bento = [
+  {
+    href: "/financing",
+    eyebrow: "Financing",
+    title: "Get approved before you arrive.",
+    body: "Every credit situation — first-time buyers, rebuilding, and trade-ins welcome.",
+    dark: true,
+    cta: "Start application",
+  },
+  {
+    href: "/contact?intent=trade",
+    eyebrow: "Trade-In",
+    title: "Top-dollar for your trade.",
+    body: "A real offer applied straight to your next vehicle — even with a balance owed.",
+    dark: false,
+    cta: "Value your trade",
+  },
+  {
+    href: "/services",
+    eyebrow: "Detailing & Service",
+    title: "Showroom-clean, in-house.",
+    body: "Detailing, customization, and mechanical care under one roof.",
+    dark: false,
+    cta: "Explore services",
+  },
+  {
+    href: "/our-story",
+    eyebrow: "Our Story",
+    title: "Built in Raleigh.",
+    body: "A local dealership grown into North Carolina's full-service destination.",
+    dark: true,
+    cta: "Read our story",
+  },
 ];
 
 export default function Home() {
   const available = vehicles.filter((v) => v.status !== "Sold");
   const featured = available.slice(0, 6);
+  const perfCar = FEATURED_PERFORMANCE_ID ? getVehicle(FEATURED_PERFORMANCE_ID) : null;
 
   return (
-    <div className="home-in bg-black text-white">
-      {/* ============ HERO ============ */}
-      <HeroStage />
+    <div id="top" className="bg-white">
+      <SubNav title="Diamond Auto" links={subnavLinks} cta={{ label: "Reserve", href: "/contact?intent=test-drive" }} appearAfter={560} tone="light" />
 
-      {/* ============ FEATURED INVENTORY ============ */}
-      <section className="mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-28">
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <Reveal blur>
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-blue-400/90">Featured Inventory</p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl">The current collection.</h2>
-              <p className="mt-2 text-white/50">{available.length} vehicles available now in Raleigh.</p>
-            </div>
-          </Reveal>
-          <Link href="/inventory" className="text-sm font-semibold text-blue-400 transition-colors hover:text-blue-300">
-            View all inventory →
+      {/* ============ HERO 1 — PERFORMANCE (black) ============ */}
+      <section className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden bg-black px-5 pb-16 pt-24 text-center text-white sm:px-8">
+        <p className="apple-metric-label text-[#0071e3]">
+          {perfCar ? "Now Available" : "Performance"}
+        </p>
+        <h1 className="apple-headline mt-3 max-w-4xl text-balance">
+          {perfCar ? (
+            <>{perfCar.year} {perfCar.make} {perfCar.model}.</>
+          ) : (
+            <>Performance, perfected.</>
+          )}
+        </h1>
+        <p className="apple-sub mt-4 max-w-2xl text-white/70">
+          {perfCar
+            ? `${perfCar.trim} · ${perfCar.power} · ${formatPrice(perfCar.price)}`
+            : "Hand-picked, inspected, and ready to drive. Our standout vehicles, front and center."}
+        </p>
+        <div className="mt-7 flex items-center gap-4">
+          <Link href={perfCar ? `/inventory/${perfCar.id}` : "/inventory"} className="pill pill-dark">
+            Learn more
+          </Link>
+          <Link
+            href={perfCar ? `/contact?intent=test-drive&vehicle=${perfCar.id}` : "/contact?intent=test-drive"}
+            className="pill pill-blue"
+          >
+            Reserve
           </Link>
         </div>
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {featured.map((v, i) => (
-            <Reveal key={v.id} delay={(i % 3) * 80} blur>
-              <ListingCard vehicle={v} priceDrop={i === 1} />
-            </Reveal>
+
+        {/* product visual */}
+        <div className="mt-12 w-full max-w-4xl">
+          {perfCar ? (
+            <div className="relative mx-auto aspect-[16/9] w-full overflow-hidden rounded-[28px]">
+              <div className="absolute inset-0" style={{ background: perfCar.tone }} />
+              <PhotoLayer src={vehicleImage(perfCar.id)} alt={`${perfCar.year} ${perfCar.make} ${perfCar.model}`} eager />
+            </div>
+          ) : (
+            <ImagePlaceholder
+              src="/hero/performance.jpg"
+              alt="Featured performance vehicle"
+              label="Featured performance vehicle"
+              dimensions="2400×1350"
+              filename="/hero/performance.jpg"
+              priority
+              className="aspect-[16/9] w-full rounded-[28px]"
+            />
+          )}
+        </div>
+
+        <div aria-hidden className="absolute bottom-6 left-1/2 -translate-x-1/2">
+          <div className="flex h-9 w-5 items-start justify-center rounded-full border border-white/25 p-1">
+            <span className="scroll-hint h-2 w-1 rounded-full bg-white/70" />
+          </div>
+        </div>
+      </section>
+
+      {/* ============ HERO 2 — RENTALS (white) ============ */}
+      <section id="rentals" className="relative flex min-h-[100svh] scroll-mt-16 flex-col items-center justify-center overflow-hidden bg-white px-5 pb-16 pt-24 text-center sm:px-8">
+        <p className="apple-metric-label text-[#0071e3]">Vehicle Rentals</p>
+        <h2 className="apple-headline mt-3 max-w-4xl text-balance text-[#1d1d1f]">
+          The fleet, on your schedule.
+        </h2>
+        <p className="apple-sub mt-4 max-w-2xl text-[#6e6e73]">
+          Daily, weekly, and long-term rentals in every class — economy to luxury.
+        </p>
+        <div className="mt-7 flex items-center gap-4">
+          <Link href="/rentals" className="pill pill-light">Learn more</Link>
+          <Link href="/rentals#reserve" className="pill pill-blue">Reserve</Link>
+        </div>
+
+        <div className="mt-12 grid w-full max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {rentals.map((r) => (
+            <div key={r.id} className="bento relative aspect-[3/4] overflow-hidden bg-[#f5f5f7]">
+              <div className="absolute inset-0" style={{ background: r.tone }} />
+              <PhotoLayer src={r.image} alt={`${r.name} rental`} />
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-4 text-left">
+                <p className="text-sm font-semibold text-white">{r.name}</p>
+                <p className="text-[12px] text-white/80">from ${r.dailyFrom}/day</p>
+              </div>
+            </div>
           ))}
         </div>
-        <Reveal>
-          <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Button href="/inventory">Browse Inventory</Button>
-            <Button href="/contact?intent=test-drive" variant="ghost">Schedule Test Drive</Button>
-          </div>
-        </Reveal>
       </section>
 
-      {/* ============ FINANCING ============ */}
-      <section className="border-y border-white/10 bg-[#0a0a0c]">
-        <div className="mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-28">
-          <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
-            <Reveal blur>
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-blue-400/90">Financing</p>
-                <h2 className="mt-3 text-4xl font-semibold tracking-tight text-white sm:text-5xl text-balance">
-                  Get <span className="text-electric">approved</span> before you arrive.
-                </h2>
-                <p className="mt-5 max-w-lg text-lg leading-relaxed text-white/60">
-                  Good credit, bad credit, no credit, or rebuilding — our finance team
-                  shops a network of lenders to structure an approval that works. First-time
-                  buyers and trade-ins welcome.
-                </p>
-                <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                  <Button href="/contact?intent=financing">Start Financing Application</Button>
-                  <Button href="/financing" variant="ghost">Estimate Payments</Button>
-                </div>
-              </div>
-            </Reveal>
-            <Reveal delay={120} blur>
-              <div className="grid gap-4 sm:grid-cols-2">
-                {[
-                  { t: "Pre-approval", b: "Soft check, no score impact." },
-                  { t: "Credit rebuilding", b: "Terms designed to move you forward." },
-                  { t: "First-time buyers", b: "Programs built for no credit history." },
-                  { t: "Trade-ins", b: "Top-dollar, even if you still owe." },
-                ].map((c) => (
-                  <div key={c.t} className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-xl">
-                    <p className="font-semibold text-white">{c.t}</p>
-                    <p className="mt-1.5 text-sm text-white/50">{c.b}</p>
-                  </div>
-                ))}
-              </div>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      {/* ============ RENTALS ============ */}
-      <section className="mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-28">
-        <div className="flex flex-wrap items-end justify-between gap-4">
+      {/* ============ INVENTORY SHOWCASE (light gray) ============ */}
+      <section id="inventory" className="scroll-mt-16 bg-[#f5f5f7]">
+        <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-28">
           <Reveal blur>
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-blue-400/90">Rentals</p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl text-balance">
-                Need a vehicle short-term or long-term?
-              </h2>
-              <p className="mt-2 max-w-xl text-white/50">
-                Daily, weekly, and longer-term rentals in every class — for travel, work,
-                a special occasion, or while your car is in our shop.
-              </p>
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <h2 className="text-[40px] font-semibold leading-none tracking-tight text-[#1d1d1f] sm:text-5xl">Inventory.</h2>
+                <p className="mt-3 text-[19px] text-[#6e6e73]">{available.length} vehicles available now in Raleigh.</p>
+              </div>
+              <Link href="/inventory" className="link-apple text-[15px]">
+                View all ›
+              </Link>
             </div>
           </Reveal>
-          <Link href="/rentals" className="text-sm font-semibold text-blue-400 transition-colors hover:text-blue-300">
-            View rental fleet →
-          </Link>
-        </div>
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {rentals.map((r, i) => (
-            <Reveal key={r.id} delay={(i % 4) * 70} blur>
-              <RentalCard rental={r} />
-            </Reveal>
-          ))}
-        </div>
-        <Reveal>
-          <div className="mt-10">
-            <Button href="/rentals#reserve">Request Rental Availability</Button>
-          </div>
-        </Reveal>
-      </section>
-
-      {/* ============ SERVICES / DETAILING ============ */}
-      <section className="border-y border-white/10 bg-[#0a0a0c]">
-        <div className="mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-28">
-          <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
-            <Reveal blur>
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-blue-400/90">Services & Detailing</p>
-                <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
-                  Detailing, <span className="text-chrome">done right.</span>
-                </h2>
-                <p className="mt-5 max-w-lg text-lg leading-relaxed text-white/60">
-                  In-house detailing, customization, and mechanical care — performed by
-                  hand, with an honest assessment before any work begins.
-                </p>
-                <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                  <Button href="/contact?intent=detailing">Book Detailing Inquiry</Button>
-                  <Button href="/services" variant="ghost">All Services</Button>
-                </div>
-              </div>
-            </Reveal>
-            <Reveal delay={120} blur>
-              <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur-xl">
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-blue-400/90">What&apos;s included</p>
-                <ul className="mt-5 grid gap-3 sm:grid-cols-2">
-                  {detailing.map((d) => (
-                    <li key={d} className="flex items-start gap-2.5 text-[15px] text-white/70">
-                      <svg viewBox="0 0 24 24" className="mt-0.5 h-5 w-5 shrink-0 text-blue-400" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M5 12l4 4L19 7" />
-                      </svg>
-                      {d}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </Reveal>
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {featured.map((v, i) => (
+              <Reveal key={v.id} delay={(i % 3) * 80} blur>
+                <ListingCard vehicle={v} priceDrop={i === 1} />
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ============ WHY DIAMOND ============ */}
-      <section className="mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-28">
-        <Reveal blur>
-          <div className="max-w-2xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-blue-400/90">Why Diamond Auto Sales</p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
-              One destination for everything automotive.
+      {/* ============ BENTO — the business (white) ============ */}
+      <section id="services" className="scroll-mt-16 bg-white">
+        <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-28">
+          <Reveal blur>
+            <h2 id="financing" className="scroll-mt-24 text-[40px] font-semibold leading-none tracking-tight text-[#1d1d1f] sm:text-5xl">
+              Everything, in one place.
             </h2>
-          </div>
-        </Reveal>
-        <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {why.map((p, i) => (
-            <Reveal key={p.title} delay={(i % 3) * 70} blur>
-              <div className="h-full rounded-2xl border border-white/10 bg-white/[0.03] p-7 backdrop-blur-xl transition-all duration-300 hover:border-white/20 hover:bg-white/[0.05]">
-                <div className="flex items-start gap-3">
-                  <span className="mt-1 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-blue-500/15 ring-1 ring-blue-500/30">
-                    <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 text-blue-300" fill="none" stroke="currentColor" strokeWidth="2.2">
-                      <path d="M5 12l4 4L19 7" />
+          </Reveal>
+          <div className="mt-12 grid gap-5 md:grid-cols-2">
+            {bento.map((b, i) => (
+              <Reveal key={b.href} delay={(i % 2) * 90} blur>
+                <Link
+                  href={b.href}
+                  className={`bento bento-hover flex min-h-[280px] flex-col justify-between p-9 ${
+                    b.dark ? "bg-black text-white" : "bg-[#f5f5f7] text-[#1d1d1f]"
+                  }`}
+                >
+                  <div>
+                    <p className={`apple-metric-label ${b.dark ? "text-[#2997ff]" : "text-[#0071e3]"}`}>{b.eyebrow}</p>
+                    <h3 className="mt-3 text-[28px] font-semibold leading-tight tracking-tight">{b.title}</h3>
+                    <p className={`mt-3 max-w-md text-[15px] leading-relaxed ${b.dark ? "text-white/65" : "text-[#6e6e73]"}`}>
+                      {b.body}
+                    </p>
+                  </div>
+                  <span className={`mt-6 inline-flex items-center gap-1 text-[15px] ${b.dark ? "text-[#2997ff]" : "text-[#0071e3]"}`}>
+                    {b.cta}
+                    <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M9 6l6 6-6 6" />
                     </svg>
                   </span>
-                  <h3 className="text-lg font-semibold tracking-tight text-white">{p.title}</h3>
-                </div>
-                <p className="mt-3 text-sm leading-relaxed text-white/60">{p.body}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      {/* ============ CONTACT / VISIT US ============ */}
-      <section className="border-t border-white/10 bg-[radial-gradient(120%_120%_at_50%_-10%,rgba(47,128,255,0.10),transparent_55%)]">
-        <div className="mx-auto grid max-w-7xl gap-12 px-5 py-24 sm:px-8 sm:py-28 lg:grid-cols-2 lg:items-start">
-          <div>
-            <Reveal blur>
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-blue-400/90">Visit Us</p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl">Come see us in Raleigh.</h2>
-            </Reveal>
-            <div className="mt-10 space-y-6">
-              {contact.map((row) => (
-                <Reveal key={row.label}>
-                  <div className="flex items-center gap-6 border-b border-white/10 pb-5">
-                    <span className="w-14 shrink-0 text-[11px] font-medium uppercase tracking-widest text-blue-400/90">{row.label}</span>
-                    {row.href ? (
-                      <a href={row.href} className="text-lg text-white transition-colors hover:text-blue-300">{row.value}</a>
-                    ) : (
-                      <span className="text-lg text-white">{row.value}</span>
-                    )}
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-            <Reveal delay={120}>
-              <div className="mt-8 overflow-hidden rounded-2xl ring-1 ring-white/10">
-                <iframe
-                  title="Diamond Auto Sales location"
-                  className="h-64 w-full grayscale invert-[0.92] contrast-[0.9] lg:h-72"
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  src="https://maps.google.com/maps?q=5915%20Triangle%20Drive%20Raleigh%20NC%2027616&z=13&output=embed"
-                />
-              </div>
-            </Reveal>
+                </Link>
+              </Reveal>
+            ))}
           </div>
-          <Reveal delay={120} blur>
-            <LeadForm />
-          </Reveal>
         </div>
       </section>
     </div>

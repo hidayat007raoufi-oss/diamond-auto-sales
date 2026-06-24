@@ -77,7 +77,7 @@ export default function InventoryExplorer({
 
   return (
     <div>
-      <div className="flex flex-col gap-4 border-y border-white/10 py-5 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-4 border-y border-black/[0.08] py-5 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-wrap gap-2">
           {bodyFilters.map((b) => (
             <button
@@ -85,8 +85,8 @@ export default function InventoryExplorer({
               onClick={() => setBody(b)}
               className={`rounded-full border px-4 py-2 text-[13px] font-medium transition-all duration-300 active:scale-[0.97] ${
                 body === b
-                  ? "border-transparent bg-white text-black"
-                  : "border-white/15 text-white/60 hover:border-white/40 hover:text-white"
+                  ? "border-transparent bg-[#1d1d1f] text-white"
+                  : "border-black/15 text-[#6e6e73] hover:border-black/30 hover:text-[#1d1d1f]"
               }`}
             >
               {b}
@@ -94,11 +94,11 @@ export default function InventoryExplorer({
           ))}
         </div>
         <div className="flex items-center gap-3">
-          <span className="text-xs uppercase tracking-widest text-white/40">Sort</span>
+          <span className="text-xs uppercase tracking-widest text-[#86868b]">Sort</span>
           <select
             value={sort}
             onChange={(e) => setSort(e.target.value as (typeof sorts)[number])}
-            className="rounded-full border border-white/15 bg-[#0c0c0e] px-4 py-2 text-[13px] text-white outline-none transition-colors hover:border-white/40"
+            className="rounded-xl border border-black/15 bg-white px-4 py-2 text-[13px] text-[#1d1d1f] outline-none transition-colors hover:border-black/30 focus:border-[#0071e3]"
           >
             {sorts.map((s) => (
               <option key={s} value={s}>
@@ -110,14 +110,14 @@ export default function InventoryExplorer({
       </div>
 
       <div className="mt-6 flex flex-wrap items-center gap-3">
-        <p className="text-sm text-white/40">{list.length} vehicles</p>
+        <p className="text-sm text-[#86868b]">{list.length} vehicles</p>
         {activeChips.map((c) => (
-          <span key={c} className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-xs text-white/60 backdrop-blur">
+          <span key={c} className="rounded-full border border-black/15 bg-[#f5f5f7] px-3 py-1 text-xs text-[#6e6e73]">
             {c}
           </span>
         ))}
         {activeChips.length > 0 && (
-          <Link href="/inventory" className="text-xs font-semibold text-blue-400 hover:text-blue-300">
+          <Link href="/inventory" className="text-xs font-semibold text-[#0071e3] hover:underline">
             Clear filters
           </Link>
         )}
@@ -130,9 +130,9 @@ export default function InventoryExplorer({
           ))}
         </div>
       ) : (
-        <div className="mt-10 rounded-2xl border border-white/10 bg-white/[0.03] p-12 text-center backdrop-blur-xl">
-          <p className="text-white">No vehicles match these filters.</p>
-          <Link href="/inventory" className="mt-3 inline-block text-sm font-semibold text-blue-400 hover:text-blue-300">
+        <div className="bento mt-10 bg-[#f5f5f7] p-12 text-center ring-1 ring-black/[0.06]">
+          <p className="text-[#1d1d1f]">No vehicles match these filters.</p>
+          <Link href="/inventory" className="mt-3 inline-block text-sm font-semibold text-[#0071e3] hover:underline">
             Clear filters
           </Link>
         </div>

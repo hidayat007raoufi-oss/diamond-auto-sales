@@ -5,6 +5,7 @@ import Reveal from "@/components/motion/Reveal";
 import Button from "@/components/site/Button";
 import ListingCard from "@/components/site/ListingCard";
 import LeadForm from "@/components/site/LeadForm";
+import SubNav from "@/components/site/SubNav";
 import Vehicle360 from "@/components/site/Vehicle360";
 import ImageZoom from "@/components/site/ImageZoom";
 import VehicleGallery from "@/components/site/VehicleGallery";
@@ -62,14 +63,19 @@ export default async function VehiclePage(props: PageProps<"/inventory/[id]">) {
     ? [{ frame: 0, label: "Engine Bay", x: "52%", y: "40%", caption: "Tap to view engine bay" }]
     : [];
 
-  const pillLink =
-    "rounded-full border border-white/15 bg-white/[0.04] px-6 py-3 text-center text-sm font-semibold text-white transition-colors hover:bg-white/[0.09]";
-
   return (
-    <div className="bg-black pt-28 text-white">
-      <div className="bg-[radial-gradient(120%_120%_at_50%_-10%,rgba(47,128,255,0.10),transparent_55%)]">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8">
-          <Link href="/inventory" className="text-sm text-white/40 transition-colors hover:text-white">
+    <div id="top" className="bg-white">
+      <SubNav
+        title={`${v.make} ${v.model}`}
+        cta={{ label: "Reserve", href: `/contact?intent=test-drive&vehicle=${v.id}` }}
+        tone="light"
+        appearAfter={520}
+      />
+
+      {/* ============ DARK FEATURE HERO ============ */}
+      <section className="bg-black pt-24 text-white sm:pt-28">
+        <div className="mx-auto max-w-7xl px-5 pb-20 sm:px-8 sm:pb-24">
+          <Link href="/inventory" className="text-sm text-white/50 transition-colors hover:text-white">
             ← Back to inventory
           </Link>
 
@@ -97,7 +103,7 @@ export default async function VehiclePage(props: PageProps<"/inventory/[id]">) {
             {/* Detail */}
             <div className="flex flex-col">
               <Reveal>
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-blue-400/90">
+                <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-[#2997ff]">
                   {v.year} · {v.bodyType}
                 </p>
                 <h1 className="mt-3 text-4xl font-semibold tracking-tight text-white sm:text-5xl">
@@ -109,48 +115,44 @@ export default async function VehiclePage(props: PageProps<"/inventory/[id]">) {
               <Reveal delay={100}>
                 <div className="mt-7 flex flex-wrap items-end gap-x-8 gap-y-3 border-y border-white/10 py-6">
                   <div>
-                    <p className="text-4xl font-bold tracking-tight text-chrome">{formatPrice(v.price)}</p>
-                    <p className="mt-1 text-xs text-white/40">est. {estMonthly(v.price)} · 72mo · $5k down</p>
+                    <p className="text-4xl font-semibold tracking-tight text-white">{formatPrice(v.price)}</p>
+                    <p className="mt-1 text-xs text-white/50">est. {estMonthly(v.price)} · 72mo · $5k down</p>
                   </div>
-                  <div className="text-sm text-white/50">
-                    <span className="text-blue-400">Diamond Certified</span> · 27-point inspected
+                  <div className="text-sm text-white/60">
+                    <span className="text-[#2997ff]">Diamond Certified</span> · 27-point inspected
                   </div>
                 </div>
               </Reveal>
 
-              <Reveal delay={160}>
-                <dl className="mt-7 grid grid-cols-2 gap-3 sm:grid-cols-4">
-                  {specs.slice(0, 4).map(([k, val]) => (
-                    <div key={k} className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-                      <dt className="text-[10px] uppercase tracking-widest text-white/40">{k}</dt>
-                      <dd className="mt-1 text-sm font-semibold text-white">{val}</dd>
-                    </div>
-                  ))}
-                </dl>
-                <dl className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
-                  {specs.slice(4).map(([k, val]) => (
-                    <div key={k} className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-                      <dt className="text-[10px] uppercase tracking-widest text-white/40">{k}</dt>
-                      <dd className="mt-1 text-sm font-semibold text-white">{val}</dd>
-                    </div>
-                  ))}
-                </dl>
+              {/* Exterior swatch */}
+              <Reveal delay={140}>
+                <div className="mt-6 flex items-center gap-3">
+                  <span
+                    aria-hidden
+                    className="h-6 w-6 rounded-full ring-1 ring-white/30"
+                    style={{ background: v.tone }}
+                  />
+                  <span className="text-sm text-white/70">{v.exterior}</span>
+                </div>
               </Reveal>
 
               {/* CTA cluster */}
               <Reveal delay={220}>
                 <div className="mt-9 flex flex-col gap-3">
-                  <Button href={`/contact?intent=test-drive&vehicle=${v.id}`} className="w-full sm:w-auto">
-                    Schedule Test Drive
-                  </Button>
+                  <Link
+                    href={`/contact?intent=test-drive&vehicle=${v.id}`}
+                    className="pill pill-blue w-full sm:w-auto"
+                  >
+                    Reserve / Schedule Test Drive
+                  </Link>
                   <div className="grid gap-3 sm:grid-cols-3">
-                    <Link href="/financing" className={pillLink}>
+                    <Link href="/financing" className="pill pill-dark">
                       Get Approved
                     </Link>
-                    <Link href={`/contact?intent=trade&vehicle=${v.id}`} className={pillLink}>
+                    <Link href={`/contact?intent=trade&vehicle=${v.id}`} className="pill pill-dark">
                       Value Your Trade
                     </Link>
-                    <a href="tel:+19198878666" className={pillLink}>
+                    <a href="tel:+19198878666" className="pill pill-dark">
                       Call (919) 887-8666
                     </a>
                   </div>
@@ -158,55 +160,73 @@ export default async function VehiclePage(props: PageProps<"/inventory/[id]">) {
               </Reveal>
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* Vehicle gallery */}
-          {media.length > 0 && (
-            <Reveal blur>
-              <div className="mt-24 border-t border-white/10 pt-16">
-                <h2 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">Vehicle gallery.</h2>
-                <p className="mt-2 text-white/60">Browse every angle in a premium studio presentation.</p>
-                <div className="mt-8">
-                  <VehicleGallery media={media} alt={`${v.year} ${v.make} ${v.model}`} />
+      {/* ============ WHITE BODY ============ */}
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        {/* Specs */}
+        <Reveal blur>
+          <div className="border-b border-black/[0.08] py-16">
+            <h2 className="text-2xl font-semibold tracking-tight text-[#1d1d1f] sm:text-3xl">Specifications.</h2>
+            <dl className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
+              {specs.map(([k, val]) => (
+                <div key={k} className="rounded-2xl bg-[#f5f5f7] p-4">
+                  <dt className="text-[11px] font-medium uppercase tracking-widest text-[#86868b]">{k}</dt>
+                  <dd className="mt-1 text-sm font-semibold text-[#1d1d1f]">{val}</dd>
                 </div>
-              </div>
-            </Reveal>
-          )}
+              ))}
+            </dl>
+          </div>
+        </Reveal>
 
-          {/* Ask about this vehicle */}
+        {/* Vehicle gallery */}
+        {media.length > 0 && (
           <Reveal blur>
-            <div className="mt-24 border-t border-white/10 pt-16">
-              <div className="grid gap-10 lg:grid-cols-2">
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-blue-400/90">Inquire</p>
-                  <h2 className="mt-4 text-2xl font-semibold tracking-tight text-white sm:text-3xl">
-                    Ask about this {v.make} {v.model}.
-                  </h2>
-                  <p className="mt-4 text-base leading-relaxed text-white/60">
-                    Reserve it, request more photos, or lock in your test drive. A Diamond specialist
-                    replies fast — usually within the hour during business hours.
-                  </p>
-                  <div className="mt-6 flex flex-wrap gap-3">
-                    <Button href={`/contact?intent=test-drive&vehicle=${v.id}`} variant="ghost">
-                      Schedule Test Drive
-                    </Button>
-                    <a href="tel:+19198878666" className={pillLink}>
-                      Call (919) 887-8666
-                    </a>
-                  </div>
-                </div>
-                <LeadForm />
+            <div className="border-b border-black/[0.08] py-16">
+              <h2 className="text-2xl font-semibold tracking-tight text-[#1d1d1f] sm:text-3xl">Vehicle gallery.</h2>
+              <p className="mt-2 text-[#6e6e73]">Browse every angle in a premium studio presentation.</p>
+              <div className="mt-8">
+                <VehicleGallery media={media} alt={`${v.year} ${v.make} ${v.model}`} />
               </div>
             </div>
           </Reveal>
+        )}
 
-          {/* Related */}
-          <div className="mt-24 border-t border-white/10 pt-16 pb-24">
-            <h2 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">More from the collection</h2>
-            <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {related.map((r) => (
-                <ListingCard key={r.id} vehicle={r} />
-              ))}
+        {/* Ask about this vehicle */}
+        <Reveal blur>
+          <div className="border-b border-black/[0.08] py-16">
+            <div className="grid gap-10 lg:grid-cols-2">
+              <div>
+                <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-[#0071e3]">Inquire</p>
+                <h2 className="mt-4 text-2xl font-semibold tracking-tight text-[#1d1d1f] sm:text-3xl">
+                  Ask about this {v.make} {v.model}.
+                </h2>
+                <p className="mt-4 text-base leading-relaxed text-[#6e6e73]">
+                  Reserve it, request more photos, or lock in your test drive. A Diamond specialist
+                  replies fast — usually within the hour during business hours.
+                </p>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <Button href={`/contact?intent=test-drive&vehicle=${v.id}`} variant="ghost">
+                    Schedule Test Drive
+                  </Button>
+                  <a href="tel:+19198878666" className="pill pill-light">
+                    Call (919) 887-8666
+                  </a>
+                </div>
+              </div>
+              <LeadForm />
             </div>
+          </div>
+        </Reveal>
+
+        {/* Related */}
+        <div className="py-16 pb-24">
+          <h2 className="text-2xl font-semibold tracking-tight text-[#1d1d1f] sm:text-3xl">More from the collection</h2>
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {related.map((r) => (
+              <ListingCard key={r.id} vehicle={r} />
+            ))}
           </div>
         </div>
       </div>
