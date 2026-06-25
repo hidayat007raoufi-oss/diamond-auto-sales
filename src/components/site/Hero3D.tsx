@@ -10,16 +10,17 @@ import * as THREE from "three";
  * Drop your BMW M3 GLB at: public/models/bmw-m3.glb  (and COMMIT it so
  * the deploy serves it). Update MODEL_URL if your filename differs.
  *
- * The color picker recolors any material whose name matches BODY_MATCHES
- * (the M3 body/paint material — by default the one literally named "body").
- * If none match, a dev-console warning lists the model's material names so
- * the exact name can be mapped.
+ * The color picker recolors the body/paint material. For this model that
+ * material is "BMW_E30_M3_PAINT" (matched via "bmw_e30_m3_paint"); generic
+ * "carpaint"/"bodypaint" tokens keep it working for other models too.
+ * Tokens are kept precise so trim like "BMW_E30_M3_BLACKOUT" is NOT caught.
+ * If none match, a dev-console warning lists the model's material names.
  *
  * If the GLB is missing or fails to load, the viewer falls back to the
  * stylized placeholder so the experience never breaks.
  * ------------------------------------------------------------------ */
 const MODEL_URL = "/models/bmw-m3.glb";
-const BODY_MATCHES = ["body", "paint", "carpaint", "car_paint", "lack", "exterior", "karosserie"];
+const BODY_MATCHES = ["bmw_e30_m3_paint", "carpaint", "car_paint", "bodypaint", "body_paint"];
 
 const PAINTS = [
   { name: "Alpine White", hex: "#e9eaee" },
