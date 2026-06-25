@@ -1,15 +1,26 @@
 "use client";
 
 import { Canvas } from "@react-three/fiber";
-import { ContactShadows, Environment, Lightformer, OrbitControls, RoundedBox } from "@react-three/drei";
-import { Suspense, useState } from "react";
+import { Center, ContactShadows, Environment, Lightformer, OrbitControls, RoundedBox, useGLTF } from "@react-three/drei";
+import { Component, Suspense, useEffect, useMemo, useState, type ReactNode } from "react";
+import * as THREE from "three";
 
 /* ------------------------------------------------------------------ *
- * Real-time paint finishes. Selecting one swaps the body material
- * color live (no reload). Swap the procedural CarMesh below for a real
- * GLB (useGLTF) when a licensed BMW M3 model is available — the paint
- * picker just needs to target the body material(s).
+ * MODEL
+ * Drop your BMW M3 GLB at: public/models/bmw-m3.glb  (and COMMIT it so
+ * the deploy serves it). Update MODEL_URL if your filename differs.
+ *
+ * The color picker recolors any material whose name matches BODY_MATCHES
+ * (the M3 body/paint material — by default the one literally named "body").
+ * If none match, a dev-console warning lists the model's material names so
+ * the exact name can be mapped.
+ *
+ * If the GLB is missing or fails to load, the viewer falls back to the
+ * stylized placeholder so the experience never breaks.
  * ------------------------------------------------------------------ */
+const MODEL_URL = "/models/bmw-m3.glb";
+const BODY_MATCHES = ["body", "paint", "carpaint", "car_paint", "lack", "exterior", "karosserie"];
+
 const PAINTS = [
   { name: "Alpine White", hex: "#e9eaee" },
   { name: "Frozen Black", hex: "#16171b" },
@@ -18,34 +29,84 @@ const PAINTS = [
   { name: "Imola Red", hex: "#b42233" },
 ] as const;
 
-/** Stylized low-poly coupe — placeholder geometry with a paintable body. */
-function CarMesh({ color }: { color: string }) {
+const isBodyMaterial = (name?: string) => {
+  const n = (name ?? "").toLowerCase();
+  return BODY_MATCHES.some((m) => n.includes(m));
+};
+
+/** Real model: loads the GLB, recolors the body material(s) live, auto-fits. */
+function GltfCar({ color }: { color: string }) {
+  const { scene } = useGLTF(MODEL_URL, true, true);
+
+  const { object, bodyMats, scale } = useMemo(() => {
+    const root = scene.clone(true);
+    const bodyMats: THREE.MeshStandardMaterial[] = [];
+    const allNames = new Set<string>();
+
+    root.traverse((o) => {
+      const mesh = o as THREE.Mesh;
+      if (!mesh.isMesh) return;
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
+      const mats = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+      const next = mats.map((m) => {
+        if (!m) return m;
+        allNames.add(m.name);
+        if (isBodyMaterial(m.name)) {
+          const cloned = m.clone() as THREE.MeshStandardMaterial; // clone so we don't mutate the cache
+          bodyMats.push(cloned);
+          return cloned;
+        }
+        return m;
+      });
+      mesh.material = Array.isArray(mesh.material) ? next : next[0]!;
+    });
+
+    if (bodyMats.length === 0 && process.env.NODE_ENV !== "production") {
+      console.warn(
+        `[Hero3D] No body material matched (${BODY_MATCHES.join(", ")}). ` +
+          `Materials found: ${[...allNames].join(", ") || "none"}`
+      );
+    }
+
+    // Auto-fit any model size into a consistent on-screen scale.
+    const box = new THREE.Box3().setFromObject(root);
+    const size = box.getSize(new THREE.Vector3());
+    const maxDim = Math.max(size.x, size.y, size.z) || 1;
+    return { object: root, bodyMats, scale: 3.6 / maxDim };
+  }, [scene]);
+
+  useEffect(() => {
+    const c = new THREE.Color(color);
+    bodyMats.forEach((m) => m.color.copy(c));
+  }, [bodyMats, color]);
+
+  return (
+    <Center bottom>
+      <primitive object={object} scale={scale} />
+    </Center>
+  );
+}
+
+/** Stylized fallback coupe — used until a real GLB is present. */
+function ProceduralCar({ color }: { color: string }) {
   return (
     <group position={[0, 0, 0]} rotation={[0, -0.5, 0]}>
-      {/* lower body — the painted surface */}
       <RoundedBox args={[3.7, 0.7, 1.65]} radius={0.22} smoothness={6} position={[0, 0.6, 0]} castShadow receiveShadow>
         <meshPhysicalMaterial color={color} metalness={0.6} roughness={0.32} clearcoat={1} clearcoatRoughness={0.12} />
       </RoundedBox>
-
-      {/* nose / hood taper */}
       <RoundedBox args={[1.3, 0.5, 1.5]} radius={0.18} smoothness={5} position={[1.45, 0.62, 0]} castShadow>
         <meshPhysicalMaterial color={color} metalness={0.6} roughness={0.32} clearcoat={1} clearcoatRoughness={0.12} />
       </RoundedBox>
-
-      {/* greenhouse / cabin (glass) */}
       <RoundedBox args={[1.95, 0.62, 1.42]} radius={0.16} smoothness={5} position={[-0.15, 1.12, 0]} castShadow>
         <meshPhysicalMaterial color="#0a0b0e" metalness={0.3} roughness={0.08} transmission={0.15} />
       </RoundedBox>
-
-      {/* headlights */}
       {[-0.62, 0.62].map((z) => (
         <mesh key={z} position={[2.04, 0.66, z]}>
           <boxGeometry args={[0.08, 0.18, 0.34]} />
           <meshStandardMaterial color="#dfeaff" emissive="#bcd4ff" emissiveIntensity={0.5} />
         </mesh>
       ))}
-
-      {/* wheels */}
       {([
         [1.25, 0.85],
         [1.25, -0.85],
@@ -67,6 +128,22 @@ function CarMesh({ color }: { color: string }) {
   );
 }
 
+/** Falls back to the placeholder if the GLB is missing or errors. */
+class ModelBoundary extends Component<{ fallback: ReactNode; children: ReactNode }, { failed: boolean }> {
+  state = { failed: false };
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+  componentDidCatch() {
+    if (process.env.NODE_ENV !== "production") {
+      console.warn(`[Hero3D] GLB at ${MODEL_URL} failed to load — using placeholder.`);
+    }
+  }
+  render() {
+    return this.state.failed ? this.props.fallback : this.props.children;
+  }
+}
+
 export default function Hero3D({ className = "" }: { className?: string }) {
   const [color, setColor] = useState<string>(PAINTS[0].hex);
   const [interacted, setInteracted] = useState(false);
@@ -80,23 +157,21 @@ export default function Hero3D({ className = "" }: { className?: string }) {
         gl={{ antialias: true, alpha: true }}
         className="!h-full !w-full"
       >
-        <Suspense fallback={null}>
-          <CarMesh color={color} />
+        <ModelBoundary fallback={<ProceduralCar color={color} />}>
+          <Suspense fallback={<ProceduralCar color={color} />}>
+            <GltfCar color={color} />
+          </Suspense>
+        </ModelBoundary>
 
-          {/* ground + contact shadow */}
-          <ContactShadows position={[0, 0, 0]} opacity={0.55} scale={16} blur={2.6} far={5} color="#000000" />
-
-          {/* in-scene studio env (no external HDR) for metallic reflections */}
-          <Environment resolution={256} frames={1}>
-            <Lightformer intensity={2.2} position={[0, 5, -4]} scale={[12, 5, 1]} />
-            <Lightformer intensity={1.3} position={[-5, 2, 3]} scale={[7, 7, 1]} />
-            <Lightformer intensity={1.1} position={[5, 2, 3]} scale={[7, 7, 1]} />
-            <Lightformer intensity={0.8} position={[0, -3, 2]} scale={[10, 4, 1]} />
-          </Environment>
-
-          <ambientLight intensity={0.35} />
-          <directionalLight position={[6, 9, 4]} intensity={1.3} castShadow shadow-mapSize={[1024, 1024]} />
-        </Suspense>
+        <ContactShadows position={[0, 0, 0]} opacity={0.55} scale={16} blur={2.6} far={5} color="#000000" />
+        <Environment resolution={256} frames={1}>
+          <Lightformer intensity={2.2} position={[0, 5, -4]} scale={[12, 5, 1]} />
+          <Lightformer intensity={1.3} position={[-5, 2, 3]} scale={[7, 7, 1]} />
+          <Lightformer intensity={1.1} position={[5, 2, 3]} scale={[7, 7, 1]} />
+          <Lightformer intensity={0.8} position={[0, -3, 2]} scale={[10, 4, 1]} />
+        </Environment>
+        <ambientLight intensity={0.35} />
+        <directionalLight position={[6, 9, 4]} intensity={1.3} castShadow shadow-mapSize={[1024, 1024]} />
 
         <OrbitControls
           makeDefault
@@ -139,3 +214,6 @@ export default function Hero3D({ className = "" }: { className?: string }) {
     </div>
   );
 }
+
+// Preload the model so it's ready the moment it exists at MODEL_URL.
+useGLTF.preload(MODEL_URL);
