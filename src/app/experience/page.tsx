@@ -19,61 +19,60 @@ const gallery = [
 export default function ExperiencePage() {
   return (
     <div className="no-scrollbar h-[100svh] w-screen snap-y snap-mandatory overflow-y-scroll overflow-x-hidden bg-black text-white">
-      {/* ===================== SECTION 1 · 3D WebGL (placeholder) ===================== */}
+      {/* ===================== SECTION 1 · 3D WebGL model ===================== */}
       <section
         aria-label="3D model"
         className="relative flex h-[100svh] w-full snap-start snap-always items-center justify-center overflow-hidden"
       >
-        {/* ambient cinematic light */}
+        {/* ambient cinematic light behind the model */}
         <div
           aria-hidden
-          className="absolute inset-0 bg-[radial-gradient(60%_60%_at_50%_46%,rgba(47,128,255,0.18),transparent_70%)]"
+          className="absolute inset-0 bg-[radial-gradient(60%_60%_at_50%_50%,rgba(47,128,255,0.16),transparent_72%)]"
         />
-        <div aria-hidden className="ambient-sheen absolute inset-0 opacity-40" />
 
-        {/* rotating 3D gizmo — stands in for the WebGL canvas */}
-        <div aria-hidden className="relative h-[78vmin] w-[78vmin] [transform-style:preserve-3d]">
-          <div className="absolute inset-0" style={{ transform: "rotateX(74deg)" }}>
-            <div className="spin-slow h-full w-full rounded-full border border-white/15" />
-          </div>
-          <div className="absolute inset-[12%]" style={{ transform: "rotateX(74deg) rotateZ(30deg)" }}>
-            <div className="spin-rev h-full w-full rounded-full border border-[#2f80ff]/35" />
-          </div>
-          <div className="absolute inset-[26%]" style={{ transform: "rotateY(70deg)" }}>
-            <div className="spin-slow h-full w-full rounded-full border border-white/10" />
-          </div>
-          <div className="absolute inset-0 grid place-items-center">
-            <div className="h-24 w-24 rounded-full bg-[radial-gradient(circle,rgba(120,180,255,0.55),transparent_70%)] blur-xl" />
-          </div>
-        </div>
+        {/* Interactive 3D model (Sketchfab WebGL) — full-bleed, transparent bg */}
+        <iframe
+          title="BMW M3 E30 — 3D model"
+          src="https://sketchfab.com/models/ac3c7013434e403e8faff87948caf422/embed?autospin=0.3&autostart=1&transparent=1&ui_theme=dark&ui_infos=0&ui_controls=1&ui_stop=0&ui_watermark_link=0&dnt=1"
+          allow="autoplay; fullscreen; xr-spatial-tracking"
+          allowFullScreen
+          className="absolute inset-0 h-full w-full"
+          style={{ border: 0 }}
+        />
 
-        {/* copy */}
-        <div className="relative z-10 px-6 text-center">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.4em] text-white/55">
+        {/* edge vignettes for text legibility — center stays clickable for orbit */}
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/70 to-transparent" />
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-black/85 to-transparent" />
+
+        {/* top-left brand + eyebrow */}
+        <div className="pointer-events-none absolute left-6 top-6 z-10">
+          <Link href="/" className="pointer-events-auto text-[12px] font-medium text-white/60 transition-colors hover:text-white">
+            ← Diamond Auto
+          </Link>
+          <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.4em] text-white/55">
             Diamond · 3D Experience
           </p>
-          <h1 className="mt-5 text-balance text-5xl font-semibold tracking-tight sm:text-7xl md:text-8xl">
-            The machine,<br className="hidden sm:block" /> in three dimensions.
+        </div>
+
+        {/* bottom headline + hint (kept clear of the model's center) */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 p-8 sm:p-12">
+          <h1
+            className="text-balance text-4xl font-semibold tracking-tight sm:text-6xl md:text-7xl"
+            style={{ textShadow: "0 2px 40px rgba(0,0,0,0.7)" }}
+          >
+            BMW M3 E30.
           </h1>
-          <p className="mt-7 font-mono text-[11px] uppercase tracking-[0.32em] text-white/35">
-            WebGL model · mount point
+          <p className="mt-3 max-w-md text-base text-white/70 sm:text-lg" style={{ textShadow: "0 2px 30px rgba(0,0,0,0.6)" }}>
+            Drag to orbit. Scroll to keep going.
           </p>
         </div>
 
         {/* scroll cue */}
-        <div aria-hidden className="absolute bottom-8 left-1/2 -translate-x-1/2">
+        <div aria-hidden className="pointer-events-none absolute bottom-7 left-1/2 z-10 -translate-x-1/2">
           <div className="flex h-9 w-5 items-start justify-center rounded-full border border-white/25 p-1">
             <span className="scroll-hint h-2 w-1 rounded-full bg-white/70" />
           </div>
         </div>
-
-        {/* minimal exit affordance (kept tiny + edge, not a panel) */}
-        <Link
-          href="/"
-          className="absolute left-6 top-6 z-10 text-[12px] font-medium text-white/50 transition-colors hover:text-white"
-        >
-          ← Diamond Auto
-        </Link>
       </section>
 
       {/* ===================== SECTION 2 · full-screen scroll-snap gallery ===================== */}
