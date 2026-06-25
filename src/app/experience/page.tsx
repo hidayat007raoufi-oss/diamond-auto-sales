@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import SketchfabModel from "@/components/site/SketchfabModel";
+import Hero3DMount from "@/components/site/Hero3DMount";
 
 export const metadata: Metadata = {
   title: "Experience",
@@ -20,60 +20,49 @@ const gallery = [
 export default function ExperiencePage() {
   return (
     <div className="no-scrollbar h-[100svh] w-screen snap-y snap-mandatory overflow-y-scroll overflow-x-hidden bg-black text-white">
-      {/* ===================== SECTION 1 · 3D WebGL model ===================== */}
+      {/* ===================== SECTION 1 · 3D configurator ===================== */}
       <section
-        aria-label="3D model"
-        className="relative flex h-[100svh] w-full snap-start snap-always items-center justify-center overflow-hidden"
+        aria-label="3D configurator"
+        className="relative h-[100svh] w-full snap-start snap-always overflow-hidden"
       >
         {/* ambient cinematic light behind the model */}
         <div
           aria-hidden
-          className="absolute inset-0 bg-[radial-gradient(60%_60%_at_50%_50%,rgba(47,128,255,0.16),transparent_72%)]"
+          className="absolute inset-0 bg-[radial-gradient(62%_62%_at_50%_48%,rgba(47,128,255,0.15),transparent_72%)]"
         />
 
-        {/* Interactive 3D model (Sketchfab WebGL) with brand loader + clean credit */}
-        <SketchfabModel
-          uid="ac3c7013434e403e8faff87948caf422"
-          title="BMW M3 E30"
-          author="Martin Trafas"
-          authorUrl="https://sketchfab.com/TinoD2"
-          modelUrl="https://sketchfab.com/3d-models/free-bmw-m3-e30-ac3c7013434e403e8faff87948caf422"
-          className="absolute inset-0"
-        />
+        {/* Interactive WebGL viewer (R3F) — drag to rotate, live paint picker.
+            Fills the section edge to edge; the overlays below are absolutely
+            positioned at the corners so they never box or shrink the canvas. */}
+        <Hero3DMount className="absolute inset-0" />
 
         {/* edge vignettes for text legibility — center stays clickable for orbit */}
-        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/70 to-transparent" />
-        <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-black/85 to-transparent" />
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-black/65 to-transparent" />
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-black/70 to-transparent" />
 
-        {/* top-left brand + eyebrow */}
-        <div className="pointer-events-none absolute left-6 top-6 z-10">
+        {/* top-left brand + title (corner-anchored, never wraps the model) */}
+        <div className="pointer-events-none absolute left-6 top-6 z-10 max-w-[80vw]">
           <Link href="/" className="pointer-events-auto text-[12px] font-medium text-white/60 transition-colors hover:text-white">
             ← Diamond Auto
           </Link>
-          <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.4em] text-white/55">
-            Diamond · 3D Experience
+          <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.36em] text-white/55">
+            Diamond · 3D Configurator
           </p>
-        </div>
-
-        {/* bottom headline + hint (kept clear of the model's center) */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 p-8 sm:p-12">
           <h1
-            className="text-balance text-4xl font-semibold tracking-tight sm:text-6xl md:text-7xl"
-            style={{ textShadow: "0 2px 40px rgba(0,0,0,0.7)" }}
+            className="mt-2 text-balance text-3xl font-semibold tracking-tight sm:text-5xl"
+            style={{ textShadow: "0 2px 40px rgba(0,0,0,0.6)" }}
           >
-            BMW M3 E30.
+            BMW M3 Competition.
           </h1>
-          <p className="mt-3 max-w-md text-base text-white/70 sm:text-lg" style={{ textShadow: "0 2px 30px rgba(0,0,0,0.6)" }}>
-            Drag to orbit. Scroll to keep going.
+          <p className="mt-2 text-sm text-white/60" style={{ textShadow: "0 2px 30px rgba(0,0,0,0.6)" }}>
+            Drag to rotate · pick a finish below.
           </p>
         </div>
 
-        {/* scroll cue */}
-        <div aria-hidden className="pointer-events-none absolute bottom-7 left-1/2 z-10 -translate-x-1/2">
-          <div className="flex h-9 w-5 items-start justify-center rounded-full border border-white/25 p-1">
-            <span className="scroll-hint h-2 w-1 rounded-full bg-white/70" />
-          </div>
-        </div>
+        {/* subtle "more below" cue, tucked bottom-right so it clears the picker */}
+        <p aria-hidden className="pointer-events-none absolute bottom-7 right-6 z-10 text-[11px] uppercase tracking-[0.28em] text-white/35">
+          Scroll ↓
+        </p>
       </section>
 
       {/* ===================== SECTION 2 · full-screen scroll-snap gallery ===================== */}

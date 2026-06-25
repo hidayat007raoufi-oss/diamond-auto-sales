@@ -1,6 +1,15 @@
 "use client";
 
-import { useEffect, useRef, useState, type ElementType, type ReactNode } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type ElementType, type ReactNode, type Ref } from "react";
+
+/** Concrete prop shape so the polymorphic tag type-checks cleanly even under
+ *  global JSX augmentation (e.g. from @react-three/fiber). */
+type RevealTag = React.ComponentType<{
+  ref?: Ref<HTMLElement>;
+  className?: string;
+  style?: CSSProperties;
+  children?: ReactNode;
+}>;
 
 type RevealProps = {
   children: ReactNode;
@@ -23,7 +32,7 @@ export default function Reveal({
   className = "",
   as,
 }: RevealProps) {
-  const Tag = (as ?? "div") as ElementType;
+  const Tag = (as ?? "div") as unknown as RevealTag;
   const ref = useRef<HTMLElement | null>(null);
   const [visible, setVisible] = useState(false);
 
