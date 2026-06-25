@@ -22,7 +22,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 const u = (id: string) =>
   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1600&q=80`;
 
-const DEFAULT_FRAMES: string[] = [
+export const DEFAULT_FRAMES: string[] = [
   "1544636331-e26879cd4d9b",
   "1503376780353-7e6692767b70",
   "1617814076367-b759c7d7e738",
@@ -56,6 +56,15 @@ type CarShowcaseProps = {
   title?: string;
   subtitle?: string;
   className?: string;
+  /**
+   * Controlled mode: when provided, the rendered frame is driven externally
+   * (e.g. by scroll) and internal drag/auto-rotate are disabled.
+   */
+  frameIndex?: number;
+  /** Toggle the built-in title / hint / scrubber overlay (off when a parent supplies its own). */
+  chrome?: boolean;
+  /** Notifies the cached-state to a parent (e.g. to gate a scroll scene). */
+  onReady?: (ready: boolean) => void;
 };
 
 export default function CarShowcase({
@@ -63,9 +72,13 @@ export default function CarShowcase({
   title = "Diamond Performance",
   subtitle = "Drag to explore every angle",
   className = "",
+  frameIndex,
+  chrome = true,
+  onReady,
 }: CarShowcaseProps) {
   const total = frames.length;
   const prefersReduced = useReducedMotion();
+  const controlled = frameIndex !== undefined;
 
   const [index, setIndex] = useState(0);
   const [loaded, setLoaded] = useState(0);
@@ -74,6 +87,12 @@ export default function CarShowcase({
 
   const stageRef = useRef<HTMLDivElement | null>(null);
   const baseIndex = useRef(0);
+
+  const activeIndex = controlled ? wrap(frameIndex as number, total) : index;
+
+  useEffect(() => {
+    onReady?.(ready);
+  }, [ready, onReady]);
 
   /* ---------- Pre-load / cache every frame (settle on load OR error) ---------- */
   useEffect(() => {
@@ -113,13 +132,13 @@ export default function CarShowcase({
 
   /* ---------- Idle auto-rotate until the user takes over ---------- */
   useEffect(() => {
-    if (!ready || interacted || prefersReduced) return;
+    if (controlled || !ready || interacted || prefersReduced) return;
     const id = window.setInterval(
       () => setIndex((i) => wrap(i + 1, total)),
       120
     );
     return () => window.clearInterval(id);
-  }, [ready, interacted, prefersReduced, total]);
+  }, [controlled, ready, interacted, prefersReduced, total]);
 
   /* ---------- Gesture: map horizontal swipe distance → frame index ---------- */
   const onPanStart = useCallback(() => {
@@ -139,7 +158,7 @@ export default function CarShowcase({
     [total]
   );
 
-  const progress = total > 1 ? index / (total - 1) : 0;
+  const progress = total > 1 ? activeIndex / (total - 1) : 0;
 
   return (
     <div
@@ -149,9 +168,11 @@ export default function CarShowcase({
       {/* ---------- Frame stack (all preloaded; only active is visible → zero flicker) ---------- */}
       <motion.div
         ref={stageRef}
-        onPanStart={onPanStart}
-        onPan={onPan}
-        className="relative aspect-[16/10] w-full cursor-grab touch-none select-none active:cursor-grabbing"
+        onPanStart={controlled ? undefined : onPanStart}
+        onPan={controlled ? undefined : onPan}
+        className={`relative h-full w-full select-none ${
+          controlled ? "" : "aspect-[16/10] cursor-grab touch-none active:cursor-grabbing"
+        }`}
       >
         {frames.map((src, i) => (
           // eslint-disable-next-line @next/next/no-img-element
@@ -160,9 +181,9 @@ export default function CarShowcase({
             src={src}
             alt={`${title} — frame ${i + 1} of ${total}`}
             draggable={false}
-            aria-hidden={i !== index}
+            aria-hidden={i !== activeIndex}
             className="pointer-events-none absolute inset-0 h-full w-full object-cover"
-            style={{ opacity: i === index ? 1 : 0 }}
+            style={{ opacity: i === activeIndex ? 1 : 0 }}
           />
         ))}
 
@@ -176,7 +197,8 @@ export default function CarShowcase({
           }}
         />
 
-        {/* ---------- Overlay UI ---------- */}
+        {/* ---------- Built-in overlay UI (drag mode) ---------- */}
+        {chrome && (
         <div className="pointer-events-none absolute inset-0 flex flex-col justify-between p-6 sm:p-10">
           {/* Title block */}
           <div>
@@ -214,11 +236,12 @@ export default function CarShowcase({
                 />
               </div>
               <span className="w-14 text-right font-mono text-[11px] tabular-nums tracking-widest text-white/55">
-                {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
+                {String(activeIndex + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
               </span>
             </div>
           </div>
         </div>
+        )}
       </motion.div>
 
       {/* ---------- Premium minimalist loader ---------- */}
