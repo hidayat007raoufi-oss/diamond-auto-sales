@@ -4,7 +4,7 @@ import { vehicles } from "@/lib/vehicles";
 const base = "https://diamondautonc.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const routes = ["", "/inventory", "/financing", "/services", "/programs", "/contact"].map(
+  const routes = ["", "/inventory", "/rentals", "/financing", "/services", "/our-story", "/contact"].map(
     (path) => ({
       url: `${base}${path}`,
       lastModified: new Date(),

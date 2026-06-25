@@ -20,14 +20,16 @@ export default async function InventoryPage(props: PageProps<"/inventory">) {
     mileage: str(sp.mileage),
   };
   return (
-    <div className="mx-auto max-w-7xl px-5 pb-28 pt-36 sm:px-8">
-      <SectionHeading
-        kicker="Inventory"
-        title={<>Available inventory.</>}
-        intro="Browse selected vehicles ready for sale in Raleigh."
-      />
-      <div className="mt-12">
-        <InventoryExplorer vehicles={vehicles} initial={initial} />
+    <div className="bg-white">
+      <div className="mx-auto max-w-7xl px-5 pb-28 pt-24 sm:px-8 sm:pt-28">
+        <SectionHeading
+          kicker="Inventory"
+          title={<>The current collection.</>}
+          intro="Hand-selected luxury and performance vehicles — each Diamond Certified, 27-point inspected, and priced up front. Filter, compare, and book a test drive."
+        />
+        <div className="mt-12">
+          <InventoryExplorer vehicles={vehicles} initial={initial} />
+        </div>
       </div>
     </div>
   );

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import VehicleCard from "@/components/site/VehicleCard";
+import ListingCard from "@/components/site/ListingCard";
 import type { Vehicle } from "@/lib/vehicles";
 
 const bodyFilters = ["All", "Coupe", "Sedan", "SUV", "Truck"] as const;
@@ -77,7 +77,7 @@ export default function InventoryExplorer({
 
   return (
     <div>
-      <div className="flex flex-col gap-4 border-y border-line py-5 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-4 border-y border-black/[0.08] py-5 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-wrap gap-2">
           {bodyFilters.map((b) => (
             <button
@@ -85,8 +85,8 @@ export default function InventoryExplorer({
               onClick={() => setBody(b)}
               className={`rounded-full border px-4 py-2 text-[13px] font-medium transition-all duration-300 active:scale-[0.97] ${
                 body === b
-                  ? "border-transparent bg-white text-black"
-                  : "border-line text-dim hover:border-line-strong hover:text-white"
+                  ? "border-transparent bg-[#1d1d1f] text-white"
+                  : "border-black/15 text-[#6e6e73] hover:border-black/30 hover:text-[#1d1d1f]"
               }`}
             >
               {b}
@@ -94,14 +94,14 @@ export default function InventoryExplorer({
           ))}
         </div>
         <div className="flex items-center gap-3">
-          <span className="text-xs uppercase tracking-widest text-mute">Sort</span>
+          <span className="text-xs uppercase tracking-widest text-[#86868b]">Sort</span>
           <select
             value={sort}
             onChange={(e) => setSort(e.target.value as (typeof sorts)[number])}
-            className="rounded-full border border-line bg-surface px-4 py-2 text-[13px] text-white outline-none transition-colors hover:border-line-strong"
+            className="rounded-xl border border-black/15 bg-white px-4 py-2 text-[13px] text-[#1d1d1f] outline-none transition-colors hover:border-black/30 focus:border-[#0071e3]"
           >
             {sorts.map((s) => (
-              <option key={s} value={s} className="bg-surface text-white">
+              <option key={s} value={s}>
                 {s}
               </option>
             ))}
@@ -110,29 +110,29 @@ export default function InventoryExplorer({
       </div>
 
       <div className="mt-6 flex flex-wrap items-center gap-3">
-        <p className="text-sm text-mute">{list.length} vehicles</p>
+        <p className="text-sm text-[#86868b]">{list.length} vehicles</p>
         {activeChips.map((c) => (
-          <span key={c} className="rounded-full border border-line bg-surface px-3 py-1 text-xs text-dim">
+          <span key={c} className="rounded-full border border-black/15 bg-[#f5f5f7] px-3 py-1 text-xs text-[#6e6e73]">
             {c}
           </span>
         ))}
         {activeChips.length > 0 && (
-          <Link href="/inventory" className="text-xs font-medium text-accent hover:underline">
+          <Link href="/inventory" className="text-xs font-semibold text-[#0071e3] hover:underline">
             Clear filters
           </Link>
         )}
       </div>
 
       {list.length > 0 ? (
-        <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {list.map((v) => (
-            <VehicleCard key={v.id} vehicle={v} />
+            <ListingCard key={v.id} vehicle={v} />
           ))}
         </div>
       ) : (
-        <div className="mt-10 rounded-3xl border border-line bg-surface/50 p-12 text-center">
-          <p className="text-white">No vehicles match these filters.</p>
-          <Link href="/inventory" className="mt-3 inline-block text-sm font-medium text-accent hover:underline">
+        <div className="bento mt-10 bg-[#f5f5f7] p-12 text-center ring-1 ring-black/[0.06]">
+          <p className="text-[#1d1d1f]">No vehicles match these filters.</p>
+          <Link href="/inventory" className="mt-3 inline-block text-sm font-semibold text-[#0071e3] hover:underline">
             Clear filters
           </Link>
         </div>

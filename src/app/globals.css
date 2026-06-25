@@ -18,9 +18,19 @@
   --color-silver: #c9ccd1;
   --color-silver-bright: #e9ebee;
 
-  --color-accent: #b9c4d2;
-  --color-accent-bright: #e4ebf2;
+  --color-accent: #0071e3;
+  --color-accent-bright: #0077ed;
   --color-ice: #cfd8e2;
+  --color-neon: #0071e3;
+
+  /* Apple two-tone palette */
+  --color-ink: #1d1d1f;        /* primary text on light */
+  --color-ink-soft: #6e6e73;   /* secondary text on light */
+  --color-blue: #0071e3;       /* Apple link/CTA blue */
+  --color-blue-hover: #0077ed;
+  --color-panel: #fafafa;      /* light bento surface */
+  --color-panel-2: #f5f5f7;    /* light section bg */
+  --color-dark-panel: #1d1d1f; /* dark bento surface */
 
   --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
     "Inter", system-ui, sans-serif;
@@ -31,55 +41,48 @@
 }
 
 :root {
-  color-scheme: dark;
-}
-
-* {
-  border-color: var(--color-line);
+  color-scheme: light;
 }
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 5.5rem;
+  scroll-padding-top: 4rem;
   -webkit-text-size-adjust: 100%;
 }
 
 html {
-  background: #000000;
+  background: #ffffff;
 }
 body {
-  background: transparent;
-  color: var(--color-text);
+  background: #ffffff;
+  color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
 }
 
-/* Blue metallic accent text */
+/* Blue accent text (flat) */
 .text-azure {
-  background: linear-gradient(180deg, #eaf3ff 0%, #60a5fa 48%, #2563eb 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--color-blue);
 }
 
 ::selection {
-  background: var(--color-silver);
+  background: #b3d4fd;
   color: #000;
 }
 
 /* Refined scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 12px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--color-bg);
+  background: #ffffff;
 }
 ::-webkit-scrollbar-thumb {
-  background: #26272c;
+  background: #c7c7cc;
   border-radius: 999px;
-  border: 2px solid var(--color-bg);
+  border: 3px solid #ffffff;
 }
 
 /* ---------- Fluid display typography ---------- */
@@ -92,12 +95,9 @@ body {
   text-wrap: balance;
 }
 
-/* Metallic silver text */
+/* Emphasis headline — flat, inherits section color */
 .text-metal {
-  background: linear-gradient(180deg, #ffffff 0%, #cfd2d6 45%, #8d9096 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: inherit;
 }
 
 /* Eyebrow / kicker label */
@@ -597,12 +597,12 @@ textarea:focus-visible,
   width: 20px;
   border-radius: 50%;
   background: #ffffff;
-  border: 1px solid rgba(185, 196, 210, 0.5);
-  box-shadow: 0 0 0 6px rgba(185, 196, 210, 0.16), 0 0 14px rgba(185, 196, 210, 0.4);
+  border: 1px solid rgba(96, 165, 250, 0.6);
+  box-shadow: 0 0 0 5px rgba(59, 130, 246, 0.18), 0 0 16px rgba(59, 130, 246, 0.55);
   transition: box-shadow 0.25s var(--ease-lux);
 }
 .lux-range::-webkit-slider-thumb:hover {
-  box-shadow: 0 0 0 9px rgba(185, 196, 210, 0.22), 0 0 18px rgba(185, 196, 210, 0.6);
+  box-shadow: 0 0 0 8px rgba(59, 130, 246, 0.24), 0 0 22px rgba(59, 130, 246, 0.7);
 }
 .lux-range::-moz-range-thumb {
   height: 20px;
@@ -610,7 +610,279 @@ textarea:focus-visible,
   border-radius: 50%;
   background: #ffffff;
   border: none;
-  box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 6px rgba(59, 130, 246, 0.18);
+}
+
+/* ============================================================
+   APPLE-INSPIRED PREMIUM LAYER — electric blue · chrome · glass
+   ============================================================ */
+
+/* Apple-blue accent text (flat — no gradient) */
+.text-electric {
+  color: var(--color-blue);
+}
+
+/* Headline emphasis — inherits the section's text color (flat) */
+.text-chrome {
+  color: inherit;
+}
+
+/* Premium glass card */
+.glass-card {
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+}
+
+/* Electric glow for CTAs / focal elements */
+.glow-blue {
+  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.35),
+    0 14px 50px -12px rgba(47, 128, 255, 0.55);
+}
+
+/* Apple-style fluid hero scale */
+.hero-display {
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.04;
+  font-size: clamp(2.6rem, 7vw, 5.6rem);
+}
+
+/* ============================================================
+   APPLE TWO-TONE SYSTEM — flat black/white blocks, solid blue
+   ============================================================ */
+
+/* Massive Apple headline (single feature blocks) */
+.apple-headline {
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.05;
+  font-size: clamp(2.75rem, 8vw, 6rem);
+}
+.apple-sub {
+  font-weight: 400;
+  letter-spacing: 0.004em;
+  line-height: 1.2;
+  font-size: clamp(1.25rem, 2.4vw, 1.9rem);
+}
+/* Micro-text metric label */
+.apple-metric-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Pill CTAs (980px radius like Apple) */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border-radius: 980px;
+  padding: 0.72rem 1.35rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1;
+  transition: background-color 0.22s var(--ease-out-soft), color 0.22s var(--ease-out-soft), transform 0.22s var(--ease-out-soft);
+}
+.pill-blue {
+  background: var(--color-blue);
+  color: #fff;
+}
+.pill-blue:hover {
+  background: var(--color-blue-hover);
+}
+.pill-light {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--color-ink);
+}
+.pill-light:hover {
+  background: rgba(0, 0, 0, 0.09);
+}
+.pill-dark {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+.pill-dark:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+/* Apple text-link with chevron */
+.link-apple {
+  color: var(--color-blue);
+  font-weight: 400;
+}
+.link-apple:hover {
+  text-decoration: underline;
+}
+
+/* Bento tile — soft radius, hidden border, smooth hover */
+.bento {
+  border-radius: 28px;
+  overflow: hidden;
+  transition: transform 0.4s var(--ease-lux), box-shadow 0.4s var(--ease-lux);
+}
+.bento-hover:hover {
+  transform: translateY(-4px);
+}
+
+/* Frosted sticky sub-nav (drops in after the section hero) */
+.subnav-frost {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+.subnav-frost-dark {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ---------- Hero: 3D logo tilt holder + neon sweep ---------- */
+.tilt-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.18s var(--ease-out-soft);
+  will-change: transform;
+}
+@keyframes neonSweep {
+  0% {
+    transform: translateX(-130%) skewX(-16deg);
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateX(220%) skewX(-16deg);
+    opacity: 0;
+  }
+}
+.neon-sweep {
+  background: linear-gradient(
+    100deg,
+    transparent 40%,
+    rgba(120, 180, 255, 0.55) 50%,
+    transparent 60%
+  );
+  mix-blend-mode: screen;
+  animation: neonSweep 5.5s var(--ease-out-soft) infinite;
+}
+
+/* Floating diamond particles (hero + intro) */
+@keyframes diamondFloat {
+  0% {
+    transform: translateY(0) translateX(0) rotate(45deg) scale(1);
+    opacity: 0;
+  }
+  12%,
+  88% {
+    opacity: var(--d-opacity, 0.55);
+  }
+  50% {
+    transform: translateY(-26px) translateX(10px) rotate(45deg) scale(1.08);
+  }
+  100% {
+    transform: translateY(0) translateX(0) rotate(45deg) scale(1);
+    opacity: 0;
+  }
+}
+.diamond-float {
+  position: absolute;
+  background: linear-gradient(135deg, #dbeaff, #3b82f6);
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.7), 0 0 28px rgba(47, 128, 255, 0.4);
+  animation: diamondFloat var(--d-dur, 9s) ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* ============================================================
+   CINEMATIC INTRO — black -> rotating diamond -> logo build -> flash
+   ============================================================ */
+@keyframes introDiamondSpin {
+  from {
+    transform: rotateY(0deg) rotateX(12deg);
+  }
+  to {
+    transform: rotateY(360deg) rotateX(12deg);
+  }
+}
+@keyframes introDiamondIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.4);
+    filter: blur(14px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+@keyframes introLogoBuild {
+  0% {
+    opacity: 0;
+    transform: translateY(14px) scale(0.96);
+    filter: blur(12px) brightness(1.6);
+    letter-spacing: 0.5em;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0) brightness(1);
+    letter-spacing: 0.18em;
+  }
+}
+@keyframes introFlash {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes introExit {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.18);
+    visibility: hidden;
+  }
+}
+@keyframes homeIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.home-in {
+  animation: homeIn 0.9s var(--ease-lux) both;
+}
+
+/* Scroll hint */
+@keyframes scrollHint {
+  0% {
+    transform: translateY(0);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(7px);
+    opacity: 0.25;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 0.7;
+  }
+}
+.scroll-hint {
+  animation: scrollHint 1.8s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -626,5 +898,9 @@ textarea:focus-visible,
     opacity: 1 !important;
     transform: none !important;
     filter: none !important;
+  }
+  .diamond-float,
+  .neon-sweep {
+    display: none !important;
   }
 }

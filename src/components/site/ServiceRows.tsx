@@ -9,17 +9,17 @@ export default function ServiceRows() {
         <Link
           key={s.id}
           href={`/contact?intent=service&service=${s.id}`}
-          className="group flex items-center justify-between gap-6 border-b border-line/50 py-6 sm:py-7"
+          className="group flex items-center justify-between gap-6 border-b border-black/10 py-6 sm:py-7"
         >
           <div>
-            <p className="display text-[1.7rem] leading-none tracking-tight text-white/75 transition-colors duration-300 group-hover:text-white sm:text-3xl">
+            <p className="text-[1.7rem] font-semibold leading-none tracking-tight text-[#1d1d1f] sm:text-3xl">
               {s.name}
             </p>
-            <p className="mt-2 text-sm text-mute">{s.tagline}</p>
+            <p className="mt-2 text-sm text-[#86868b]">{s.tagline}</p>
           </div>
           <svg
             viewBox="0 0 24 24"
-            className="h-5 w-5 shrink-0 text-mute transition-all duration-300 group-hover:translate-x-1 group-hover:text-white"
+            className="h-5 w-5 shrink-0 text-[#86868b] transition-all duration-300 group-hover:translate-x-1 group-hover:text-[#0071e3]"
             fill="none"
             stroke="currentColor"
             strokeWidth="1.5"
