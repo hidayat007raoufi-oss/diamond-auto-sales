@@ -106,6 +106,10 @@ export default function CarShowcase({
 
   const stageRef = useRef<HTMLDivElement | null>(null);
   const baseIndex = useRef(0);
+  const posRef = useRef(0); // fractional frame position (for smooth inertia)
+  const velRef = useRef(0); // frames / second
+  const rafRef = useRef(0);
+  const lastT = useRef(0);
 
   const committed = finishList[color];
   const total = committed.frames.length;
@@ -152,21 +156,66 @@ export default function CarShowcase({
     return () => window.clearInterval(id);
   }, [controlled, ready, interacted, prefersReduced, total]);
 
-  /* ---------- Gesture: map horizontal swipe distance → frame index ---------- */
+  /* ---------- Gesture: swipe distance → frame index, tuned for touch ---------- *
+   * pxPerFrame sets sensitivity: a full-width swipe ≈ one full rotation, but a
+   * floor keeps tiny phone screens from feeling hyper-sensitive. A small
+   * dead-zone ignores micro-movement (so taps don't jump frames), and release
+   * velocity feeds a decaying inertia loop so the spin glides to a stop.
+   */
+  const SENS_FLOOR_PX = 13; // min px per frame → not twitchy on small screens
+  const DEAD_ZONE_PX = 6; // ignore sub-threshold jitter before scrubbing
+
+  const stopInertia = useCallback(() => cancelAnimationFrame(rafRef.current), []);
+
+  const pxPerFrame = useCallback(
+    () => Math.max((stageRef.current?.offsetWidth ?? 1) / total, SENS_FLOOR_PX),
+    [total]
+  );
+
   const onPanStart = useCallback(() => {
+    stopInertia();
     setInteracted(true);
     baseIndex.current = index;
-  }, [index]);
+    posRef.current = index;
+  }, [index, stopInertia]);
 
   const onPan = useCallback(
     (_e: PointerEvent, info: PanInfo) => {
-      const width = stageRef.current?.offsetWidth ?? 1;
-      const pxPerFrame = width / total;
-      const step = Math.round(-info.offset.x / pxPerFrame);
-      setIndex(wrap(baseIndex.current + step, total));
+      const ox = info.offset.x;
+      // drag LEFT (negative x) spins the car forward; apply the dead-zone.
+      const mag = Math.max(0, Math.abs(ox) - DEAD_ZONE_PX);
+      const eff = -Math.sign(ox) * mag;
+      posRef.current = baseIndex.current + eff / pxPerFrame();
+      setIndex(wrap(Math.round(posRef.current), total));
     },
-    [total]
+    [pxPerFrame, total]
   );
+
+  const onPanEnd = useCallback(
+    (_e: PointerEvent, info: PanInfo) => {
+      if (prefersReduced) return;
+      // frames/sec from fling velocity, clamped so it never goes wild.
+      let vel = -info.velocity.x / pxPerFrame();
+      if (Math.abs(vel) < 2) return; // a gentle release just stops
+      vel = Math.max(-42, Math.min(42, vel));
+      velRef.current = vel;
+      lastT.current = performance.now();
+      stopInertia();
+      const tick = (now: number) => {
+        const dt = Math.min(0.05, (now - lastT.current) / 1000);
+        lastT.current = now;
+        posRef.current += velRef.current * dt;
+        velRef.current *= Math.exp(-3.4 * dt); // friction → smooth glide-down
+        setIndex(wrap(Math.round(posRef.current), total));
+        if (Math.abs(velRef.current) > 1.2) rafRef.current = requestAnimationFrame(tick);
+      };
+      rafRef.current = requestAnimationFrame(tick);
+    },
+    [prefersReduced, pxPerFrame, total, stopInertia]
+  );
+
+  // Stop any in-flight inertia on unmount.
+  useEffect(() => () => cancelAnimationFrame(rafRef.current), []);
 
   /* ---------- Color selection → clip-path wipe reveal ---------- */
   const selectColor = useCallback(
@@ -200,9 +249,11 @@ export default function CarShowcase({
         ref={stageRef}
         onPanStart={controlled ? undefined : onPanStart}
         onPan={controlled ? undefined : onPan}
+        onPanEnd={controlled ? undefined : onPanEnd}
         className={`relative h-full w-full select-none ${
           controlled ? "" : "aspect-[16/10] cursor-grab touch-none active:cursor-grabbing"
         }`}
+        style={{ transform: "translate3d(0,0,0)", willChange: "transform", backfaceVisibility: "hidden" }}
       >
         {/* Base layer — committed finish */}
         <FrameStack frames={committed.frames} active={activeIndex} title={`${title} · ${committed.name}`} />
@@ -238,10 +289,12 @@ export default function CarShowcase({
         {chrome && (
           <div className="pointer-events-none absolute inset-0 z-[7] flex flex-col justify-between p-6 sm:p-10">
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-white/55">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-white/55 sm:text-[11px] sm:tracking-[0.32em]">
                 Diamond Auto Sales
               </p>
-              <h2 className="mt-2 text-3xl font-semibold tracking-tight sm:text-5xl">{title}</h2>
+              <h2 className="mt-2 text-2xl font-semibold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl">
+                {title}
+              </h2>
             </div>
 
             <div>
@@ -337,10 +390,14 @@ export default function CarShowcase({
   );
 }
 
-/** A stack of preloaded frames; only the active one is visible (zero flicker). */
+/** A stack of preloaded frames; only the active one is visible (zero flicker).
+ *  GPU-promoted so rapid swiping stays smooth on mobile (no repaint stutter). */
 function FrameStack({ frames, active, title }: { frames: string[]; active: number; title: string }) {
   return (
-    <>
+    <div
+      className="absolute inset-0"
+      style={{ transform: "translate3d(0,0,0)", willChange: "transform", backfaceVisibility: "hidden" }}
+    >
       {frames.map((src, i) => (
         // eslint-disable-next-line @next/next/no-img-element
         <img
@@ -350,10 +407,10 @@ function FrameStack({ frames, active, title }: { frames: string[]; active: numbe
           draggable={false}
           aria-hidden={i !== active}
           className="pointer-events-none absolute inset-0 h-full w-full object-cover"
-          style={{ opacity: i === active ? 1 : 0 }}
+          style={{ opacity: i === active ? 1 : 0, transform: "translateZ(0)" }}
         />
       ))}
-    </>
+    </div>
   );
 }
 

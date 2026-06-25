@@ -64,13 +64,13 @@ export default function CarShowcaseScene({
           {/* Card 1 — header */}
           <OverlayCard progress={scrollYProgress} range={[0.02, 0.32]}>
             <p
-              className="text-[12px] font-semibold uppercase tracking-[0.35em] text-white/60"
+              className="text-[10px] font-semibold uppercase tracking-[0.3em] text-white/60 sm:text-[12px] sm:tracking-[0.35em]"
               style={{ textShadow: SHADOW }}
             >
               Diamond Performance
             </p>
             <h2
-              className="mt-4 text-balance text-5xl font-semibold tracking-tight text-white sm:text-7xl"
+              className="mt-3 text-balance text-4xl font-semibold tracking-tight text-white sm:mt-4 sm:text-6xl md:text-7xl"
               style={{ textShadow: SHADOW }}
             >
               Performance, perfected.
@@ -80,21 +80,21 @@ export default function CarShowcaseScene({
           {/* Card 2 — spec grid */}
           <OverlayCard progress={scrollYProgress} range={[0.38, 0.66]}>
             <p
-              className="text-[12px] font-semibold uppercase tracking-[0.35em] text-white/60"
+              className="text-[10px] font-semibold uppercase tracking-[0.3em] text-white/60 sm:text-[12px] sm:tracking-[0.35em]"
               style={{ textShadow: SHADOW }}
             >
               Specifications
             </p>
-            <div className="mt-7 grid w-full max-w-2xl grid-cols-2 gap-3 sm:gap-4">
+            <div className="mt-5 grid w-full max-w-2xl grid-cols-2 gap-2.5 sm:mt-7 sm:gap-4">
               {specs.map((s) => (
                 <div
                   key={s.label}
-                  className="rounded-2xl border border-white/12 bg-white/[0.06] p-5 text-left backdrop-blur-xl sm:p-6"
+                  className="rounded-2xl border border-white/12 bg-white/[0.06] p-4 text-left backdrop-blur-xl sm:p-6"
                 >
-                  <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white/50">
+                  <p className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/50 sm:text-[11px] sm:tracking-[0.18em]">
                     {s.label}
                   </p>
-                  <p className="mt-1.5 text-xl font-semibold tracking-tight text-white sm:text-2xl">
+                  <p className="mt-1 text-base font-semibold tracking-tight text-white sm:mt-1.5 sm:text-2xl">
                     {s.value}
                   </p>
                 </div>
@@ -105,13 +105,13 @@ export default function CarShowcaseScene({
           {/* Card 3 — closing CTA (bonus) */}
           <OverlayCard progress={scrollYProgress} range={[0.72, 0.98]}>
             <h2
-              className="text-balance text-4xl font-semibold tracking-tight text-white sm:text-6xl"
+              className="text-balance text-3xl font-semibold tracking-tight text-white sm:text-5xl md:text-6xl"
               style={{ textShadow: SHADOW }}
             >
               Yours to experience.
             </h2>
             <p
-              className="mt-4 max-w-md text-lg text-white/70"
+              className="mt-4 max-w-md text-base text-white/70 sm:text-lg"
               style={{ textShadow: SHADOW }}
             >
               Book a private viewing at Diamond Auto Sales.
