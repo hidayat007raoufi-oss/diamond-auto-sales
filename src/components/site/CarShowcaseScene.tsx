@@ -10,12 +10,22 @@ import {
 import { useRef, useState, type ReactNode } from "react";
 import CarShowcase, { DEFAULT_FRAMES } from "@/components/site/CarShowcase";
 
-const specs = [
+type Spec = { label: string; value: string };
+type SceneCta = { headline: string; subtext: string; href: string; label: string };
+
+const DEFAULT_SPECS: Spec[] = [
   { label: "Title", value: "Clean" },
   { label: "Engine", value: "Twin-Turbo" },
   { label: "Drivetrain", value: "Rear-Wheel Drive" },
   { label: "Mileage", value: "Low Miles" },
 ];
+
+const DEFAULT_CTA: SceneCta = {
+  headline: "Yours to experience.",
+  subtext: "Book a private viewing at Diamond Auto Sales.",
+  href: "/contact?intent=test-drive",
+  label: "Reserve",
+};
 
 const SHADOW = "0 2px 40px rgba(0,0,0,0.65)";
 
@@ -27,9 +37,17 @@ const SHADOW = "0 2px 40px rgba(0,0,0,0.65)";
 export default function CarShowcaseScene({
   frames = DEFAULT_FRAMES,
   className = "",
+  eyebrow = "Diamond Performance",
+  headline = "Performance, perfected.",
+  specs = DEFAULT_SPECS,
+  cta = DEFAULT_CTA,
 }: {
   frames?: string[];
   className?: string;
+  eyebrow?: string;
+  headline?: string;
+  specs?: Spec[];
+  cta?: SceneCta;
 }) {
   const total = frames.length;
   const sectionRef = useRef<HTMLDivElement | null>(null);
@@ -67,13 +85,13 @@ export default function CarShowcaseScene({
               className="text-[10px] font-semibold uppercase tracking-[0.3em] text-white/60 sm:text-[12px] sm:tracking-[0.35em]"
               style={{ textShadow: SHADOW }}
             >
-              Diamond Performance
+              {eyebrow}
             </p>
             <h2
               className="mt-3 text-balance text-4xl font-semibold tracking-tight text-white sm:mt-4 sm:text-6xl md:text-7xl"
               style={{ textShadow: SHADOW }}
             >
-              Performance, perfected.
+              {headline}
             </h2>
           </OverlayCard>
 
@@ -108,19 +126,19 @@ export default function CarShowcaseScene({
               className="text-balance text-3xl font-semibold tracking-tight text-white sm:text-5xl md:text-6xl"
               style={{ textShadow: SHADOW }}
             >
-              Yours to experience.
+              {cta.headline}
             </h2>
             <p
               className="mt-4 max-w-md text-base text-white/70 sm:text-lg"
               style={{ textShadow: SHADOW }}
             >
-              Book a private viewing at Diamond Auto Sales.
+              {cta.subtext}
             </p>
             <a
-              href="/contact?intent=test-drive"
+              href={cta.href}
               className="pointer-events-auto mt-8 inline-flex items-center justify-center rounded-full bg-[#0071e3] px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-[#0077ed]"
             >
-              Reserve
+              {cta.label}
             </a>
           </OverlayCard>
         </div>
