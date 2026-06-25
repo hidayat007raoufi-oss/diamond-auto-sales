@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import SketchfabModel from "@/components/site/SketchfabModel";
 
 export const metadata: Metadata = {
   title: "Experience",
@@ -30,14 +31,14 @@ export default function ExperiencePage() {
           className="absolute inset-0 bg-[radial-gradient(60%_60%_at_50%_50%,rgba(47,128,255,0.16),transparent_72%)]"
         />
 
-        {/* Interactive 3D model (Sketchfab WebGL) — full-bleed, transparent bg */}
-        <iframe
-          title="BMW M3 E30 — 3D model"
-          src="https://sketchfab.com/models/ac3c7013434e403e8faff87948caf422/embed?autospin=0.3&autostart=1&transparent=1&ui_theme=dark&ui_infos=0&ui_controls=1&ui_stop=0&ui_watermark_link=0&dnt=1"
-          allow="autoplay; fullscreen; xr-spatial-tracking"
-          allowFullScreen
-          className="absolute inset-0 h-full w-full"
-          style={{ border: 0 }}
+        {/* Interactive 3D model (Sketchfab WebGL) with brand loader + clean credit */}
+        <SketchfabModel
+          uid="ac3c7013434e403e8faff87948caf422"
+          title="BMW M3 E30"
+          author="Martin Trafas"
+          authorUrl="https://sketchfab.com/TinoD2"
+          modelUrl="https://sketchfab.com/3d-models/free-bmw-m3-e30-ac3c7013434e403e8faff87948caf422"
+          className="absolute inset-0"
         />
 
         {/* edge vignettes for text legibility — center stays clickable for orbit */}
