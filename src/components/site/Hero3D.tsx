@@ -1,7 +1,7 @@
 "use client";
 
 import { Canvas } from "@react-three/fiber";
-import { Center, ContactShadows, Environment, Lightformer, OrbitControls, RoundedBox, useGLTF } from "@react-three/drei";
+import { Bounds, Center, ContactShadows, Environment, Lightformer, OrbitControls, RoundedBox, useBounds, useGLTF } from "@react-three/drei";
 import { Component, Suspense, useEffect, useMemo, useState, type ReactNode } from "react";
 import * as THREE from "three";
 
@@ -38,6 +38,7 @@ const isBodyMaterial = (name?: string) => {
 /** Real model: loads the GLB, recolors the body material(s) live, auto-fits. */
 function GltfCar({ color }: { color: string }) {
   const { scene } = useGLTF(MODEL_URL, true, true);
+  const bounds = useBounds();
 
   const { object, bodyMats, scale } = useMemo(() => {
     const root = scene.clone(true);
@@ -81,6 +82,11 @@ function GltfCar({ color }: { color: string }) {
     const c = new THREE.Color(color);
     bodyMats.forEach((m) => m.color.copy(c));
   }, [bodyMats, color]);
+
+  // Re-frame the camera to the real model once it's mounted.
+  useEffect(() => {
+    bounds.refresh().clip().fit();
+  }, [bounds, object]);
 
   return (
     <Center bottom>
@@ -154,15 +160,20 @@ export default function Hero3D({ className = "" }: { className?: string }) {
       <Canvas
         shadows
         dpr={[1, 2]}
-        camera={{ position: [5, 1.9, 5.5], fov: 34 }}
+        camera={{ position: [5, 2, 6], fov: 32 }}
         gl={{ antialias: true, alpha: true }}
         className="!h-full !w-full"
+        // vertical swipe scrolls the page; horizontal swipe rotates the car
+        style={{ touchAction: "pan-y" }}
       >
-        <ModelBoundary fallback={<ProceduralCar color={color} />}>
-          <Suspense fallback={<ProceduralCar color={color} />}>
-            <GltfCar color={color} />
-          </Suspense>
-        </ModelBoundary>
+        {/* Bounds auto-frames the model (full car + wheels), refits on resize */}
+        <Bounds fit clip observe margin={1.45}>
+          <ModelBoundary fallback={<ProceduralCar color={color} />}>
+            <Suspense fallback={<ProceduralCar color={color} />}>
+              <GltfCar color={color} />
+            </Suspense>
+          </ModelBoundary>
+        </Bounds>
 
         <ContactShadows position={[0, 0, 0]} opacity={0.55} scale={16} blur={2.6} far={5} color="#000000" />
         <Environment resolution={256} frames={1}>
@@ -177,14 +188,11 @@ export default function Hero3D({ className = "" }: { className?: string }) {
         <OrbitControls
           makeDefault
           enablePan={false}
-          enableZoom
-          minDistance={4}
-          maxDistance={10}
+          enableZoom={false} /* let the mouse wheel / vertical swipe scroll the page */
           minPolarAngle={Math.PI / 6}
           maxPolarAngle={Math.PI / 2 - 0.02}
           autoRotate={!interacted}
           autoRotateSpeed={0.5}
-          target={[0, 0.6, 0]}
           onStart={() => setInteracted(true)}
         />
       </Canvas>
