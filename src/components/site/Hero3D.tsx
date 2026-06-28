@@ -180,7 +180,22 @@ export default function Hero3D({ className = "" }: { className?: string }) {
       if (!e.ctrlKey && !e.metaKey) e.stopPropagation();
     };
     el.addEventListener("wheel", onWheel, { capture: true, passive: true });
-    return () => el.removeEventListener("wheel", onWheel, true);
+
+    // OrbitControls forces touch-action:none on the canvas when it connects,
+    // which traps page scroll on mobile. Restore pan-y on the canvas so a
+    // one-finger vertical swipe scrolls the page (and drives the turntable),
+    // while horizontal still rotates and two-finger pinch still zooms.
+    const fixTouch = () => {
+      const canvas = el.querySelector("canvas");
+      if (canvas) canvas.style.touchAction = "pan-y";
+    };
+    fixTouch();
+    const raf = requestAnimationFrame(fixTouch); // re-assert after controls connect
+
+    return () => {
+      el.removeEventListener("wheel", onWheel, true);
+      cancelAnimationFrame(raf);
+    };
   }, []);
 
   return (
