@@ -1,9 +1,24 @@
 "use client";
 
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { Bounds, Center, ContactShadows, Environment, Lightformer, OrbitControls, RoundedBox, useBounds, useGLTF } from "@react-three/drei";
 import { Component, Suspense, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import * as THREE from "three";
+import { heroScroll } from "@/lib/experienceScroll";
+
+/** ¾-turn turntable driven by scroll progress (lerped for smoothness). */
+const SCROLL_TURN = Math.PI * 1.5;
+
+function SpinGroup({ children }: { children: ReactNode }) {
+  const ref = useRef<THREE.Group>(null);
+  useFrame(() => {
+    const g = ref.current;
+    if (!g) return;
+    const target = -heroScroll.progress * SCROLL_TURN;
+    g.rotation.y += (target - g.rotation.y) * 0.15;
+  });
+  return <group ref={ref}>{children}</group>;
+}
 
 /* ------------------------------------------------------------------ *
  * MODEL
@@ -153,7 +168,6 @@ class ModelBoundary extends Component<{ fallback: ReactNode; children: ReactNode
 
 export default function Hero3D({ className = "" }: { className?: string }) {
   const [color, setColor] = useState<string>(PAINTS[0].hex);
-  const [interacted, setInteracted] = useState(false);
   const rootRef = useRef<HTMLDivElement | null>(null);
 
   // Wheel gating: plain wheel scrolls the page (blocked from OrbitControls in
@@ -184,11 +198,13 @@ export default function Hero3D({ className = "" }: { className?: string }) {
             mobile the URL-bar show/hide resizes the canvas, and refitting there
             caused the camera to jump mid-scroll (the glitchiness). */}
         <Bounds fit clip margin={1.45}>
-          <ModelBoundary fallback={<ProceduralCar color={color} />}>
-            <Suspense fallback={<ProceduralCar color={color} />}>
-              <GltfCar color={color} />
-            </Suspense>
-          </ModelBoundary>
+          <SpinGroup>
+            <ModelBoundary fallback={<ProceduralCar color={color} />}>
+              <Suspense fallback={<ProceduralCar color={color} />}>
+                <GltfCar color={color} />
+              </Suspense>
+            </ModelBoundary>
+          </SpinGroup>
         </Bounds>
 
         {/* Scene is static (camera orbits), so bake the contact shadow once */}
@@ -205,16 +221,13 @@ export default function Hero3D({ className = "" }: { className?: string }) {
         <OrbitControls
           makeDefault
           enablePan={false}
-          enableZoom /* re-enabled: ⌘/Ctrl+wheel (desktop) + two-finger pinch (mobile) */
+          enableZoom /* ⌘/Ctrl+wheel (desktop) + two-finger pinch (mobile) */
           enableDamping
           dampingFactor={0.08}
           minDistance={2.4}
           maxDistance={13}
           minPolarAngle={Math.PI / 6}
           maxPolarAngle={Math.PI / 2 + 0.06}
-          autoRotate={!interacted}
-          autoRotateSpeed={0.5}
-          onStart={() => setInteracted(true)}
         />
       </Canvas>
 

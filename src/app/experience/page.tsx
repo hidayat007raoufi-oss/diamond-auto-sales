@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import Hero3DMount from "@/components/site/Hero3DMount";
+import ExperienceHero from "@/components/site/ExperienceHero";
 
 export const metadata: Metadata = {
   title: "Experience",
@@ -18,65 +17,21 @@ const gallery = [
 ];
 
 export default function ExperiencePage() {
+  // Window-scroll (no nested overflow / CSS scroll-snap) so GSAP ScrollTrigger
+  // owns the scroll and the hero can pin + scrub without jank.
   return (
-    <div className="no-scrollbar h-[100svh] w-screen snap-y snap-mandatory overflow-y-scroll overflow-x-hidden bg-black text-white">
-      {/* ===================== SECTION 1 · 3D configurator ===================== */}
-      <section
-        aria-label="3D configurator"
-        className="relative h-[100svh] w-full snap-start snap-always overflow-hidden"
-      >
-        {/* ambient cinematic light behind the model */}
-        <div
-          aria-hidden
-          className="absolute inset-0 bg-[radial-gradient(62%_62%_at_50%_48%,rgba(47,128,255,0.15),transparent_72%)]"
-        />
+    <div className="overflow-x-hidden bg-black text-white">
+      {/* ===================== PHASE 1 · pinned 3D configurator ===================== */}
+      <ExperienceHero />
 
-        {/* Interactive WebGL viewer (R3F) — drag to rotate, live paint picker.
-            Fills the section edge to edge; the overlays below are absolutely
-            positioned at the corners so they never box or shrink the canvas. */}
-        <Hero3DMount className="absolute inset-0" />
-
-        {/* edge vignettes for text legibility — center stays clickable for orbit */}
-        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-black/65 to-transparent" />
-        <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-black/70 to-transparent" />
-
-        {/* top-left brand + title (corner-anchored, never wraps the model) */}
-        <div className="pointer-events-none absolute left-6 top-6 z-10 max-w-[80vw]">
-          <Link href="/" className="pointer-events-auto text-[12px] font-medium text-white/60 transition-colors hover:text-white">
-            ← Diamond Auto
-          </Link>
-          <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.36em] text-white/55">
-            Diamond · 3D Configurator
-          </p>
-          <h1
-            className="mt-2 text-balance text-3xl font-semibold tracking-tight sm:text-5xl"
-            style={{ textShadow: "0 2px 40px rgba(0,0,0,0.6)" }}
-          >
-            BMW M3 Competition.
-          </h1>
-          <p className="mt-2 text-sm text-white/60" style={{ textShadow: "0 2px 30px rgba(0,0,0,0.6)" }}>
-            Drag to rotate · pick a finish below.
-          </p>
-        </div>
-
-        {/* subtle "more below" cue, tucked bottom-right so it clears the picker */}
-        <p aria-hidden className="pointer-events-none absolute bottom-7 right-6 z-10 text-[11px] uppercase tracking-[0.28em] text-white/35">
-          Scroll ↓
-        </p>
-      </section>
-
-      {/* ===================== SECTION 2 · full-screen scroll-snap gallery ===================== */}
+      {/* ===================== gallery ===================== */}
       {gallery.map((g, i) => (
-        <section
-          key={g.id}
-          aria-label="Gallery"
-          className="relative h-[100svh] w-full snap-start snap-always overflow-hidden"
-        >
+        <section key={g.id} aria-label="Gallery" className="relative h-[100svh] w-full overflow-hidden">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={u(g.id)}
             alt={g.caption}
-            loading={i === 0 ? "eager" : "lazy"}
+            loading="lazy"
             decoding="async"
             className="absolute inset-0 h-full w-full object-cover"
             style={{ transform: "translateZ(0)" }}
