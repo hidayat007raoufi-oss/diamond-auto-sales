@@ -6,16 +6,50 @@ import { Component, Suspense, useEffect, useMemo, useRef, useState, type ReactNo
 import * as THREE from "three";
 import { heroScroll } from "@/lib/experienceScroll";
 
-/** ¾-turn turntable driven by scroll progress (lerped for smoothness). */
-const SCROLL_TURN = Math.PI * 1.5;
+/**
+ * Scroll-driven "camera keyframes" for the M3 — achieved by orchestrating the
+ * MODEL (rotation + push-in scale + framing), NOT the camera, so OrbitControls
+ * drag/zoom stay fully user-owned. Each keyframe is a cinematic shot; the value
+ * is lerped each frame for smoothness on top of the scrubbed scroll progress.
+ */
+type ShotKey = { at: number; rotY: number; scale: number; posY: number };
+const SHOT_KEYS: ShotKey[] = [
+  { at: 0.0, rotY: 0, scale: 1.0, posY: 0 },          // intro · front 3/4
+  { at: 0.3, rotY: -Math.PI * 1.5, scale: 1.0, posY: 0 },     // profile sweep
+  { at: 0.55, rotY: -Math.PI * 2.1, scale: 1.18, posY: -0.12 }, // push-in detail
+  { at: 0.8, rotY: -Math.PI * 2.6, scale: 1.06, posY: 0 },     // new angle
+  { at: 1.0, rotY: -Math.PI * 3.0, scale: 1.0, posY: 0 },      // hero settle
+];
+
+function sampleShots(p: number): { rotY: number; scale: number; posY: number } {
+  if (p <= 0) return SHOT_KEYS[0];
+  if (p >= 1) return SHOT_KEYS[SHOT_KEYS.length - 1];
+  for (let i = 0; i < SHOT_KEYS.length - 1; i++) {
+    const a = SHOT_KEYS[i];
+    const b = SHOT_KEYS[i + 1];
+    if (p >= a.at && p <= b.at) {
+      const t = (p - a.at) / (b.at - a.at);
+      const e = t * t * (3 - 2 * t); // smoothstep ease between shots
+      return {
+        rotY: a.rotY + (b.rotY - a.rotY) * e,
+        scale: a.scale + (b.scale - a.scale) * e,
+        posY: a.posY + (b.posY - a.posY) * e,
+      };
+    }
+  }
+  return SHOT_KEYS[SHOT_KEYS.length - 1];
+}
 
 function SpinGroup({ children }: { children: ReactNode }) {
   const ref = useRef<THREE.Group>(null);
   useFrame(() => {
     const g = ref.current;
     if (!g) return;
-    const target = -heroScroll.progress * SCROLL_TURN;
-    g.rotation.y += (target - g.rotation.y) * 0.15;
+    const target = sampleShots(heroScroll.progress);
+    g.rotation.y += (target.rotY - g.rotation.y) * 0.12;
+    const s = g.scale.x + (target.scale - g.scale.x) * 0.12;
+    g.scale.setScalar(s);
+    g.position.y += (target.posY - g.position.y) * 0.12;
   });
   return <group ref={ref}>{children}</group>;
 }
