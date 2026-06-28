@@ -267,10 +267,11 @@ export default function Hero3D({ className = "" }: { className?: string }) {
           maxDistance={13}
           minPolarAngle={Math.PI / 6}
           maxPolarAngle={Math.PI / 2 + 0.06}
-          /* One finger is left entirely to the page so vertical swipes scroll
-             with zero fight; two fingers rotate + pinch-zoom the car. Desktop
-             mouse drag-to-rotate is unaffected (mouse buttons, not touches). */
-          touches={{ ONE: undefined, TWO: THREE.TOUCH.DOLLY_ROTATE }}
+          /* `touch-action: pan-y` (globals.css) hands VERTICAL one-finger
+             swipes to the page (scroll), so a HORIZONTAL one-finger drag is
+             free to rotate the car — the browser arbitrates by gesture
+             direction, no fight. Two fingers pinch-zoom (+ rotate). */
+          touches={{ ONE: THREE.TOUCH.ROTATE, TWO: THREE.TOUCH.DOLLY_ROTATE }}
         />
       </Canvas>
 
