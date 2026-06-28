@@ -7,12 +7,13 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Hero3DMount from "@/components/site/Hero3DMount";
 import { heroScroll } from "@/lib/experienceScroll";
 
-/** On-brand M3 "shots" — captions crossfade as the model is keyframed. */
+/** Literal M3 "shots" — captions crossfade in sync with the model keyframes.
+ *  `in`/`out` are scroll-progress windows aligned to SHOT_KEYS in Hero3D. */
 const SHOTS = [
-  { kicker: "01 — Presence", caption: "Every line, deliberate." },
-  { kicker: "02 — Profile", caption: "A stance that means business." },
-  { kicker: "03 — Detail", caption: "Down to the last millimeter." },
-  { kicker: "04 — Icon", caption: "The M3, the way it should be seen." },
+  { label: "Presence.", sub: "Every line, deliberate.", in: 0.18, out: 0.34 },
+  { label: "Stance.", sub: "The silhouette that started it all.", in: 0.37, out: 0.56 },
+  { label: "The Nose.", sub: "That unmistakable face.", in: 0.6, out: 0.76 },
+  { label: "The Departure.", sub: "Unforgettable, even leaving.", in: 0.82, out: 0.97 },
 ];
 
 /**
@@ -57,9 +58,9 @@ export default function ExperienceHero() {
 
       // Each shot caption fades in, holds, fades out across its window.
       caps.forEach((el, i) => {
-        const start = 0.2 + i * 0.2;
-        tl.fromTo(el, { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, ease: "none", duration: 0.05 }, start)
-          .to(el, { autoAlpha: 0, y: -20, ease: "none", duration: 0.05 }, start + 0.14);
+        const shot = SHOTS[i];
+        tl.fromTo(el, { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, ease: "none", duration: 0.05 }, shot.in)
+          .to(el, { autoAlpha: 0, y: -20, ease: "none", duration: 0.05 }, shot.out);
       });
 
       // Normalize timeline length to ~1 so caption positions align with progress.
@@ -104,10 +105,12 @@ export default function ExperienceHero() {
         {/* per-shot captions (crossfaded by the scrub timeline) */}
         <div ref={capsRef} className="pointer-events-none absolute bottom-24 left-6 z-10 max-w-[80vw] sm:bottom-28">
           {SHOTS.map((s) => (
-            <div key={s.kicker} className="absolute bottom-0 left-0">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-[#2997ff]">{s.kicker}</p>
-              <p className="mt-2 text-balance text-3xl font-semibold tracking-tight text-white sm:text-5xl" style={{ textShadow: "0 2px 40px rgba(0,0,0,0.65)" }}>
-                {s.caption}
+            <div key={s.label} className="absolute bottom-0 left-0">
+              <h2 className="text-balance text-4xl font-semibold tracking-tight text-white sm:text-6xl" style={{ textShadow: "0 2px 40px rgba(0,0,0,0.65)" }}>
+                {s.label}
+              </h2>
+              <p className="mt-2 text-sm text-white/70 sm:text-base" style={{ textShadow: "0 2px 30px rgba(0,0,0,0.6)" }}>
+                {s.sub}
               </p>
             </div>
           ))}

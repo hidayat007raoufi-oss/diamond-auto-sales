@@ -14,11 +14,12 @@ import { heroScroll } from "@/lib/experienceScroll";
  */
 type ShotKey = { at: number; rotY: number; scale: number; posY: number };
 const SHOT_KEYS: ShotKey[] = [
-  { at: 0.0, rotY: 0, scale: 1.0, posY: 0 },          // intro · front 3/4
-  { at: 0.3, rotY: -Math.PI * 1.5, scale: 1.0, posY: 0 },     // profile sweep
-  { at: 0.55, rotY: -Math.PI * 2.1, scale: 1.18, posY: -0.12 }, // push-in detail
-  { at: 0.8, rotY: -Math.PI * 2.6, scale: 1.06, posY: 0 },     // new angle
-  { at: 1.0, rotY: -Math.PI * 3.0, scale: 1.0, posY: 0 },      // hero settle
+  { at: 0.0, rotY: 0, scale: 1.0, posY: 0 },           // presence · hero frame
+  { at: 0.3, rotY: -Math.PI * 1.5, scale: 1.0, posY: 0 },      // into the profile
+  { at: 0.5, rotY: -Math.PI * 1.85, scale: 1.0, posY: 0 },     // profile breathes (scale held)
+  { at: 0.65, rotY: -Math.PI * 2.15, scale: 1.18, posY: -0.12 }, // the nose · push-in peak (later)
+  { at: 0.82, rotY: -Math.PI * 2.6, scale: 1.06, posY: 0 },    // swing to the tail
+  { at: 1.0, rotY: -Math.PI * 3.0, scale: 1.0, posY: 0 },      // departure · settle
 ];
 
 function sampleShots(p: number): { rotY: number; scale: number; posY: number } {

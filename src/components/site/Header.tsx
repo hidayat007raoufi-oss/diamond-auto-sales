@@ -9,6 +9,7 @@ import { SOCIAL_LINKS } from "@/lib/social";
 const links = [
   { href: "/", label: "Home" },
   { href: "/inventory", label: "Inventory" },
+  { href: "/experience", label: "Experience" },
   { href: "/financing", label: "Financing" },
   { href: "/rentals", label: "Rentals" },
   { href: "/services", label: "Services" },
