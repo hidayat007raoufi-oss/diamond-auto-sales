@@ -61,7 +61,7 @@ export default function Footer() {
               <ul className="mt-3.5 space-y-2.5 text-[13px] text-[#6e6e73]">
                 <li>5915 Triangle Drive<br />Raleigh, NC 27616</li>
                 <li>
-                  <a href="tel:+19198878666" className="font-medium text-[#1d1d1f] hover:text-[#0071e3]">
+                  <a href="tel:+19198878666" className="font-medium text-[#0071e3] hover:underline">
                     (919) 887-8666
                   </a>
                 </li>

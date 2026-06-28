@@ -75,7 +75,7 @@ export default function RentalsPage() {
       </section>
 
       {/* FLEET */}
-      <section id="fleet" className="mx-auto max-w-7xl scroll-mt-24 px-5 py-24 sm:px-8 sm:py-28">
+      <section id="fleet" className="mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-28">
         <SectionHeading
           kicker="The Fleet"
           title={<>Our rental fleet.</>}
@@ -113,7 +113,7 @@ export default function RentalsPage() {
       </section>
 
       {/* RESERVE */}
-      <section id="reserve" className="scroll-mt-24 bg-white">
+      <section id="reserve" className="bg-white">
         <div className="mx-auto grid max-w-7xl gap-12 px-5 py-24 sm:px-8 sm:py-28 lg:grid-cols-[1fr_1.05fr] lg:items-start">
           <div>
             <SectionHeading
