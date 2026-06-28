@@ -1,5 +1,6 @@
 import Link from "next/link";
 import SubNav from "@/components/site/SubNav";
+import ExperienceFeature from "@/components/site/ExperienceFeature";
 import ListingCard from "@/components/site/ListingCard";
 import ImagePlaceholder from "@/components/site/ImagePlaceholder";
 import PhotoLayer from "@/components/site/PhotoLayer";
@@ -76,7 +77,7 @@ export default function Home() {
             ? `${perfCar.trim} · ${perfCar.power} · ${formatPrice(perfCar.price)}`
             : "Hand-picked, inspected, and ready to drive. Our standout vehicles, front and center."}
         </p>
-        <div className="mt-7 flex items-center gap-4">
+        <div className="mt-7 flex flex-wrap items-center justify-center gap-4">
           <Link href={perfCar ? `/inventory/${perfCar.id}` : "/inventory"} className="pill pill-dark">
             Learn more
           </Link>
@@ -85,6 +86,13 @@ export default function Home() {
             className="pill pill-blue"
           >
             Reserve
+          </Link>
+          <Link href="/experience" className="pill pill-3d">
+            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden>
+              <path d="M12 2.5l8.5 4.9v9.2L12 21.5 3.5 16.6V7.4z" />
+              <path d="M3.7 7.3L12 12l8.3-4.7M12 12v9.3" />
+            </svg>
+            Explore in 3D
           </Link>
         </div>
 
@@ -166,6 +174,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ============ 3D EXPERIENCE FEATURE (black, full-bleed) ============ */}
+      <ExperienceFeature />
 
       {/* ============ BENTO — the business (white) ============ */}
       <section id="services" className="scroll-mt-16 bg-white">
