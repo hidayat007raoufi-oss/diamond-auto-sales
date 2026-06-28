@@ -2,7 +2,7 @@
 
 import { Canvas } from "@react-three/fiber";
 import { Bounds, Center, ContactShadows, Environment, Lightformer, OrbitControls, RoundedBox, useBounds, useGLTF } from "@react-three/drei";
-import { Component, Suspense, useEffect, useMemo, useState, type ReactNode } from "react";
+import { Component, Suspense, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import * as THREE from "three";
 
 /* ------------------------------------------------------------------ *
@@ -154,20 +154,36 @@ class ModelBoundary extends Component<{ fallback: ReactNode; children: ReactNode
 export default function Hero3D({ className = "" }: { className?: string }) {
   const [color, setColor] = useState<string>(PAINTS[0].hex);
   const [interacted, setInteracted] = useState(false);
+  const rootRef = useRef<HTMLDivElement | null>(null);
+
+  // Wheel gating: plain wheel scrolls the page (blocked from OrbitControls in
+  // the capture phase before it reaches the canvas); Ctrl/⌘ + wheel — which
+  // also covers trackpad pinch — passes through and zooms the model.
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el) return;
+    const onWheel = (e: WheelEvent) => {
+      if (!e.ctrlKey && !e.metaKey) e.stopPropagation();
+    };
+    el.addEventListener("wheel", onWheel, { capture: true, passive: true });
+    return () => el.removeEventListener("wheel", onWheel, true);
+  }, []);
 
   return (
-    <div className={`relative h-full w-full ${className}`}>
+    <div ref={rootRef} className={`relative h-full w-full ${className}`}>
       <Canvas
         shadows
-        dpr={[1, 2]}
+        dpr={[1, 1.5]} /* cap DPR — full 2x with shadows is the main mobile stutter */
         camera={{ position: [5, 2, 6], fov: 32 }}
-        gl={{ antialias: true, alpha: true }}
+        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
         className="!h-full !w-full"
-        // vertical swipe scrolls the page; horizontal swipe rotates the car
+        // 1-finger vertical scrolls the page; 1-finger horizontal rotates; 2-finger pinch zooms
         style={{ touchAction: "pan-y" }}
       >
-        {/* Bounds auto-frames the model (full car + wheels), refits on resize */}
-        <Bounds fit clip observe margin={1.45}>
+        {/* Bounds auto-frames the model (full car + wheels). No `observe`: on
+            mobile the URL-bar show/hide resizes the canvas, and refitting there
+            caused the camera to jump mid-scroll (the glitchiness). */}
+        <Bounds fit clip margin={1.45}>
           <ModelBoundary fallback={<ProceduralCar color={color} />}>
             <Suspense fallback={<ProceduralCar color={color} />}>
               <GltfCar color={color} />
@@ -175,7 +191,8 @@ export default function Hero3D({ className = "" }: { className?: string }) {
           </ModelBoundary>
         </Bounds>
 
-        <ContactShadows position={[0, 0, 0]} opacity={0.55} scale={16} blur={2.6} far={5} color="#000000" />
+        {/* Scene is static (camera orbits), so bake the contact shadow once */}
+        <ContactShadows position={[0, 0, 0]} opacity={0.55} scale={16} blur={2.6} far={5} frames={1} color="#000000" />
         <Environment resolution={256} frames={1}>
           <Lightformer intensity={2.2} position={[0, 5, -4]} scale={[12, 5, 1]} />
           <Lightformer intensity={1.3} position={[-5, 2, 3]} scale={[7, 7, 1]} />
@@ -188,9 +205,13 @@ export default function Hero3D({ className = "" }: { className?: string }) {
         <OrbitControls
           makeDefault
           enablePan={false}
-          enableZoom={false} /* let the mouse wheel / vertical swipe scroll the page */
+          enableZoom /* re-enabled: ⌘/Ctrl+wheel (desktop) + two-finger pinch (mobile) */
+          enableDamping
+          dampingFactor={0.08}
+          minDistance={2.4}
+          maxDistance={13}
           minPolarAngle={Math.PI / 6}
-          maxPolarAngle={Math.PI / 2 - 0.02}
+          maxPolarAngle={Math.PI / 2 + 0.06}
           autoRotate={!interacted}
           autoRotateSpeed={0.5}
           onStart={() => setInteracted(true)}
