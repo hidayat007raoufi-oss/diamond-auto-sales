@@ -116,10 +116,6 @@ export default function ExperienceHero() {
           ))}
         </div>
 
-        {/* scroll cue */}
-        <p aria-hidden className="pointer-events-none absolute bottom-7 right-6 z-10 text-[11px] uppercase tracking-[0.28em] text-white/35">
-          Scroll ↓
-        </p>
       </div>
     </section>
   );
