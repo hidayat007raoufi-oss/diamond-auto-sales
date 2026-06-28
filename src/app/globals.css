@@ -904,3 +904,13 @@ textarea:focus-visible,
     display: none !important;
   }
 }
+
+/* ----- /experience 3D viewer: keep page scroll on mobile -----
+   OrbitControls / R3F force `touch-action: none` inline on the <canvas>,
+   which traps vertical page scroll. An !important rule beats the inline
+   style (which has no !important), so one-finger vertical swipes scroll the
+   page (and drive the turntable) while horizontal still rotates and
+   two-finger pinch still zooms. */
+.hero3d-stage canvas {
+  touch-action: pan-y !important;
+}

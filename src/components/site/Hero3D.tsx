@@ -215,26 +215,15 @@ export default function Hero3D({ className = "" }: { className?: string }) {
       if (!e.ctrlKey && !e.metaKey) e.stopPropagation();
     };
     el.addEventListener("wheel", onWheel, { capture: true, passive: true });
-
-    // OrbitControls forces touch-action:none on the canvas when it connects,
-    // which traps page scroll on mobile. Restore pan-y on the canvas so a
-    // one-finger vertical swipe scrolls the page (and drives the turntable),
-    // while horizontal still rotates and two-finger pinch still zooms.
-    const fixTouch = () => {
-      const canvas = el.querySelector("canvas");
-      if (canvas) canvas.style.touchAction = "pan-y";
-    };
-    fixTouch();
-    const raf = requestAnimationFrame(fixTouch); // re-assert after controls connect
-
-    return () => {
-      el.removeEventListener("wheel", onWheel, true);
-      cancelAnimationFrame(raf);
-    };
+    return () => el.removeEventListener("wheel", onWheel, true);
+    // NOTE: mobile page scroll (touch-action: pan-y on the canvas) is enforced
+    // via the `.hero3d-stage canvas` !important rule in globals.css — an inline
+    // style set by OrbitControls/R3F can't override an !important stylesheet
+    // rule, which makes it race-proof.
   }, []);
 
   return (
-    <div ref={rootRef} className={`relative h-full w-full ${className}`}>
+    <div ref={rootRef} className={`hero3d-stage relative h-full w-full ${className}`}>
       <Canvas
         shadows
         dpr={[1, 1.5]} /* cap DPR — full 2x with shadows is the main mobile stutter */
