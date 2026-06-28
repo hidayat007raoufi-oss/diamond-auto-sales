@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/components/site/Header";
 import Footer from "@/components/site/Footer";
 import StickyCTABar from "@/components/site/StickyCTABar";
+import ChromeGate from "@/components/site/ChromeGate";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://diamondauto.com"),
@@ -40,12 +41,16 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" className="antialiased">
       <body className="min-h-screen bg-white text-[#1d1d1f]">
-        <Header />
+        <ChromeGate>
+          <Header />
+        </ChromeGate>
         <main>{children}</main>
-        <Footer />
-        {/* clearance so the sticky bar never hides footer content on mobile */}
-        <div aria-hidden className="h-24 lg:hidden" />
-        <StickyCTABar />
+        <ChromeGate>
+          <Footer />
+          {/* clearance so the sticky bar never hides footer content on mobile */}
+          <div aria-hidden className="h-24 lg:hidden" />
+          <StickyCTABar />
+        </ChromeGate>
       </body>
     </html>
   );
