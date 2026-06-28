@@ -124,7 +124,7 @@ export default function Home() {
       </section>
 
       {/* ============ HERO 2 — RENTALS (white) ============ */}
-      <section id="rentals" className="relative flex min-h-[100svh] scroll-mt-16 flex-col items-center justify-center overflow-hidden bg-white px-5 pb-16 pt-24 text-center sm:px-8">
+      <section id="rentals" className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden bg-white px-5 pb-16 pt-24 text-center sm:px-8">
         <p className="apple-metric-label text-[#0071e3]">Vehicle Rentals</p>
         <h2 className="apple-headline mt-3 max-w-4xl text-balance text-[#1d1d1f]">
           The fleet, on your schedule.
@@ -152,7 +152,7 @@ export default function Home() {
       </section>
 
       {/* ============ INVENTORY SHOWCASE (light gray) ============ */}
-      <section id="inventory" className="scroll-mt-16 bg-[#f5f5f7]">
+      <section id="inventory" className="bg-[#f5f5f7]">
         <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-28">
           <Reveal blur>
             <div className="flex flex-wrap items-end justify-between gap-4">
@@ -179,10 +179,10 @@ export default function Home() {
       <ExperienceFeature />
 
       {/* ============ BENTO — the business (white) ============ */}
-      <section id="services" className="scroll-mt-16 bg-white">
+      <section id="services" className="bg-white">
         <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-28">
           <Reveal blur>
-            <h2 id="financing" className="scroll-mt-24 text-[40px] font-semibold leading-none tracking-tight text-[#1d1d1f] sm:text-5xl">
+            <h2 id="financing" className="text-[40px] font-semibold leading-none tracking-tight text-[#1d1d1f] sm:text-5xl">
               Everything, in one place.
             </h2>
           </Reveal>
