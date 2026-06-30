@@ -744,6 +744,49 @@ textarea:focus-visible,
   color: #cad7e7;
   text-shadow: 0 1px 14px rgba(47, 128, 255, 0.4);
 }
+
+/* ---------- Brand image hero: cinematic CSS motion ---------- */
+/* slow ken-burns drift on the background so it feels alive */
+@keyframes brandZoom {
+  from { transform: scale(1.05); }
+  to { transform: scale(1.12); }
+}
+/* soft blue glow pulsing around the logo */
+@keyframes brandGlowPulse {
+  0%, 100% { opacity: 0.45; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.06); }
+}
+/* light sweep across the chrome letters */
+@keyframes brandSweep {
+  0% { transform: translateX(-130%) skewX(-16deg); opacity: 0; }
+  10% { opacity: 0.55; }
+  32% { opacity: 0; }
+  100% { transform: translateX(240%) skewX(-16deg); opacity: 0; }
+}
+/* tiny particle sparkle twinkle */
+@keyframes brandTwinkle {
+  0%, 100% { opacity: 0.15; transform: scale(0.6); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+/* gentle drift on floating diamond shards */
+@keyframes brandDrift {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-16px) rotate(7deg); }
+}
+
+.brand-bg-zoom { animation: brandZoom 20s ease-in-out infinite alternate; transform-origin: 50% 42%; }
+.brand-glow-pulse { animation: brandGlowPulse 5.5s ease-in-out infinite; transform-origin: 50% 40%; }
+.brand-sweep { animation: brandSweep 7.5s ease-in-out infinite; }
+.brand-twinkle { animation: brandTwinkle var(--tw, 4s) ease-in-out infinite; animation-delay: var(--td, 0s); }
+.brand-drift { animation: brandDrift var(--dr, 9s) ease-in-out infinite; animation-delay: var(--dd, 0s); }
+
+/* keep motion lighter on phones; honor reduced-motion fully */
+@media (max-width: 640px) {
+  .brand-bg-zoom, .brand-sweep { animation: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .brand-bg-zoom, .brand-glow-pulse, .brand-sweep, .brand-twinkle, .brand-drift { animation: none !important; }
+}
 /* Apple text-link with chevron */
 .link-apple {
   color: var(--color-blue);
