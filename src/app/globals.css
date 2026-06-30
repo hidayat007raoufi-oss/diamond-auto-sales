@@ -780,6 +780,32 @@ textarea:focus-visible,
   50% { transform: translate(6px, 5px); }
 }
 
+/* ---------- living hero: layered motion over the approved composition ---------- */
+/* almost-imperceptible cinematic camera breath (~1% zoom + micro drift) */
+@keyframes brandBreath {
+  0%, 100% { transform: scale(1) translate(0, 0); }
+  50% { transform: scale(1.012) translate(-0.35%, -0.3%); }
+}
+/* volumetric light rays slowly shifting */
+@keyframes brandRayA {
+  0%, 100% { transform: rotate(-7deg) translateY(-2%); opacity: 0.16; }
+  50% { transform: rotate(-3deg) translateY(2%); opacity: 0.3; }
+}
+@keyframes brandRayB {
+  0%, 100% { transform: rotate(7deg) translateY(2%); opacity: 0.12; }
+  50% { transform: rotate(3deg) translateY(-2%); opacity: 0.24; }
+}
+/* per-crystal independent drift + slow rotation (amount/timing via vars) */
+@keyframes brandCrystal {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(var(--cx, 8px), var(--cy, -10px)) rotate(var(--cr, 8deg)); }
+}
+
+.brand-breath { animation: brandBreath 26s ease-in-out infinite; transform-origin: 50% 42%; }
+.brand-ray-a { animation: brandRayA 19s ease-in-out infinite; }
+.brand-ray-b { animation: brandRayB 24s ease-in-out infinite; }
+.brand-crystal { animation: brandCrystal var(--cd, 13s) ease-in-out infinite; animation-delay: var(--cdl, 0s); }
+
 .brand-bg-zoom { animation: brandZoom 20s ease-in-out infinite alternate; transform-origin: 50% 42%; }
 .brand-glow-pulse { animation: brandGlowPulse 5.5s ease-in-out infinite; transform-origin: 50% 40%; }
 .brand-sweep { animation: brandSweep 5s ease-in-out infinite; }
@@ -811,7 +837,8 @@ textarea:focus-visible,
   .brand-auto-drift { animation: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .brand-bg-zoom, .brand-glow-pulse, .brand-sweep, .brand-twinkle, .brand-drift, .brand-auto-drift { animation: none !important; }
+  .brand-bg-zoom, .brand-glow-pulse, .brand-sweep, .brand-twinkle, .brand-drift, .brand-auto-drift,
+  .brand-breath, .brand-ray-a, .brand-ray-b, .brand-crystal { animation: none !important; }
 }
 /* Apple text-link with chevron */
 .link-apple {
