@@ -716,6 +716,34 @@ textarea:focus-visible,
 .pill-3d:hover {
   background: rgba(47, 128, 255, 0.2);
 }
+
+/* ---------- Brand-splash hero: chrome wordmark ---------- */
+.brand-wordmark {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 0.9;
+  font-size: clamp(3rem, 15vw, 10rem);
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #d2e0f1 36%,
+    #8ea3b9 52%,
+    #f1f7ff 66%,
+    #9fb4cb 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 2px 22px rgba(47, 128, 255, 0.45)) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.55));
+}
+.brand-submark {
+  margin-top: 0.4rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  font-size: clamp(0.8rem, 2.6vw, 1.5rem);
+  color: #cad7e7;
+  text-shadow: 0 1px 14px rgba(47, 128, 255, 0.4);
+}
 /* Apple text-link with chevron */
 .link-apple {
   color: var(--color-blue);
