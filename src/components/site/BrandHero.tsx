@@ -39,7 +39,9 @@ function sceneMode(): "high" | "low" | "off" {
   const conn = (navigator as unknown as { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
   if (conn?.saveData) return "off";
   if (conn?.effectiveType && /(^|-)2g$/.test(conn.effectiveType)) return "off";
-  return window.matchMedia("(pointer: coarse)").matches ? "low" : "high";
+  // Mobile (coarse pointer): keep the locked flat dense composition for now —
+  // the live layered scene is desktop-only until the mobile layers are rebuilt.
+  return window.matchMedia("(pointer: coarse)").matches ? "off" : "high";
 }
 
 export default function BrandHero() {
@@ -111,8 +113,9 @@ export default function BrandHero() {
         className="brand-glow-pulse pointer-events-none absolute inset-0 bg-[radial-gradient(42%_34%_at_50%_38%,rgba(60,150,255,0.30),transparent_70%)]"
       />
 
-      {/* LAYER 3–4: hero diamond + chrome logo art, screen-blended over the scene */}
-      <div ref={artRef} className="pointer-events-none absolute inset-0 will-change-transform" style={{ mixBlendMode: "screen" }}>
+      {/* LAYER 3–4: hero diamond + chrome logo art. On desktop it screen-blends
+          over the live scene; on mobile it's the locked flat dense composition. */}
+      <div ref={artRef} className="pointer-events-none absolute inset-0 will-change-transform sm:mix-blend-screen">
         <picture>
           <source media="(max-width: 640px)" srcSet="/hero/brand-hero-mobile.webp" />
           <img
@@ -129,8 +132,8 @@ export default function BrandHero() {
         </div>
       </div>
 
-      {/* legibility: bottom gradient under the UI */}
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-black via-black/70 to-transparent" />
+      {/* legibility: bottom gradient under the UI (light enough to keep floor reflections) */}
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-black via-black/55 to-transparent" />
 
       {/* LAYER 6: UI — stays perfectly readable while the scene moves */}
       <div className="relative z-10 flex flex-col items-center">
