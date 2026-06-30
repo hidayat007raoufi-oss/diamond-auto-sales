@@ -65,9 +65,9 @@ export default function BrandHero() {
       ref={ref}
       className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden bg-black px-5 pb-16 pt-24 text-center text-white sm:px-8"
     >
-      {/* blue studio halo (always) */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_55%_at_50%_42%,rgba(47,128,255,0.22),transparent_70%)]" />
-      <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(38%_32%_at_50%_38%,rgba(140,190,255,0.20),transparent_75%)]" />
+      {/* electric-blue halo — base layer (also the look on low-power devices that skip WebGL) */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(65%_55%_at_50%_40%,rgba(47,128,255,0.35),transparent_70%)]" />
+      <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(40%_30%_at_50%_36%,rgba(150,200,255,0.32),transparent_72%)]" />
 
       {/* live 3D diamond — decorative background behind the wordmark */}
       {mounted && !failed && (
