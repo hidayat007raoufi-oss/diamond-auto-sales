@@ -1,7 +1,7 @@
 "use client";
 
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Environment, Float, Lightformer, MeshTransmissionMaterial, Sparkles } from "@react-three/drei";
+import { Environment, Float, MeshTransmissionMaterial, Sparkles } from "@react-three/drei";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
@@ -114,8 +114,11 @@ export default function BrandHero3D({
       <color attach="background" args={["#03040a"]} />
 
       <ambientLight intensity={0.5} />
-      <pointLight position={[5, 4, 5]} intensity={30} color="#ffffff" />
-      <pointLight position={[-5, 2, 3]} intensity={22} color="#3aa0ff" />
+      {/* sharp silver facet glints + a blue rim */}
+      <directionalLight position={[4, 6, 5]} intensity={3.2} color="#ffffff" />
+      <pointLight position={[5, 3, 4]} intensity={45} color="#ffffff" />
+      <pointLight position={[-5, 2, 3]} intensity={32} color="#3aa0ff" />
+      <pointLight position={[0, -3, 4]} intensity={18} color="#7fb2ff" />
 
       {/* electric-blue glow halo behind the gem — the gem refracts this, and Bloom amplifies it */}
       <sprite position={[0, 0.7, -1.4]} scale={[7.5, 7.5, 1]}>
@@ -130,14 +133,11 @@ export default function BrandHero3D({
       <Sparkles count={260} scale={[16, 11, 7]} size={1.6} speed={0.2} color="#ffffff" opacity={0.9} noise={1.4} />
       <Sparkles count={90} scale={[14, 10, 6]} size={5} speed={0.35} color="#4aa6ff" opacity={0.8} noise={1.6} />
 
-      {/* high-contrast studio reflections for sharp silver facet highlights */}
-      <Environment resolution={256} frames={1}>
-        <Lightformer intensity={5} position={[0, 4, 2]} scale={[10, 6, 1]} color="#ffffff" />
-        <Lightformer intensity={4} position={[-6, 1, 2]} scale={[6, 8, 1]} color="#3aa0ff" />
-        <Lightformer intensity={4} position={[6, 1, 2]} scale={[6, 8, 1]} color="#ffffff" />
-        <Lightformer intensity={2.5} position={[0, -5, 2]} scale={[10, 5, 1]} color="#1a4bd0" />
-        <Lightformer intensity={3} position={[0, 0, -6]} scale={[12, 12, 1]} color="#0a1840" />
-      </Environment>
+      {/* Reflections sourced from the brand reference image, so the gem's facets
+          reflect its galaxy/sparkle palette (reflections only — the visible
+          background stays black + glow). The lights above add the sharp silver
+          facet highlights on top. */}
+      <Environment files="/hero/brand-env.jpg" environmentIntensity={1.2} />
 
       <EffectComposer>
         <Bloom intensity={1.5} luminanceThreshold={0.15} luminanceSmoothing={0.9} mipmapBlur radius={0.85} />
