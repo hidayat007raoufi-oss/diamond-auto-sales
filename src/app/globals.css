@@ -774,18 +774,35 @@ textarea:focus-visible,
   50% { transform: translateY(-16px) rotate(7deg); }
 }
 
+/* gentle automatic drift for the FX layer on phones (no pointer parallax there) */
+@keyframes brandAutoDrift {
+  0%, 100% { transform: translate(-6px, -4px); }
+  50% { transform: translate(6px, 5px); }
+}
+
 .brand-bg-zoom { animation: brandZoom 20s ease-in-out infinite alternate; transform-origin: 50% 42%; }
 .brand-glow-pulse { animation: brandGlowPulse 5.5s ease-in-out infinite; transform-origin: 50% 40%; }
-.brand-sweep { animation: brandSweep 7.5s ease-in-out infinite; }
+.brand-sweep { animation: brandSweep 5s ease-in-out infinite; }
 .brand-twinkle { animation: brandTwinkle var(--tw, 4s) ease-in-out infinite; animation-delay: var(--td, 0s); }
 .brand-drift { animation: brandDrift var(--dr, 9s) ease-in-out infinite; animation-delay: var(--dd, 0s); }
+.brand-auto-drift { animation: brandAutoDrift 12s ease-in-out infinite; }
 
-/* keep motion lighter on phones; honor reduced-motion fully */
+/* full-height hero with svh/dvh fallbacks (handles iOS Safari bottom bar) */
+.hero-minh {
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+}
+
+/* keep the heaviest motion off phones; desktop uses pointer parallax instead of auto-drift */
 @media (max-width: 640px) {
-  .brand-bg-zoom, .brand-sweep { animation: none; }
+  .brand-bg-zoom { animation: none; }
+}
+@media (min-width: 641px) {
+  .brand-auto-drift { animation: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .brand-bg-zoom, .brand-glow-pulse, .brand-sweep, .brand-twinkle, .brand-drift { animation: none !important; }
+  .brand-bg-zoom, .brand-glow-pulse, .brand-sweep, .brand-twinkle, .brand-drift, .brand-auto-drift { animation: none !important; }
 }
 /* Apple text-link with chevron */
 .link-apple {

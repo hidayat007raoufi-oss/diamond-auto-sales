@@ -1,56 +1,52 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import DiamondLogo from "@/components/site/DiamondLogo";
 
 /**
- * Homepage brand-splash hero. A cropped, car-free brand graphic (giant chrome
- * DIAMOND logo + floating diamond + crystal shards + cosmic glow) used as a
- * full-screen background, with cinematic motion layered on top in CSS:
- *  - slow ken-burns drift on the background
- *  - soft blue glow pulsing around the logo
- *  - a light sweep across the chrome letters
- *  - tiny twinkling sparkle particles
- *  - gently drifting diamond shards
- *  - subtle mouse/touch parallax (desktop, layered for depth)
- *
- * Performance-minded: pure CSS animations (GPU transform/opacity), no WebGL.
- * Heavy motion (bg zoom, sweep, parallax) is disabled on phones / reduced-motion;
- * the image itself is the LCP and loads eagerly. CTAs sit below the logo.
+ * Homepage brand-splash hero. Uses the car-free brand graphic as a full-screen
+ * background, but serves TWO art-directed compositions:
+ *   - desktop: the wide cinematic crop, object-cover center
+ *   - mobile: a dedicated 9:16 portrait composition (full diamond + full logo,
+ *     never clipped), object-contain center-top with header clearance
+ * Cinematic motion is layered in CSS (ken-burns, blue glow pulse, chrome light
+ * sweep, twinkling sparkles, drifting shards). Desktop gets pointer parallax
+ * (background / logo / shards at different depths); mobile gets a gentle
+ * automatic drift instead. All heavy motion is gated for phones and fully
+ * disabled for prefers-reduced-motion. No WebGL — the image is the LCP.
  */
 
 const SPARKLES = [
-  { left: "12%", top: "28%", s: 3, tw: "3.5s", td: "0s" },
-  { left: "22%", top: "62%", s: 2, tw: "4.2s", td: "0.6s" },
-  { left: "34%", top: "18%", s: 4, tw: "5s", td: "1.1s" },
-  { left: "47%", top: "70%", s: 2, tw: "3.8s", td: "0.3s" },
-  { left: "58%", top: "24%", s: 3, tw: "4.6s", td: "0.9s" },
-  { left: "68%", top: "60%", s: 2, tw: "3.4s", td: "1.4s" },
-  { left: "78%", top: "32%", s: 4, tw: "5.2s", td: "0.2s" },
-  { left: "86%", top: "54%", s: 3, tw: "4s", td: "0.7s" },
-  { left: "8%", top: "46%", s: 2, tw: "4.4s", td: "1.2s" },
-  { left: "91%", top: "22%", s: 3, tw: "3.9s", td: "0.5s" },
+  { left: "16%", top: "30%", s: 3, tw: "3.5s", td: "0s", mobile: true },
+  { left: "30%", top: "20%", s: 4, tw: "5s", td: "1.1s", mobile: true },
+  { left: "50%", top: "16%", s: 3, tw: "4.6s", td: "0.9s", mobile: true },
+  { left: "70%", top: "22%", s: 4, tw: "5.2s", td: "0.2s", mobile: true },
+  { left: "84%", top: "32%", s: 3, tw: "3.9s", td: "0.5s", mobile: true },
+  { left: "22%", top: "60%", s: 2, tw: "4.2s", td: "0.6s", mobile: false },
+  { left: "47%", top: "66%", s: 2, tw: "3.8s", td: "0.3s", mobile: false },
+  { left: "68%", top: "58%", s: 2, tw: "3.4s", td: "1.4s", mobile: false },
+  { left: "8%", top: "46%", s: 2, tw: "4.4s", td: "1.2s", mobile: false },
+  { left: "91%", top: "52%", s: 3, tw: "4s", td: "0.7s", mobile: false },
 ];
 
 const SHARDS = [
-  { left: "6%", top: "30%", size: 30, op: 0.5, dr: "8s", dd: "0s" },
-  { left: "16%", top: "66%", size: 22, op: 0.4, dr: "10s", dd: "1.2s" },
-  { left: "82%", top: "34%", size: 26, op: 0.45, dr: "9s", dd: "0.6s" },
-  { left: "90%", top: "62%", size: 20, op: 0.4, dr: "11s", dd: "1.8s" },
+  { left: "7%", top: "30%", size: 28, op: 0.5, dr: "8s", dd: "0s" },
+  { left: "84%", top: "32%", size: 24, op: 0.45, dr: "9s", dd: "0.6s" },
+  { left: "16%", top: "64%", size: 20, op: 0.4, dr: "10s", dd: "1.2s" },
+  { left: "88%", top: "60%", size: 18, op: 0.4, dr: "11s", dd: "1.8s" },
 ];
 
 export default function BrandHero() {
   const bgRef = useRef<HTMLDivElement>(null);
   const fxRef = useRef<HTMLDivElement>(null);
 
-  // Subtle layered parallax on pointer move — desktop only, reduced-motion off.
+  // Desktop layered pointer parallax (background moves less, shards move more).
   useEffect(() => {
     if (typeof window === "undefined") return;
     const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!fine || reduce) return;
+    if (!fine || reduce) return; // mobile uses CSS auto-drift instead
 
     let raf = 0;
     const onMove = (e: PointerEvent) => {
@@ -59,7 +55,7 @@ export default function BrandHero() {
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
         if (bgRef.current) bgRef.current.style.transform = `translate(${nx * -10}px, ${ny * -10}px)`;
-        if (fxRef.current) fxRef.current.style.transform = `translate(${nx * -26}px, ${ny * -26}px)`;
+        if (fxRef.current) fxRef.current.style.transform = `translate(${nx * -28}px, ${ny * -28}px)`;
       });
     };
     window.addEventListener("pointermove", onMove, { passive: true });
@@ -70,39 +66,44 @@ export default function BrandHero() {
   }, []);
 
   return (
-    <section className="relative flex min-h-[100svh] flex-col items-center justify-end overflow-hidden bg-black px-5 pb-20 pt-24 text-center text-white sm:px-8 sm:pb-24">
-      {/* background brand graphic (LCP) */}
+    <section className="hero-minh relative flex flex-col items-center justify-end overflow-hidden bg-black px-5 pb-24 pt-24 text-center text-white sm:px-8">
+      {/* background brand graphic (LCP) — art-directed via <picture> so the
+          browser downloads ONLY the matching composition (good for Lighthouse).
+          Mobile: dedicated 9:16, object-contain/top (full logo, never clipped).
+          Desktop: wide crop, object-cover/center. */}
       <div ref={bgRef} className="absolute inset-0 will-change-transform">
         <div className="brand-bg-zoom absolute inset-0">
-          <Image
-            src="/hero/brand-hero.webp"
-            alt="Diamond Auto Sales"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-center"
-          />
+          <picture>
+            <source media="(max-width: 640px)" srcSet="/hero/brand-hero-mobile.webp" />
+            <img
+              src="/hero/brand-hero.webp"
+              alt="Diamond Auto Sales"
+              fetchPriority="high"
+              decoding="async"
+              className="absolute inset-0 h-full w-full object-contain object-top sm:object-cover sm:object-center"
+            />
+          </picture>
         </div>
       </div>
 
       {/* soft blue glow pulsing around the logo */}
       <div
         aria-hidden
-        className="brand-glow-pulse pointer-events-none absolute inset-0 bg-[radial-gradient(42%_36%_at_50%_40%,rgba(60,150,255,0.35),transparent_70%)]"
+        className="brand-glow-pulse pointer-events-none absolute inset-0 bg-[radial-gradient(42%_34%_at_50%_38%,rgba(60,150,255,0.32),transparent_70%)]"
       />
 
-      {/* parallax FX layer: sparkles + drifting shards + light sweep */}
-      <div ref={fxRef} className="pointer-events-none absolute inset-0 will-change-transform">
-        {/* light sweep across the chrome letters (mid band) */}
-        <div className="absolute inset-x-0 top-[24%] h-[44%] overflow-hidden">
-          <div className="brand-sweep absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-transparent via-white/35 to-transparent mix-blend-screen" />
+      {/* parallax / drift FX layer: light sweep + sparkles + shards */}
+      <div ref={fxRef} className="brand-auto-drift pointer-events-none absolute inset-0 will-change-transform">
+        {/* blue-white light sweep across the chrome letters */}
+        <div className="absolute inset-x-0 top-[22%] h-[42%] overflow-hidden">
+          <div className="brand-sweep absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-transparent via-[#cfe7ff]/40 to-transparent mix-blend-screen" />
         </div>
 
-        {/* twinkling particles */}
+        {/* twinkling particles (fewer on mobile) */}
         {SPARKLES.map((p, i) => (
           <span
             key={i}
-            className="brand-twinkle absolute rounded-full bg-white"
+            className={`brand-twinkle absolute rounded-full bg-white ${p.mobile ? "" : "hidden sm:block"}`}
             style={{
               left: p.left,
               top: p.top,
@@ -115,7 +116,7 @@ export default function BrandHero() {
           />
         ))}
 
-        {/* drifting diamond shards */}
+        {/* drifting diamond shards (gentle up/down + slow rotation, varied depth) */}
         {SHARDS.map((s, i) => (
           <span
             key={i}
@@ -136,14 +137,14 @@ export default function BrandHero() {
         ))}
       </div>
 
-      {/* edge vignette for cinematic depth + clean blend under the header */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_90%_at_50%_45%,transparent_55%,rgba(0,0,0,0.55)_100%)]" />
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-black/80 to-transparent" />
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-black via-black/70 to-transparent" />
+      {/* edge vignette + top/bottom gradients (header blend + CTA legibility) */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_90%_at_50%_45%,transparent_55%,rgba(0,0,0,0.5)_100%)]" />
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/80 to-transparent" />
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-black via-black/70 to-transparent" />
 
       {/* foreground content — below the logo, never over it */}
       <div className="relative z-10 flex flex-col items-center">
-        <p className="text-[12px] font-semibold uppercase tracking-[0.32em] text-white/70 sm:text-sm">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-white/70 sm:text-sm sm:tracking-[0.32em]">
           Luxury energy · Fast movement · <span className="text-[#5aa6ff]">Diamond-level experience</span>
         </p>
         <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
