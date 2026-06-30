@@ -54,8 +54,9 @@ export default function BrandHero() {
       const ny = e.clientY / window.innerHeight - 0.5;
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
-        if (bgRef.current) bgRef.current.style.transform = `translate(${nx * -10}px, ${ny * -10}px)`;
-        if (fxRef.current) fxRef.current.style.transform = `translate(${nx * -28}px, ${ny * -28}px)`;
+        // background moves least, FX (shards/sparkles) moves most → layered depth
+        if (bgRef.current) bgRef.current.style.transform = `translate(${nx * -6}px, ${ny * -6}px)`;
+        if (fxRef.current) fxRef.current.style.transform = `translate(${nx * -16}px, ${ny * -16}px)`;
       });
     };
     window.addEventListener("pointermove", onMove, { passive: true });
@@ -80,7 +81,7 @@ export default function BrandHero() {
               alt="Diamond Auto Sales"
               fetchPriority="high"
               decoding="async"
-              className="absolute inset-0 h-full w-full object-contain object-top sm:object-cover sm:object-center"
+              className="hero-art-mask absolute inset-0 h-full w-full object-cover object-center"
             />
           </picture>
         </div>

@@ -794,6 +794,15 @@ textarea:focus-visible,
   min-height: 100dvh;
 }
 
+/* mobile only: fade the hero art into the black background top + bottom so there
+   are no hard edges around the logo (header blend above, CTA blend below) */
+@media (max-width: 640px) {
+  .hero-art-mask {
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 80%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 80%, transparent 100%);
+  }
+}
+
 /* keep the heaviest motion off phones; desktop uses pointer parallax instead of auto-drift */
 @media (max-width: 640px) {
   .brand-bg-zoom { animation: none; }
