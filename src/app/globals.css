@@ -716,6 +716,152 @@ textarea:focus-visible,
 .pill-3d:hover {
   background: rgba(47, 128, 255, 0.2);
 }
+
+/* ---------- Brand-splash hero: chrome wordmark ---------- */
+.brand-wordmark {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 0.9;
+  font-size: clamp(3rem, 15vw, 10rem);
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #d2e0f1 36%,
+    #8ea3b9 52%,
+    #f1f7ff 66%,
+    #9fb4cb 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 2px 22px rgba(47, 128, 255, 0.45)) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.55));
+}
+.brand-submark {
+  margin-top: 0.4rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  font-size: clamp(0.8rem, 2.6vw, 1.5rem);
+  color: #cad7e7;
+  text-shadow: 0 1px 14px rgba(47, 128, 255, 0.4);
+}
+
+/* ---------- Brand image hero: cinematic CSS motion ---------- */
+/* slow ken-burns drift on the background so it feels alive */
+@keyframes brandZoom {
+  from { transform: scale(1.05); }
+  to { transform: scale(1.12); }
+}
+/* soft blue glow pulsing around the logo */
+@keyframes brandGlowPulse {
+  0%, 100% { opacity: 0.4; transform: scale(0.98); }
+  50% { opacity: 0.95; transform: scale(1.1); }
+}
+/* light sweep across the chrome letters */
+@keyframes brandSweep {
+  0% { transform: translateX(-130%) skewX(-16deg); opacity: 0; }
+  10% { opacity: 0.55; }
+  32% { opacity: 0; }
+  100% { transform: translateX(240%) skewX(-16deg); opacity: 0; }
+}
+/* tiny particle sparkle twinkle */
+@keyframes brandTwinkle {
+  0%, 100% { opacity: 0.15; transform: scale(0.6); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+/* gentle drift on floating diamond shards */
+@keyframes brandDrift {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-16px) rotate(7deg); }
+}
+
+/* gentle automatic drift for the FX layer on phones (no pointer parallax there) */
+@keyframes brandAutoDrift {
+  0%, 100% { transform: translate(-6px, -4px); }
+  50% { transform: translate(6px, 5px); }
+}
+
+/* ---------- living hero: layered motion over the approved composition ---------- */
+/* surroundings copy: continuous breathing zoom + drift (moves on its own) */
+@keyframes brandBreath {
+  0%, 100% { transform: scale(1.07) translate(0.9%, -0.6%); }
+  50% { transform: scale(1.11) translate(-0.9%, 0.7%); }
+}
+/* soft atmosphere copy: larger, slower drift in the opposite direction */
+@keyframes brandBreathSlow {
+  0%, 100% { transform: scale(1.15) translate(-1.4%, 0.9%); }
+  50% { transform: scale(1.19) translate(1.4%, -0.9%); }
+}
+/* diamond/logo copy: floats + drifts opposite the surroundings → obvious depth */
+@keyframes brandFloat {
+  0%, 100% { transform: translate(-5px, 2px) scale(1); }
+  50% { transform: translate(5px, -13px) scale(1.02); }
+}
+/* volumetric light rays slowly shifting */
+@keyframes brandRayA {
+  0%, 100% { transform: rotate(-7deg) translateY(-2%); opacity: 0.16; }
+  50% { transform: rotate(-3deg) translateY(2%); opacity: 0.3; }
+}
+@keyframes brandRayB {
+  0%, 100% { transform: rotate(7deg) translateY(2%); opacity: 0.12; }
+  50% { transform: rotate(3deg) translateY(-2%); opacity: 0.24; }
+}
+/* per-crystal independent drift + slow rotation (amount/timing via vars) */
+@keyframes brandCrystal {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(var(--cx, 8px), var(--cy, -10px)) rotate(var(--cr, 8deg)); }
+}
+
+.brand-breath { animation: brandBreath 17s ease-in-out infinite; transform-origin: 50% 42%; }
+.brand-breath-slow { animation: brandBreathSlow 28s ease-in-out infinite; transform-origin: 50% 45%; }
+.brand-float { animation: brandFloat 8s ease-in-out infinite; }
+.brand-ray-a { animation: brandRayA 19s ease-in-out infinite; }
+.brand-ray-b { animation: brandRayB 24s ease-in-out infinite; }
+.brand-crystal { animation: brandCrystal var(--cd, 13s) ease-in-out infinite; animation-delay: var(--cdl, 0s); }
+
+/* fake-depth masks: isolate the diamond/logo copy from the surrounding copy */
+.hero-mask-center {
+  -webkit-mask-image: radial-gradient(62% 48% at 50% 44%, #000 55%, transparent 80%);
+  mask-image: radial-gradient(62% 48% at 50% 44%, #000 55%, transparent 80%);
+}
+.hero-mask-edges {
+  -webkit-mask-image: radial-gradient(62% 48% at 50% 44%, transparent 52%, #000 82%);
+  mask-image: radial-gradient(62% 48% at 50% 44%, transparent 52%, #000 82%);
+}
+
+.brand-bg-zoom { animation: brandZoom 20s ease-in-out infinite alternate; transform-origin: 50% 42%; }
+.brand-glow-pulse { animation: brandGlowPulse 5.5s ease-in-out infinite; transform-origin: 50% 40%; }
+.brand-sweep { animation: brandSweep 5s ease-in-out infinite; }
+.brand-twinkle { animation: brandTwinkle var(--tw, 4s) ease-in-out infinite; animation-delay: var(--td, 0s); }
+.brand-drift { animation: brandDrift var(--dr, 9s) ease-in-out infinite; animation-delay: var(--dd, 0s); }
+.brand-auto-drift { animation: brandAutoDrift 12s ease-in-out infinite; }
+
+/* full-height hero with svh/dvh fallbacks (handles iOS Safari bottom bar) */
+.hero-minh {
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+}
+
+/* mobile only: fade the hero art into the black background top + bottom so there
+   are no hard edges around the logo (header blend above, CTA blend below) */
+@media (max-width: 640px) {
+  .hero-art-mask {
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 80%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 80%, transparent 100%);
+  }
+}
+
+/* keep the heaviest motion off phones; desktop uses pointer parallax instead of auto-drift */
+@media (max-width: 640px) {
+  .brand-bg-zoom { animation: none; }
+}
+@media (min-width: 641px) {
+  .brand-auto-drift { animation: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .brand-bg-zoom, .brand-glow-pulse, .brand-sweep, .brand-twinkle, .brand-drift, .brand-auto-drift,
+  .brand-breath, .brand-breath-slow, .brand-float, .brand-ray-a, .brand-ray-b, .brand-crystal { animation: none !important; }
+}
 /* Apple text-link with chevron */
 .link-apple {
   color: var(--color-blue);
