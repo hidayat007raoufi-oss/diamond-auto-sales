@@ -82,10 +82,10 @@ export default function BrandHero() {
 
     const loop = () => {
       if (!usingInput) {
-        // extremely slow automatic camera drift when there's no input
-        const t = performance.now() * 0.0001;
-        target.x = Math.sin(t) * 0.22;
-        target.y = Math.cos(t * 0.8) * 0.16;
+        // automatic camera drift when there's no pointer (mobile) — visible but slow
+        const t = performance.now() * 0.00018;
+        target.x = Math.sin(t) * 0.6;
+        target.y = Math.cos(t * 0.8) * 0.42;
       }
       cur.x += (target.x - cur.x) * 0.05;
       cur.y += (target.y - cur.y) * 0.05;
@@ -110,21 +110,21 @@ export default function BrandHero() {
       className="hero-minh relative flex flex-col items-center justify-end overflow-hidden bg-black px-5 pb-24 pt-24 text-center text-white sm:px-8"
     >
       {/* DEPTH LAYER 1 — soft atmosphere: blurred, scaled-up copy, slowest parallax */}
-      <div className="absolute inset-0 will-change-transform" style={{ transform: "translate(calc(var(--px,0) * -4px), calc(var(--py,0) * -4px))" }}>
+      <div className="absolute inset-0 will-change-transform" style={{ transform: "translate(calc(var(--px,0) * -7px), calc(var(--py,0) * -7px))" }}>
         <div className="brand-breath-slow absolute inset-0">
           <HeroArt className="absolute inset-0 h-full w-full scale-110 object-cover object-center opacity-60 blur-[6px]" />
         </div>
       </div>
 
       {/* DEPTH LAYER 2 — surroundings: crisp copy with the center masked OUT, medium parallax + breath */}
-      <div className="absolute inset-0 will-change-transform" style={{ transform: "translate(calc(var(--px,0) * -9px), calc(var(--py,0) * -9px))" }}>
+      <div className="absolute inset-0 will-change-transform" style={{ transform: "translate(calc(var(--px,0) * -14px), calc(var(--py,0) * -14px))" }}>
         <div className="brand-breath absolute inset-0">
           <HeroArt className="hero-mask-edges absolute inset-0 h-full w-full object-cover object-center" priority />
         </div>
       </div>
 
       {/* DEPTH LAYER 3 — the diamond/logo: crisp copy masked to the center, floats + parallaxes most */}
-      <div className="absolute inset-0 will-change-transform" style={{ transform: "translate(calc(var(--px,0) * -20px), calc(var(--py,0) * -20px))" }}>
+      <div className="absolute inset-0 will-change-transform" style={{ transform: "translate(calc(var(--px,0) * -30px), calc(var(--py,0) * -30px))" }}>
         <div className="brand-float absolute inset-0">
           <HeroArt className="hero-mask-center absolute inset-0 h-full w-full object-cover object-center" />
         </div>
@@ -132,8 +132,8 @@ export default function BrandHero() {
 
       {/* LAYER: volumetric light rays, slowly shifting */}
       <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden mix-blend-screen">
-        <div className="brand-ray-a absolute -inset-1/4 bg-[conic-gradient(from_200deg_at_50%_28%,transparent_0deg,rgba(90,160,255,0.10)_28deg,transparent_66deg,rgba(120,180,255,0.07)_120deg,transparent_160deg)]" />
-        <div className="brand-ray-b absolute -inset-1/4 bg-[conic-gradient(from_18deg_at_52%_34%,transparent_0deg,rgba(70,140,255,0.08)_38deg,transparent_88deg)]" />
+        <div className="brand-ray-a absolute -inset-1/4 bg-[conic-gradient(from_200deg_at_50%_28%,transparent_0deg,rgba(90,160,255,0.16)_28deg,transparent_66deg,rgba(120,180,255,0.12)_120deg,transparent_160deg)]" />
+        <div className="brand-ray-b absolute -inset-1/4 bg-[conic-gradient(from_18deg_at_52%_34%,transparent_0deg,rgba(70,140,255,0.14)_38deg,transparent_88deg)]" />
       </div>
 
       {/* LAYER: drifting crystal shards (independent), parallax further */}
@@ -171,7 +171,7 @@ export default function BrandHero() {
       </div>
 
       {/* LAYER: glow breathing + chrome light sweep on the logo */}
-      <div aria-hidden className="brand-glow-pulse pointer-events-none absolute inset-0 bg-[radial-gradient(40%_30%_at_50%_42%,rgba(60,150,255,0.22),transparent_70%)]" />
+      <div aria-hidden className="brand-glow-pulse pointer-events-none absolute inset-0 bg-[radial-gradient(48%_38%_at_50%_42%,rgba(70,160,255,0.42),transparent_72%)]" />
       <div aria-hidden className="pointer-events-none absolute inset-x-0 top-[28%] h-[38%] overflow-hidden">
         <div className="brand-sweep absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-transparent via-white/40 to-transparent mix-blend-screen" />
       </div>

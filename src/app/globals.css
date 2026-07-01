@@ -781,20 +781,20 @@ textarea:focus-visible,
 }
 
 /* ---------- living hero: layered motion over the approved composition ---------- */
-/* cinematic camera breath (visible ~3% zoom + drift) */
+/* surroundings copy: continuous breathing zoom + drift (moves on its own) */
 @keyframes brandBreath {
-  0%, 100% { transform: scale(1.01) translate(0, 0); }
-  50% { transform: scale(1.04) translate(-0.7%, -0.6%); }
+  0%, 100% { transform: scale(1.07) translate(0.9%, -0.6%); }
+  50% { transform: scale(1.11) translate(-0.9%, 0.7%); }
 }
-/* slower, larger breath for the soft atmosphere layer */
+/* soft atmosphere copy: larger, slower drift in the opposite direction */
 @keyframes brandBreathSlow {
-  0%, 100% { transform: scale(1.08) translate(0.6%, 0.4%); }
-  50% { transform: scale(1.13) translate(-0.6%, -0.5%); }
+  0%, 100% { transform: scale(1.15) translate(-1.4%, 0.9%); }
+  50% { transform: scale(1.19) translate(1.4%, -0.9%); }
 }
-/* main diamond/logo copy floats up and down a few px */
+/* diamond/logo copy: floats + drifts opposite the surroundings → obvious depth */
 @keyframes brandFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-7px); }
+  0%, 100% { transform: translate(-5px, 2px) scale(1); }
+  50% { transform: translate(5px, -13px) scale(1.02); }
 }
 /* volumetric light rays slowly shifting */
 @keyframes brandRayA {
@@ -811,9 +811,9 @@ textarea:focus-visible,
   50% { transform: translate(var(--cx, 8px), var(--cy, -10px)) rotate(var(--cr, 8deg)); }
 }
 
-.brand-breath { animation: brandBreath 22s ease-in-out infinite; transform-origin: 50% 42%; }
-.brand-breath-slow { animation: brandBreathSlow 34s ease-in-out infinite; transform-origin: 50% 45%; }
-.brand-float { animation: brandFloat 7s ease-in-out infinite; }
+.brand-breath { animation: brandBreath 17s ease-in-out infinite; transform-origin: 50% 42%; }
+.brand-breath-slow { animation: brandBreathSlow 28s ease-in-out infinite; transform-origin: 50% 45%; }
+.brand-float { animation: brandFloat 8s ease-in-out infinite; }
 .brand-ray-a { animation: brandRayA 19s ease-in-out infinite; }
 .brand-ray-b { animation: brandRayB 24s ease-in-out infinite; }
 .brand-crystal { animation: brandCrystal var(--cd, 13s) ease-in-out infinite; animation-delay: var(--cdl, 0s); }
