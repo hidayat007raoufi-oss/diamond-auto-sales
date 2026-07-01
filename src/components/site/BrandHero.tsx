@@ -32,6 +32,24 @@ const CRYSTALS = [
   { left: "72%", top: "74%", size: 16, op: 0.4, cx: "7px", cy: "11px", cr: "9deg", cd: "15.5s", cdl: "0.6s" },
 ];
 
+/** One copy of the approved art (mobile 9:16 / desktop wide). Same src across
+ *  all copies → the browser downloads it once. `priority` marks the LCP copy. */
+function HeroArt({ className, priority = false }: { className?: string; priority?: boolean }) {
+  return (
+    <picture>
+      <source media="(max-width: 640px)" srcSet="/hero/brand-hero-mobile.webp" />
+      <img
+        src="/hero/brand-hero.webp"
+        alt={priority ? "Diamond Auto Sales" : ""}
+        aria-hidden={priority ? undefined : true}
+        {...(priority ? { fetchPriority: "high" as const } : {})}
+        decoding="async"
+        className={className}
+      />
+    </picture>
+  );
+}
+
 export default function BrandHero() {
   const sectionRef = useRef<HTMLElement>(null);
   const parallax = useRef({ px: 0, py: 0 });
@@ -91,19 +109,24 @@ export default function BrandHero() {
       ref={sectionRef}
       className="hero-minh relative flex flex-col items-center justify-end overflow-hidden bg-black px-5 pb-24 pt-24 text-center text-white sm:px-8"
     >
-      {/* LAYER: approved composition (static art) + camera breath + slight parallax */}
-      <div className="absolute inset-0 will-change-transform" style={{ transform: "translate(calc(var(--px,0) * -6px), calc(var(--py,0) * -6px))" }}>
+      {/* DEPTH LAYER 1 — soft atmosphere: blurred, scaled-up copy, slowest parallax */}
+      <div className="absolute inset-0 will-change-transform" style={{ transform: "translate(calc(var(--px,0) * -4px), calc(var(--py,0) * -4px))" }}>
+        <div className="brand-breath-slow absolute inset-0">
+          <HeroArt className="absolute inset-0 h-full w-full scale-110 object-cover object-center opacity-60 blur-[6px]" />
+        </div>
+      </div>
+
+      {/* DEPTH LAYER 2 — surroundings: crisp copy with the center masked OUT, medium parallax + breath */}
+      <div className="absolute inset-0 will-change-transform" style={{ transform: "translate(calc(var(--px,0) * -9px), calc(var(--py,0) * -9px))" }}>
         <div className="brand-breath absolute inset-0">
-          <picture>
-            <source media="(max-width: 640px)" srcSet="/hero/brand-hero-mobile.webp" />
-            <img
-              src="/hero/brand-hero.webp"
-              alt="Diamond Auto Sales"
-              fetchPriority="high"
-              decoding="async"
-              className="hero-art-mask absolute inset-0 h-full w-full object-cover object-center"
-            />
-          </picture>
+          <HeroArt className="hero-mask-edges absolute inset-0 h-full w-full object-cover object-center" priority />
+        </div>
+      </div>
+
+      {/* DEPTH LAYER 3 — the diamond/logo: crisp copy masked to the center, floats + parallaxes most */}
+      <div className="absolute inset-0 will-change-transform" style={{ transform: "translate(calc(var(--px,0) * -20px), calc(var(--py,0) * -20px))" }}>
+        <div className="brand-float absolute inset-0">
+          <HeroArt className="hero-mask-center absolute inset-0 h-full w-full object-cover object-center" />
         </div>
       </div>
 
@@ -153,7 +176,8 @@ export default function BrandHero() {
         <div className="brand-sweep absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-transparent via-white/40 to-transparent mix-blend-screen" />
       </div>
 
-      {/* legibility: bottom gradient under the UI (light enough to keep floor reflections) */}
+      {/* legibility: top blend under the header + bottom gradient under the UI */}
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/70 to-transparent" />
       <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-black via-black/55 to-transparent" />
 
       {/* LAYER: UI — stays perfectly readable while everything moves */}

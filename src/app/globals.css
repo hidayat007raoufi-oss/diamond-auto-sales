@@ -753,8 +753,8 @@ textarea:focus-visible,
 }
 /* soft blue glow pulsing around the logo */
 @keyframes brandGlowPulse {
-  0%, 100% { opacity: 0.45; transform: scale(1); }
-  50% { opacity: 0.8; transform: scale(1.06); }
+  0%, 100% { opacity: 0.4; transform: scale(0.98); }
+  50% { opacity: 0.95; transform: scale(1.1); }
 }
 /* light sweep across the chrome letters */
 @keyframes brandSweep {
@@ -781,10 +781,20 @@ textarea:focus-visible,
 }
 
 /* ---------- living hero: layered motion over the approved composition ---------- */
-/* almost-imperceptible cinematic camera breath (~1% zoom + micro drift) */
+/* cinematic camera breath (visible ~3% zoom + drift) */
 @keyframes brandBreath {
-  0%, 100% { transform: scale(1) translate(0, 0); }
-  50% { transform: scale(1.012) translate(-0.35%, -0.3%); }
+  0%, 100% { transform: scale(1.01) translate(0, 0); }
+  50% { transform: scale(1.04) translate(-0.7%, -0.6%); }
+}
+/* slower, larger breath for the soft atmosphere layer */
+@keyframes brandBreathSlow {
+  0%, 100% { transform: scale(1.08) translate(0.6%, 0.4%); }
+  50% { transform: scale(1.13) translate(-0.6%, -0.5%); }
+}
+/* main diamond/logo copy floats up and down a few px */
+@keyframes brandFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
 }
 /* volumetric light rays slowly shifting */
 @keyframes brandRayA {
@@ -801,10 +811,22 @@ textarea:focus-visible,
   50% { transform: translate(var(--cx, 8px), var(--cy, -10px)) rotate(var(--cr, 8deg)); }
 }
 
-.brand-breath { animation: brandBreath 26s ease-in-out infinite; transform-origin: 50% 42%; }
+.brand-breath { animation: brandBreath 22s ease-in-out infinite; transform-origin: 50% 42%; }
+.brand-breath-slow { animation: brandBreathSlow 34s ease-in-out infinite; transform-origin: 50% 45%; }
+.brand-float { animation: brandFloat 7s ease-in-out infinite; }
 .brand-ray-a { animation: brandRayA 19s ease-in-out infinite; }
 .brand-ray-b { animation: brandRayB 24s ease-in-out infinite; }
 .brand-crystal { animation: brandCrystal var(--cd, 13s) ease-in-out infinite; animation-delay: var(--cdl, 0s); }
+
+/* fake-depth masks: isolate the diamond/logo copy from the surrounding copy */
+.hero-mask-center {
+  -webkit-mask-image: radial-gradient(62% 48% at 50% 44%, #000 55%, transparent 80%);
+  mask-image: radial-gradient(62% 48% at 50% 44%, #000 55%, transparent 80%);
+}
+.hero-mask-edges {
+  -webkit-mask-image: radial-gradient(62% 48% at 50% 44%, transparent 52%, #000 82%);
+  mask-image: radial-gradient(62% 48% at 50% 44%, transparent 52%, #000 82%);
+}
 
 .brand-bg-zoom { animation: brandZoom 20s ease-in-out infinite alternate; transform-origin: 50% 42%; }
 .brand-glow-pulse { animation: brandGlowPulse 5.5s ease-in-out infinite; transform-origin: 50% 40%; }
@@ -838,7 +860,7 @@ textarea:focus-visible,
 }
 @media (prefers-reduced-motion: reduce) {
   .brand-bg-zoom, .brand-glow-pulse, .brand-sweep, .brand-twinkle, .brand-drift, .brand-auto-drift,
-  .brand-breath, .brand-ray-a, .brand-ray-b, .brand-crystal { animation: none !important; }
+  .brand-breath, .brand-breath-slow, .brand-float, .brand-ray-a, .brand-ray-b, .brand-crystal { animation: none !important; }
 }
 /* Apple text-link with chevron */
 .link-apple {
