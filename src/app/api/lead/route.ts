@@ -1,47 +1,57 @@
 import { NextResponse } from "next/server";
 
-/**
- * Lead intake. Sends an email via Resend when configured, otherwise logs.
- *
- * To go live, add these environment variables in Vercel:
- *   RESEND_API_KEY   – your Resend API key (https://resend.com)
- *   LEAD_TO_EMAIL    – inbox that should receive leads (e.g. sales@diamondautonc.com)
- *   LEAD_FROM_EMAIL  – verified sender (e.g. leads@diamondautonc.com)
- *
- * No keys are exposed to the client. Swap Resend for any provider/CRM here.
- */
-export async function POST(req: Request) {
-  const lead = await req.json().catch(() => null);
-  if (!lead) return NextResponse.json({ ok: false, error: "invalid" }, { status: 400 });
+const fields = [
+  "type", "name", "phone", "email", "vehicle", "budget", "tradeIn", "message", "source",
+] as const;
 
-  console.log("[diamond-lead]", JSON.stringify(lead));
+export async function POST(req: Request) {
+  const payload = await req.json().catch(() => null);
+  if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
+    return NextResponse.json({ ok: false }, { status: 400 });
+  }
+
+  const lead = new Map<string, string>();
+  for (const field of fields) {
+    const value: unknown = payload[field];
+    if (value === undefined) continue;
+    if (typeof value !== "string" || value.length > 4000) {
+      return NextResponse.json({ ok: false }, { status: 400 });
+    }
+    if (value.trim()) lead.set(field, value.trim());
+  }
+
+  const type = lead.get("type");
+  const email = lead.get("email");
+  if (!type || !/^[a-z-]{1,40}$/.test(type) || (!email && !lead.has("phone"))) {
+    return NextResponse.json({ ok: false }, { status: 400 });
+  }
 
   const key = process.env.RESEND_API_KEY;
   const to = process.env.LEAD_TO_EMAIL;
   const from = process.env.LEAD_FROM_EMAIL;
-
-  if (key && to && from) {
-    const rows = Object.entries(lead)
-      .filter(([, v]) => v)
-      .map(([k, v]) => `<tr><td style="padding:4px 12px 4px 0;color:#888">${k}</td><td style="padding:4px 0"><b>${String(v)}</b></td></tr>`)
-      .join("");
-    try {
-      const res = await fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
-        body: JSON.stringify({
-          from,
-          to,
-          reply_to: lead.email || undefined,
-          subject: `New ${lead.type || "lead"} — Diamond Auto Sales`,
-          html: `<h2>New ${lead.type || "lead"}</h2><table>${rows}</table>`,
-        }),
-      });
-      if (!res.ok) console.error("[diamond-lead] resend failed", await res.text());
-    } catch (e) {
-      console.error("[diamond-lead] resend error", e);
-    }
+  if (!key || !to || !from) {
+    return NextResponse.json({ ok: false }, { status: 503 });
   }
 
-  return NextResponse.json({ ok: true });
+  try {
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        from,
+        to,
+        reply_to: email,
+        subject: `New ${type} — Diamond Auto Sales`,
+        text: Array.from(lead, ([field, value]) => `${field}: ${value}`).join("\n"),
+      }),
+      signal: AbortSignal.timeout(10000),
+    });
+
+    if (response.ok) return NextResponse.json({ ok: true });
+    console.error("[diamond-lead] provider rejected submission", response.status);
+  } catch {
+    console.error("[diamond-lead] provider unavailable");
+  }
+
+  return NextResponse.json({ ok: false }, { status: 502 });
 }

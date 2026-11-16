@@ -4,12 +4,14 @@ import { useState } from "react";
 import { submitLead } from "@/lib/leads";
 
 export default function LeadForm() {
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (status === "sending") return;
+    setStatus("sending");
     const f = new FormData(e.currentTarget);
-    await submitLead({
+    const { ok } = await submitLead({
       type: "contact",
       source: "contact-form",
       name: String(f.get("name") || ""),
@@ -18,10 +20,10 @@ export default function LeadForm() {
       vehicle: String(f.get("vehicle") || ""),
       message: String(f.get("message") || ""),
     });
-    setSent(true);
+    setStatus(ok ? "sent" : "error");
   }
 
-  if (sent) {
+  if (status === "sent") {
     return (
       <div className="flex flex-col items-center justify-center rounded-2xl bg-white p-12 text-center ring-1 ring-black/[0.06]">
         <div className="grid h-14 w-14 place-items-center rounded-full bg-[#0071e3] text-white">
@@ -62,7 +64,13 @@ export default function LeadForm() {
         />
       </div>
 
-      <button type="submit" className="pill pill-blue mt-6 w-full justify-center py-3.5">
+      {status === "error" && (
+        <p role="alert" className="mt-4 text-sm text-red-700">
+          We couldn’t send your request. Try again or call{" "}
+          <a className="underline" href="tel:+19198878666">(919) 887-8666</a>.
+        </p>
+      )}
+      <button type="submit" disabled={status === "sending"} className="pill pill-blue mt-6 w-full justify-center py-3.5">
         Request Availability
         <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.7">
           <path d="M5 12h14M13 6l6 6-6 6" />

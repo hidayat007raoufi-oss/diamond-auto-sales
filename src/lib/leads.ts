@@ -13,7 +13,7 @@ export type Lead = {
 };
 
 /**
- * Submits a lead to the (placeholder) API route. Returns ok=true on success.
+ * Submits a lead to the lead intake route. Returns ok=true on success.
  * Swap the backend in src/app/api/lead/route.ts to deliver to email/CRM.
  */
 export async function submitLead(lead: Lead): Promise<{ ok: boolean }> {

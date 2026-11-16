@@ -6,15 +6,17 @@ import { rentals } from "@/lib/rentals";
 
 /** Light rental availability / reservation request form. */
 export default function RentalInquiryForm() {
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (status === "sending") return;
+    setStatus("sending");
     const f = new FormData(e.currentTarget);
     const vehicleClass = String(f.get("class") || "");
     const pickup = String(f.get("pickup") || "");
     const ret = String(f.get("return") || "");
-    await submitLead({
+    const { ok } = await submitLead({
       type: "rental",
       source: "rental-form",
       name: String(f.get("name") || ""),
@@ -23,10 +25,10 @@ export default function RentalInquiryForm() {
       vehicle: vehicleClass,
       message: `Pickup: ${pickup} · Return: ${ret} · ${String(f.get("message") || "")}`,
     });
-    setSent(true);
+    setStatus(ok ? "sent" : "error");
   }
 
-  if (sent) {
+  if (status === "sent") {
     return (
       <div className="bento flex flex-col items-center justify-center bg-white p-12 text-center ring-1 ring-black/[0.06]">
         <div className="grid h-14 w-14 place-items-center rounded-full bg-[#0071e3] text-white">
@@ -88,7 +90,13 @@ export default function RentalInquiryForm() {
         />
       </div>
 
-      <button type="submit" className="pill pill-blue mt-6 w-full justify-center py-3.5">
+      {status === "error" && (
+        <p role="alert" className="mt-4 text-sm text-red-700">
+          We couldn’t send your request. Try again or call{" "}
+          <a className="underline" href="tel:+19198878666">(919) 887-8666</a>.
+        </p>
+      )}
+      <button type="submit" disabled={status === "sending"} className="pill pill-blue mt-6 w-full justify-center py-3.5">
         Request Availability
       </button>
       <p className="mt-4 text-center text-[11px] text-[#86868b]">

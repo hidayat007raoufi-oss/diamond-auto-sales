@@ -38,7 +38,7 @@ export default function ListingCard({ vehicle, priceDrop }: { vehicle: Vehicle; 
         <div className="mt-4 flex items-end justify-between">
           <div>
             <p className="text-[19px] font-semibold text-[#1d1d1f]">{formatPrice(vehicle.price)}</p>
-            <p className="mt-0.5 text-[12px] text-[#86868b]">est. {estMonthly(vehicle.price)}/mo</p>
+            <p className="mt-0.5 text-[12px] text-[#86868b]">est. {estMonthly(vehicle.price)}</p>
           </div>
           <span className="inline-flex items-center gap-1 text-[14px] text-[#0071e3] transition-all group-hover:gap-1.5">
             Learn more
