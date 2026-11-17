@@ -923,3 +923,14 @@ textarea:focus-visible,
 .hero3d-stage canvas {
   touch-action: pan-y !important;
 }
+
+@media (prefers-reduced-motion: no-preference) {
+  .service-hero-image {
+    animation: service-hero-reveal 3.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+}
+
+@keyframes service-hero-reveal {
+  from { transform: scale(1.06); }
+  to { transform: scale(1); }
+}

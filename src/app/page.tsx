@@ -11,10 +11,10 @@ export const metadata: Metadata = {
 };
 
 const customServices = [
-  { id: "wraps", price: "From $499", color: "from-[#124585] to-[#080f24]" },
-  { id: "tint", price: "From $59.99", color: "from-[#343e55] to-[#0a111c]" },
-  { id: "body-paint", price: "Free estimates", color: "from-[#4b375b] to-[#171020]" },
-  { id: "detailing", price: "From $25.99", color: "from-[#145362] to-[#0b1824]" },
+  { id: "wraps", price: "From $499" },
+  { id: "tint", price: "From $59.99" },
+  { id: "body-paint", price: "Free estimates" },
+  { id: "detailing", price: "From $25.99" },
 ];
 
 export default function Home() {
@@ -26,31 +26,31 @@ export default function Home() {
         { label: "Visit the shop", href: "#visit" },
       ]} cta={{ label: "Call the shop", href: "tel:+19199876666" }} appearAfter={560} tone="light" />
 
-      <section className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden bg-black px-5 pb-16 pt-24 text-center text-white sm:px-8">
-        <p className="apple-metric-label text-[#2997ff]">Diamond Auto · Raleigh, NC</p>
-        <h1 className="apple-headline mt-3 max-w-4xl text-balance">Auto repair &amp; customization.</h1>
-        <p className="apple-sub mt-4 max-w-2xl text-white/70">
-          Maintenance, repairs, and custom work for your car.
-        </p>
-        <div className="mt-7 flex flex-wrap items-center justify-center gap-4">
-          <Link href="#services" className="pill pill-dark">See service pricing</Link>
-          <a href="sms:+19199876666" className="pill pill-blue">Text for a quote</a>
+      <section className="overflow-hidden bg-[#071a31] text-center text-white">
+        <div className="relative aspect-[16/11] overflow-hidden bg-[#101317] sm:aspect-[2/1] xl:max-h-[680px]">
+          <Image
+            src="/services/wrap-hero.jpg"
+            alt="A coupe with a glossy vinyl wrap that shifts from emerald green to violet"
+            fill
+            preload
+            sizes="100vw"
+            className="service-hero-image object-cover"
+          />
         </div>
-
-        <div className="mt-12 w-full max-w-4xl">
-          <div className="relative mx-auto aspect-[16/9] w-full overflow-hidden rounded-[28px] bg-[radial-gradient(ellipse_at_center,#172f53,black_72%)]">
-            <Image src="/vehicles/cadillac-cts-2015/cutouts/front-right.webp" alt="" fill preload className="object-contain" sizes="(max-width: 896px) 100vw, 896px" />
-          </div>
-        </div>
-
-        <div aria-hidden className="absolute bottom-6 left-1/2 -translate-x-1/2">
-          <div className="flex h-9 w-5 items-start justify-center rounded-full border border-white/25 p-1">
-            <span className="scroll-hint h-2 w-1 rounded-full bg-white/70" />
+        <div className="px-5 py-12 sm:px-8 sm:py-16">
+          <p className="apple-metric-label text-[#7ac3ff]">Diamond Auto · Raleigh, NC</p>
+          <h1 className="apple-headline mx-auto mt-3 max-w-5xl text-balance">Auto repair &amp; customization.</h1>
+          <p className="apple-sub mx-auto mt-4 max-w-2xl text-white/75">
+            Maintenance, repairs, and custom work for your car.
+          </p>
+          <div className="mt-7 flex flex-wrap items-center justify-center gap-4">
+            <Link href="#services" className="pill pill-dark">See service pricing</Link>
+            <a href="sms:+19199876666" className="pill pill-blue">Text for a quote</a>
           </div>
         </div>
       </section>
 
-      <section id="customization" className="relative scroll-mt-12 flex min-h-[100svh] flex-col items-center justify-center overflow-hidden bg-white px-5 pb-16 pt-24 text-center sm:px-8">
+      <section id="customization" className="relative scroll-mt-12 flex flex-col items-center justify-center overflow-hidden bg-white px-5 pb-16 pt-24 text-center sm:px-8">
         <p className="apple-metric-label text-[#0071e3]">Customization</p>
         <h2 className="apple-headline mt-3 max-w-4xl text-balance text-[#1d1d1f]">Make it yours.</h2>
         <p className="apple-sub mt-4 max-w-2xl text-[#6e6e73]">Wraps, tint, body and paint, and detailing.</p>
@@ -59,11 +59,19 @@ export default function Home() {
           <a href="sms:+19199876666" className="pill pill-blue">Text for a quote</a>
         </div>
 
-        <div className="mt-12 grid w-full max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {customServices.map(({ id, price, color }) => (
-            <Link key={id} href={`#${id}`} className={`bento bento-hover relative flex aspect-[3/4] flex-col justify-end overflow-hidden bg-gradient-to-br p-4 text-left ${color}`}>
-              <p className="text-sm font-semibold text-white">{serviceMenu.find((service) => service.id === id)?.title}</p>
-              <p className="mt-1 text-xs text-white/80">{price}</p>
+        <div className="mt-12 grid w-full max-w-7xl gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {customServices.map(({ id, price }) => (
+            <Link key={id} href={`#${id}`} className="group bento bento-hover relative flex aspect-[4/3] flex-col justify-end overflow-hidden bg-[#101317] p-5 text-left lg:aspect-[3/4]">
+              <Image
+                src={`/services/${id}.jpg`}
+                alt=""
+                fill
+                sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                className="object-cover motion-safe:transition-transform motion-safe:duration-700 motion-safe:group-hover:scale-105"
+              />
+              <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+              <p className="relative text-xl font-semibold tracking-tight text-white">{serviceMenu.find((service) => service.id === id)?.title}</p>
+              <p className="relative mt-1 text-sm text-white/85">{price}</p>
             </Link>
           ))}
         </div>
