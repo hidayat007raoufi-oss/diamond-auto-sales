@@ -66,8 +66,8 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-5">
-          <a href="tel:+19198878666" className="hidden text-[13px] font-medium text-[#1d1d1f] md:block">
-            (919) 887-8666
+          <a href="tel:+19199876666" className="hidden text-[13px] font-medium text-[#1d1d1f] md:block">
+            (919) 987-6666
           </a>
           <Link href="/financing" className="hidden text-[13px] font-normal text-[#0071e3] hover:underline sm:block">
             Get Approved
@@ -121,7 +121,7 @@ export default function Header() {
 
         <div className="px-6 pb-9 pt-4">
           <div className="grid grid-cols-3 gap-3">
-            <a href="tel:+19198878666" onClick={() => setOpen(false)} className="flex flex-col items-center gap-1.5 rounded-2xl bg-[#f5f5f7] py-3.5 text-xs font-medium text-[#1d1d1f]">
+            <a href="tel:+19199876666" onClick={() => setOpen(false)} className="flex flex-col items-center gap-1.5 rounded-2xl bg-[#f5f5f7] py-3.5 text-xs font-medium text-[#1d1d1f]">
               <svg viewBox="0 0 24 24" className="h-5 w-5 text-[#0071e3]" fill="none" stroke="currentColor" strokeWidth="1.7">
                 <path d="M5 4h4l2 5-3 2a11 11 0 005 5l2-3 5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z" />
               </svg>

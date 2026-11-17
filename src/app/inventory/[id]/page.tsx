@@ -152,8 +152,8 @@ export default async function VehiclePage(props: PageProps<"/inventory/[id]">) {
                     <Link href={`/contact?intent=trade&vehicle=${v.id}`} className="pill pill-dark">
                       Value Your Trade
                     </Link>
-                    <a href="tel:+19198878666" className="pill pill-dark">
-                      Call (919) 887-8666
+                    <a href="tel:+19199876666" className="pill pill-dark">
+                      Call (919) 987-6666
                     </a>
                   </div>
                 </div>
@@ -210,8 +210,8 @@ export default async function VehiclePage(props: PageProps<"/inventory/[id]">) {
                   <Button href={`/contact?intent=test-drive&vehicle=${v.id}`} variant="ghost">
                     Schedule Test Drive
                   </Button>
-                  <a href="tel:+19198878666" className="pill pill-light">
-                    Call (919) 887-8666
+                  <a href="tel:+19199876666" className="pill pill-light">
+                    Call (919) 987-6666
                   </a>
                 </div>
               </div>

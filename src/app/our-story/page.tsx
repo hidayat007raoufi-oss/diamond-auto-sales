@@ -137,8 +137,8 @@ export default function OurStoryPage() {
               </div>
               <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
                 <Button href="/inventory">View Inventory</Button>
-                <a href="tel:+19198878666" className="pill pill-dark">
-                  Call (919) 887-8666
+                <a href="tel:+19199876666" className="pill pill-dark">
+                  Call (919) 987-6666
                 </a>
               </div>
             </div>

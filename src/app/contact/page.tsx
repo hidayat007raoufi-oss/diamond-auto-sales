@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 const rows = [
   { label: "Visit", value: "5915 Triangle Drive, Raleigh, NC 27616" },
-  { label: "Call", value: "(919) 887-8666", href: "tel:+19198878666" },
+  { label: "Call", value: "(919) 987-6666", href: "tel:+19199876666" },
   { label: "Email", value: "hello@diamondautonc.com", href: "mailto:hello@diamondautonc.com" },
   { label: "Hours", value: "Mon–Fri 9–7 · Sat 9–5 · Sun by appointment" },
 ];

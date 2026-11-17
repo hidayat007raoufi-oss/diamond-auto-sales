@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-const PHONE = "+19198878666";
+const PHONE = "+19199876666";
 
 /** Floating mobile action bar — appears after scrolling, hides near top + under overlays. */
 export default function StickyCTABar() {

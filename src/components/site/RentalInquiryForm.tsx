@@ -93,7 +93,7 @@ export default function RentalInquiryForm() {
       {status === "error" && (
         <p role="alert" className="mt-4 text-sm text-red-700">
           We couldn’t send your request. Try again or call{" "}
-          <a className="underline" href="tel:+19198878666">(919) 887-8666</a>.
+          <a className="underline" href="tel:+19199876666">(919) 987-6666</a>.
         </p>
       )}
       <button type="submit" disabled={status === "sending"} className="pill pill-blue mt-6 w-full justify-center py-3.5">

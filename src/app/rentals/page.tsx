@@ -136,7 +136,7 @@ export default function RentalsPage() {
               <p className="mt-1.5">
                 Must be 21+ with a valid driver&apos;s license and proof of
                 insurance. A refundable security deposit applies. Call{" "}
-                <a href="tel:+19198878666" className="text-[#0071e3] hover:underline">(919) 887-8666</a>{" "}
+                <a href="tel:+19199876666" className="text-[#0071e3] hover:underline">(919) 987-6666</a>{" "}
                 with questions.
               </p>
             </div>
