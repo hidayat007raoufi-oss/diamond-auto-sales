@@ -8,22 +8,20 @@ import ChromeGate from "@/components/site/ChromeGate";
 export const metadata: Metadata = {
   metadataBase: new URL("https://diamondauto.com"),
   title: {
-    default: "Diamond Auto Sales — Premium Vehicles in Raleigh, NC",
+    default: "Diamond Auto Sales — Auto Repair & Customization in Raleigh, NC",
     template: "%s | Diamond Auto Sales",
   },
   description:
-    "Premium pre-owned and luxury vehicles for sale in Raleigh, NC. Transparent financing, 27-point inspected inventory, and in-house service.",
+    "Auto repair, maintenance, detailing, wraps, tint, and body and paint in Raleigh, NC.",
   keywords: [
-    "used cars Raleigh",
-    "luxury cars Raleigh NC",
-    "premium vehicles for sale",
-    "auto financing Raleigh",
+    "auto repair Raleigh",
+    "vehicle customization Raleigh",
     "Diamond Auto Sales",
   ],
   openGraph: {
-    title: "Diamond Auto Sales — Premium Vehicles in Raleigh, NC",
+    title: "Diamond Auto Sales — Auto Repair & Customization in Raleigh, NC",
     description:
-      "Premium vehicles, transparent financing, and in-house service in Raleigh, North Carolina.",
+      "Explore automotive services and pricing at Diamond Auto in Raleigh, North Carolina.",
     type: "website",
     siteName: "Diamond Auto Sales",
     locale: "en_US",

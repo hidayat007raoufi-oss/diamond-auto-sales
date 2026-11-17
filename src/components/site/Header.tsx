@@ -8,12 +8,7 @@ import { SOCIAL_LINKS } from "@/lib/social";
 
 const links = [
   { href: "/", label: "Home" },
-  { href: "/inventory", label: "Inventory" },
-  { href: "/experience", label: "Experience" },
-  { href: "/financing", label: "Financing" },
-  { href: "/rentals", label: "Rentals" },
-  { href: "/services", label: "Services" },
-  { href: "/our-story", label: "Our Story" },
+  { href: "/#services", label: "Services" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -69,8 +64,8 @@ export default function Header() {
           <a href="tel:+19199876666" className="hidden text-[13px] font-medium text-[#1d1d1f] md:block">
             (919) 987-6666
           </a>
-          <Link href="/financing" className="hidden text-[13px] font-normal text-[#0071e3] hover:underline sm:block">
-            Get Approved
+          <Link href="sms:+19199876666" className="hidden text-[13px] font-normal text-[#0071e3] hover:underline sm:block">
+            Text for a Quote
           </Link>
           <button
             onClick={() => setOpen((v) => !v)}
@@ -127,18 +122,18 @@ export default function Header() {
               </svg>
               Call Now
             </a>
-            <Link href="/financing" onClick={() => setOpen(false)} className="flex flex-col items-center gap-1.5 rounded-2xl bg-[#0071e3] py-3.5 text-xs font-medium text-white">
+            <Link href="sms:+19199876666" onClick={() => setOpen(false)} className="flex flex-col items-center gap-1.5 rounded-2xl bg-[#0071e3] py-3.5 text-xs font-medium text-white">
               <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.7">
                 <path d="M5 12l4 4L19 7" />
               </svg>
-              Get Approved
+              Text for a Quote
             </Link>
-            <Link href="/inventory" onClick={() => setOpen(false)} className="flex flex-col items-center gap-1.5 rounded-2xl bg-[#f5f5f7] py-3.5 text-xs font-medium text-[#1d1d1f]">
+            <Link href="/#services" onClick={() => setOpen(false)} className="flex flex-col items-center gap-1.5 rounded-2xl bg-[#f5f5f7] py-3.5 text-xs font-medium text-[#1d1d1f]">
               <svg viewBox="0 0 24 24" className="h-5 w-5 text-[#0071e3]" fill="none" stroke="currentColor" strokeWidth="1.6">
                 <rect x="3" y="6" width="18" height="12" rx="2" />
                 <path d="M3 12h18" />
               </svg>
-              Inventory
+              Services
             </Link>
           </div>
 

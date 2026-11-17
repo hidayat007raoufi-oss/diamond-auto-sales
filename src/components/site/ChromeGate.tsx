@@ -8,7 +8,7 @@ const FULL_BLEED = ["/experience"];
 
 export default function ChromeGate({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const hidden = pathname === "/" || FULL_BLEED.some((p) => pathname === p || pathname?.startsWith(`${p}/`));
+  const hidden = FULL_BLEED.some((p) => pathname === p || pathname?.startsWith(`${p}/`));
   if (hidden) return null;
   return <>{children}</>;
 }

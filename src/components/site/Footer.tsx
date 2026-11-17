@@ -3,20 +3,16 @@ import DiamondLogo from "@/components/site/DiamondLogo";
 
 const columns = [
   {
-    title: "Shop",
+    title: "Services",
     links: [
-      { href: "/inventory", label: "All Inventory" },
-      { href: "/rentals", label: "Vehicle Rentals" },
-      { href: "/financing", label: "Financing" },
-      { href: "/contact?intent=trade", label: "Value Your Trade" },
+      { href: "/#services", label: "Service Pricing" },
+      { href: "/#customization", label: "Customization" },
     ],
   },
   {
     title: "Company",
     links: [
-      { href: "/services", label: "Detailing & Service" },
-      { href: "/services", label: "Customization" },
-      { href: "/our-story", label: "Our Story" },
+      { href: "/#services", label: "Detailing & Service" },
       { href: "/contact", label: "Contact" },
     ],
   },
@@ -36,8 +32,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="mt-5 max-w-xs text-[13px] leading-relaxed text-[#6e6e73]">
-              North Carolina&apos;s premier automotive destination — vehicle sales,
-              rentals, financing, and full-service care, all in Raleigh.
+              Auto repair, maintenance, and customization in Raleigh, North Carolina.
             </p>
           </div>
 
@@ -59,7 +54,7 @@ export default function Footer() {
             <div>
               <p className="text-[12px] font-semibold text-[#1d1d1f]">Visit</p>
               <ul className="mt-3.5 space-y-2.5 text-[13px] text-[#6e6e73]">
-                <li>5915 Triangle Drive<br />Raleigh, NC 27616</li>
+                <li>5915 Triangle Drive<br />Raleigh, NC 27617</li>
                 <li>
                   <a href="tel:+19199876666" className="font-medium text-[#0071e3] hover:underline">
                     (919) 987-6666

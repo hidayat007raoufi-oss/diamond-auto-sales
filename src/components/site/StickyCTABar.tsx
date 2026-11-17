@@ -36,11 +36,11 @@ export default function StickyCTABar() {
             <path d="M5 4h4l2 5-3 2a11 11 0 005 5l2-3 5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z" />
           </svg>
         </a>
-        <Link href="/inventory" className="flex-1 rounded-full bg-black/[0.05] py-3 text-center text-[13px] font-medium text-[#1d1d1f] active:scale-[0.98]">
-          Inventory
+        <Link href="/#services" className="flex-1 rounded-full bg-black/[0.05] py-3 text-center text-[13px] font-medium text-[#1d1d1f] active:scale-[0.98]">
+          Services
         </Link>
-        <Link href="/financing" className="flex-1 rounded-full bg-[#0071e3] py-3 text-center text-[13px] font-medium text-white active:scale-[0.98]">
-          Get Approved
+        <Link href="sms:+19199876666" className="flex-1 rounded-full bg-[#0071e3] py-3 text-center text-[13px] font-medium text-white active:scale-[0.98]">
+          Text for a Quote
         </Link>
       </div>
     </div>
