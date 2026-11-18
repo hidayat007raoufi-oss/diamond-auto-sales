@@ -1,12 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { servicePhone } from "@/lib/repair-menu";
 import { useEffect, useState } from "react";
 
 const PHONE = "+19198878666";
 
 /** Floating mobile action bar — appears after scrolling, hides near top + under overlays. */
 export default function StickyCTABar() {
+  const repairHome = usePathname() === "/";
   const [show, setShow] = useState(false);
   const [overlay, setOverlay] = useState(0);
 
@@ -26,12 +29,13 @@ export default function StickyCTABar() {
 
   return (
     <div
+      inert={!visible}
       className={`subnav-frost fixed inset-x-0 bottom-0 z-40 px-3 pb-[max(0.6rem,env(safe-area-inset-bottom))] pt-2.5 transition-all duration-300 lg:hidden ${
         visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-full opacity-0"
       }`}
     >
       <div className="mx-auto flex max-w-md items-center gap-2">
-        <a href={`tel:${PHONE}`} aria-label="Call" className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-black/[0.05] text-[#0071e3] active:scale-95">
+        <a href={`tel:${repairHome ? servicePhone.number : PHONE}`} aria-label="Call" className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-black/[0.05] text-[#0071e3] active:scale-95">
           <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.7">
             <path d="M5 4h4l2 5-3 2a11 11 0 005 5l2-3 5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z" />
           </svg>
@@ -39,8 +43,8 @@ export default function StickyCTABar() {
         <Link href="/inventory" className="flex-1 rounded-full bg-black/[0.05] py-3 text-center text-[13px] font-medium text-[#1d1d1f] active:scale-[0.98]">
           Inventory
         </Link>
-        <Link href="/financing" className="flex-1 rounded-full bg-[#0071e3] py-3 text-center text-[13px] font-medium text-white active:scale-[0.98]">
-          Get Approved
+        <Link href={repairHome ? "/#service-contact" : "/financing"} className="flex-1 rounded-full bg-[#0071e3] py-3 text-center text-[13px] font-medium text-white active:scale-[0.98]">
+          {repairHome ? "Book Service" : "Get Approved"}
         </Link>
       </div>
     </div>
