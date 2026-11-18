@@ -1,219 +1,136 @@
+import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
-import SubNav from "@/components/site/SubNav";
-import ExperienceFeature from "@/components/site/ExperienceFeature";
-import ListingCard from "@/components/site/ListingCard";
-import ImagePlaceholder from "@/components/site/ImagePlaceholder";
-import PhotoLayer from "@/components/site/PhotoLayer";
 import Reveal from "@/components/motion/Reveal";
-import { vehicles, getVehicle, vehicleImage, formatPrice } from "@/lib/vehicles";
-import { rentals } from "@/lib/rentals";
-import { FEATURED_PERFORMANCE_ID } from "@/lib/featured";
+import { customizationMenu, detailingMenu, repairMenu, type ServiceMenu } from "@/lib/repair-menu";
+import styles from "./repair-home.module.css";
 
-const subnavLinks = [
-  { label: "Inventory", href: "#inventory" },
-  { label: "Rentals", href: "#rentals" },
-  { label: "Financing", href: "#financing" },
-  { label: "Services", href: "#services" },
-];
+const title = "Auto Repair & Customization";
+const description = "Explore Diamond Auto Sales service pricing for maintenance, brakes, diagnostics, tire service, tint, wraps, bodywork and detailing in Raleigh, NC.";
+const vehiclePhotos = "/vehicles/cadillac-cts-2015/cutouts";
 
-const bento = [
-  {
-    href: "/financing",
-    eyebrow: "Financing",
-    title: "Get approved before you arrive.",
-    body: "Every credit situation — first-time buyers, rebuilding, and trade-ins welcome.",
-    dark: true,
-    cta: "Start application",
-  },
-  {
-    href: "/contact?intent=trade",
-    eyebrow: "Trade-In",
-    title: "Top-dollar for your trade.",
-    body: "A real offer applied straight to your next vehicle — even with a balance owed.",
-    dark: false,
-    cta: "Value your trade",
-  },
-  {
-    href: "/services",
-    eyebrow: "Detailing & Service",
-    title: "Showroom-clean, in-house.",
-    body: "Detailing, customization, and mechanical care under one roof.",
-    dark: false,
-    cta: "Explore services",
-  },
-  {
-    href: "/our-story",
-    eyebrow: "Our Story",
-    title: "Built in Raleigh.",
-    body: "A local dealership grown into North Carolina's full-service destination.",
-    dark: true,
-    cta: "Read our story",
-  },
-];
+export const metadata: Metadata = {
+  title,
+  description,
+  keywords: ["auto repair Raleigh", "vehicle customization Raleigh", "Diamond Auto Sales"],
+  openGraph: { title: `${title} | Diamond Auto Sales`, description, type: "website", siteName: "Diamond Auto Sales" },
+};
+
+function inquiry(service?: string) {
+  const subject = service ? `Service inquiry — ${service}` : "Service appointment request";
+  return `mailto:hello@diamondautonc.com?subject=${encodeURIComponent(subject)}`;
+}
+
+function PriceCards({ menu, customize = false }: { menu: ServiceMenu[]; customize?: boolean }) {
+  return (
+    <div className={styles.grid}>
+      {menu.map(({ id, title, items, note }) => (
+        <article className={styles.card} key={id}>
+          <h3>{title}</h3>
+          <dl className="mt-4 text-base">
+            {items.map(([name, price]) => (
+              <div className={styles.line} key={name}>
+                <dt>{name}</dt>
+                <dd>{price}</dd>
+              </div>
+            ))}
+          </dl>
+          {note && <p className="mt-2 text-sm opacity-85">{note}</p>}
+          <a
+            href={inquiry(title)}
+            aria-label={`${customize ? "Get a quote" : "Book service"} for ${title} by email`}
+            className={`pill mt-5 ${customize ? "pill-dark" : "pill-light"}`}
+          >
+            {customize ? "Get a Quote" : "Book Service"}
+          </a>
+        </article>
+      ))}
+    </div>
+  );
+}
 
 export default function Home() {
-  const available = vehicles.filter((v) => v.status !== "Sold");
-  const featured = available.slice(0, 6);
-  const perfCar = FEATURED_PERFORMANCE_ID ? getVehicle(FEATURED_PERFORMANCE_ID) : null;
-
   return (
-    <div id="top" className="bg-white">
-      <SubNav title="Diamond Auto" links={subnavLinks} cta={{ label: "Reserve", href: "/contact?intent=test-drive" }} appearAfter={560} tone="light" />
-
-      {/* ============ HERO 1 — PERFORMANCE (black) ============ */}
-      <section className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden bg-black px-5 pb-16 pt-24 text-center text-white sm:px-8">
-        <p className="apple-metric-label text-[#0071e3]">
-          {perfCar ? "Now Available" : "Performance"}
-        </p>
-        <h1 className="apple-headline mt-3 max-w-4xl text-balance">
-          {perfCar ? (
-            <>{perfCar.year} {perfCar.make} {perfCar.model}.</>
-          ) : (
-            <>Performance, perfected.</>
-          )}
-        </h1>
-        <p className="apple-sub mt-4 max-w-2xl text-white/70">
-          {perfCar
-            ? `${perfCar.trim} · ${perfCar.power} · ${formatPrice(perfCar.price)}`
-            : "Hand-picked, inspected, and ready to drive. Our standout vehicles, front and center."}
-        </p>
-        <div className="mt-7 flex flex-wrap items-center justify-center gap-4">
-          <Link href={perfCar ? `/inventory/${perfCar.id}` : "/inventory"} className="pill pill-dark">
-            Learn more
-          </Link>
-          <Link
-            href={perfCar ? `/contact?intent=test-drive&vehicle=${perfCar.id}` : "/contact?intent=test-drive"}
-            className="pill pill-blue"
-          >
-            Reserve
-          </Link>
-          <Link href="/experience" className="pill pill-3d">
-            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden>
-              <path d="M12 2.5l8.5 4.9v9.2L12 21.5 3.5 16.6V7.4z" />
-              <path d="M3.7 7.3L12 12l8.3-4.7M12 12v9.3" />
-            </svg>
-            Explore in 3D
-          </Link>
+    <>
+      <section className={styles.hero} aria-labelledby="repair-title">
+        <div className={styles.heroCopy}>
+          <p className={styles.eyebrow}>Diamond Auto Sales · Raleigh, NC</p>
+          <h1 id="repair-title" className={styles.headline}>{title}</h1>
+          <p className={styles.subtitle}>From oil changes and brakes to tint, wraps, and paint.</p>
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
+            <Link href="#services" className="pill pill-dark">Explore Services</Link>
+            <a href={inquiry()} className="pill pill-blue" aria-label="Book service by email">Book Service</a>
+          </div>
         </div>
+        <Image
+          className={styles.heroCar}
+          src={`${vehiclePhotos}/front-left.webp`}
+          alt=""
+          width={1500}
+          height={979}
+          sizes="(max-width: 872px) 96vw, 832px"
+          fetchPriority="high"
+          loading="eager"
+        />
+      </section>
 
-        {/* product visual */}
-        <div className="mt-12 w-full max-w-4xl">
-          {perfCar ? (
-            <div className="relative mx-auto aspect-[16/9] w-full overflow-hidden rounded-[28px]">
-              <div className="absolute inset-0" style={{ background: perfCar.tone }} />
-              <PhotoLayer src={vehicleImage(perfCar.id)} alt={`${perfCar.year} ${perfCar.make} ${perfCar.model}`} eager />
-            </div>
-          ) : (
-            <ImagePlaceholder
-              src="/hero/performance.jpg"
-              alt="Featured performance vehicle"
-              label="Featured performance vehicle"
-              dimensions="2400×1350"
-              filename="/hero/performance.jpg"
-              priority
-              className="aspect-[16/9] w-full rounded-[28px]"
+      <section id="services" className={styles.section} aria-labelledby="services-title">
+        <div className={styles.inner}>
+          <Reveal>
+            <h2 id="services-title" className={styles.title}>Repair & Maintenance</h2>
+            <p className={styles.subtitle}>Compare prices for routine maintenance, diagnostics, and repairs.</p>
+          </Reveal>
+          <PriceCards menu={repairMenu} />
+        </div>
+      </section>
+
+      <section id="customization" className={`${styles.section} ${styles.dark}`} aria-labelledby="custom-title">
+        <div className={styles.inner}>
+          <div className={styles.customIntro}>
+            <Reveal>
+              <p className={styles.eyebrow}>Customization</p>
+              <h2 id="custom-title" className={`mt-2 ${styles.title}`}>Make it yours.</h2>
+              <p className={styles.subtitle}>Window tint, wraps, and body & paint.</p>
+            </Reveal>
+            <Image
+              className={styles.customCar}
+              src={`${vehiclePhotos}/rear-right.webp`}
+              alt=""
+              width={1500}
+              height={847}
+              sizes="(max-width: 700px) 95vw, 580px"
             />
-          )}
-        </div>
-
-        <div aria-hidden className="absolute bottom-6 left-1/2 -translate-x-1/2">
-          <div className="flex h-9 w-5 items-start justify-center rounded-full border border-white/25 p-1">
-            <span className="scroll-hint h-2 w-1 rounded-full bg-white/70" />
           </div>
+          <PriceCards menu={customizationMenu} customize />
         </div>
       </section>
 
-      {/* ============ HERO 2 — RENTALS (white) ============ */}
-      <section id="rentals" className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden bg-white px-5 pb-16 pt-24 text-center sm:px-8">
-        <p className="apple-metric-label text-[#0071e3]">Vehicle Rentals</p>
-        <h2 className="apple-headline mt-3 max-w-4xl text-balance text-[#1d1d1f]">
-          The fleet, on your schedule.
-        </h2>
-        <p className="apple-sub mt-4 max-w-2xl text-[#6e6e73]">
-          Daily, weekly, and long-term rentals in every class — economy to luxury.
-        </p>
-        <div className="mt-7 flex items-center gap-4">
-          <Link href="/rentals" className="pill pill-light">Learn more</Link>
-          <Link href="/rentals#reserve" className="pill pill-blue">Reserve</Link>
-        </div>
-
-        <div className="mt-12 grid w-full max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {rentals.map((r) => (
-            <div key={r.id} className="bento relative aspect-[3/4] overflow-hidden bg-[#f5f5f7]">
-              <div className="absolute inset-0" style={{ background: r.tone }} />
-              <PhotoLayer src={r.image} alt={`${r.name} rental`} />
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-4 text-left">
-                <p className="text-sm font-semibold text-white">{r.name}</p>
-                <p className="text-[12px] text-white/80">from ${r.dailyFrom}/day</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ============ INVENTORY SHOWCASE (light gray) ============ */}
-      <section id="inventory" className="bg-[#f5f5f7]">
-        <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-28">
-          <Reveal blur>
-            <div className="flex flex-wrap items-end justify-between gap-4">
-              <div>
-                <h2 className="text-[40px] font-semibold leading-none tracking-tight text-[#1d1d1f] sm:text-5xl">Inventory.</h2>
-                <p className="mt-3 text-[19px] text-[#6e6e73]">{available.length} vehicles available now in Raleigh.</p>
-              </div>
-              <Link href="/inventory" className="link-apple text-[15px]">
-                View all ›
-              </Link>
-            </div>
+      <section id="detailing" className={styles.section} aria-labelledby="detail-title">
+        <div className={styles.inner}>
+          <Reveal>
+            <h2 id="detail-title" className={styles.title}>Detailing</h2>
+            <p className={styles.subtitle}>Three packages, from a hand wash to a deep interior clean.</p>
           </Reveal>
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {featured.map((v, i) => (
-              <Reveal key={v.id} delay={(i % 3) * 80} blur>
-                <ListingCard vehicle={v} priceDrop={i === 1} />
-              </Reveal>
+          <div className={`${styles.grid} ${styles.packages}`}>
+            {detailingMenu.map(({ name, price, items }) => (
+              <article className={styles.card} key={name}>
+                <h3>{name}</h3>
+                <p className={`mt-2 text-xl ${styles.price}`}>{price}</p>
+                <ul className="mt-4 list-disc space-y-2 pl-5">
+                  {items.map((item) => <li key={item}>{item}</li>)}
+                </ul>
+                <a className="pill pill-light mt-6" href={inquiry(`Detailing — ${name}`)} aria-label={`Book ${name} detailing by email`}>
+                  Book Service
+                </a>
+              </article>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* ============ 3D EXPERIENCE FEATURE (black, full-bleed) ============ */}
-      <ExperienceFeature />
-
-      {/* ============ BENTO — the business (white) ============ */}
-      <section id="services" className="bg-white">
-        <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-28">
-          <Reveal blur>
-            <h2 id="financing" className="text-[40px] font-semibold leading-none tracking-tight text-[#1d1d1f] sm:text-5xl">
-              Everything, in one place.
-            </h2>
-          </Reveal>
-          <div className="mt-12 grid gap-5 md:grid-cols-2">
-            {bento.map((b, i) => (
-              <Reveal key={b.href} delay={(i % 2) * 90} blur>
-                <Link
-                  href={b.href}
-                  className={`bento bento-hover flex min-h-[280px] flex-col justify-between p-9 ${
-                    b.dark ? "bg-black text-white" : "bg-[#f5f5f7] text-[#1d1d1f]"
-                  }`}
-                >
-                  <div>
-                    <p className={`apple-metric-label ${b.dark ? "text-[#2997ff]" : "text-[#0071e3]"}`}>{b.eyebrow}</p>
-                    <h3 className="mt-3 text-[28px] font-semibold leading-tight tracking-tight">{b.title}</h3>
-                    <p className={`mt-3 max-w-md text-[15px] leading-relaxed ${b.dark ? "text-white/65" : "text-[#6e6e73]"}`}>
-                      {b.body}
-                    </p>
-                  </div>
-                  <span className={`mt-6 inline-flex items-center gap-1 text-[15px] ${b.dark ? "text-[#2997ff]" : "text-[#0071e3]"}`}>
-                    {b.cta}
-                    <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M9 6l6 6-6 6" />
-                    </svg>
-                  </span>
-                </Link>
-              </Reveal>
-            ))}
+          <div className="mt-10 flex flex-wrap gap-3">
+            <Link href="/inventory" className="pill pill-light">Browse Inventory</Link>
+            <Link href="/contact" className="pill pill-light">Contact Us</Link>
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 }

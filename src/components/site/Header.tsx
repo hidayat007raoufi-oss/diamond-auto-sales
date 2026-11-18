@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import DiamondLogo from "@/components/site/DiamondLogo";
 import { pushOverlay, popOverlay } from "@/lib/overlay";
 import { SOCIAL_LINKS } from "@/lib/social";
@@ -28,15 +29,21 @@ function Mark() {
   return (
     <Link href="/" className="flex items-center gap-2" aria-label="Diamond Auto Sales — home">
       <DiamondLogo className="h-6 w-6" />
-      <span className="flex flex-col leading-none">
-        <span className="text-[12px] font-semibold tracking-[0.2em] text-[#1d1d1f]">DIAMOND</span>
-        <span className="text-[7.5px] font-medium tracking-[0.3em] text-[#6e6e73]">AUTO SALES</span>
-      </span>
     </Link>
   );
 }
 
+const homeLinks = [
+  { href: "/#services", label: "Services" },
+  { href: "/#customization", label: "Customization" },
+  { href: "/inventory", label: "Inventory" },
+  { href: "/our-story", label: "About" },
+  { href: "/contact", label: "Contact" },
+];
+
 export default function Header() {
+  const home = usePathname() === "/";
+  const navigation = home ? homeLinks : links;
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -49,16 +56,16 @@ export default function Header() {
   }, [open]);
 
   return (
-    <header className="subnav-frost fixed inset-x-0 top-0 z-50">
+    <header className={`fixed inset-x-0 top-0 z-50 ${home ? "subnav-frost-dark text-white" : "subnav-frost"}`}>
       <div className="mx-auto flex h-12 max-w-7xl items-center justify-between px-5 sm:px-8">
         <Mark />
 
         <nav className="hidden items-center gap-8 lg:flex">
-          {links.map((l) => (
+          {navigation.map((l) => (
             <Link
               key={l.href}
               href={l.href}
-              className="text-[13px] font-normal text-[#1d1d1f]/80 transition-colors hover:text-[#1d1d1f]"
+              className={`text-sm transition-colors ${home ? "text-white/80 hover:text-white" : "text-[#1d1d1f]/80 hover:text-[#1d1d1f]"}`}
             >
               {l.label}
             </Link>
@@ -66,26 +73,29 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-5">
-          <a href="tel:+19198878666" className="hidden text-[13px] font-medium text-[#1d1d1f] md:block">
+          {!home && <a href="tel:+19198878666" className="hidden text-[13px] font-medium text-[#1d1d1f] md:block">
             (919) 887-8666
-          </a>
-          <Link href="/financing" className="hidden text-[13px] font-normal text-[#0071e3] hover:underline sm:block">
-            Get Approved
-          </Link>
+          </a>}
+          {home ? (
+            <a href="mailto:hello@diamondautonc.com?subject=Service%20appointment%20request" className="hidden text-sm text-[#7eb7ff] hover:underline sm:block">Book Service</a>
+          ) : (
+            <Link href="/financing" className="hidden text-sm text-[#0071e3] hover:underline sm:block">Get Approved</Link>
+          )}
           <button
             onClick={() => setOpen((v) => !v)}
             aria-label="Menu"
             aria-expanded={open}
             className="relative grid h-9 w-9 place-items-center lg:hidden"
           >
-            <span className={`absolute h-px w-5 bg-[#1d1d1f] transition-all duration-300 ${open ? "rotate-45" : "-translate-y-1"}`} />
-            <span className={`absolute h-px w-5 bg-[#1d1d1f] transition-all duration-300 ${open ? "-rotate-45" : "translate-y-1"}`} />
+            <span className={`absolute h-px w-5 bg-current transition-all duration-300 ${open ? "rotate-45" : "-translate-y-1"}`} />
+            <span className={`absolute h-px w-5 bg-current transition-all duration-300 ${open ? "-rotate-45" : "translate-y-1"}`} />
           </button>
         </div>
       </div>
 
       {/* ---------- Full-screen mobile menu (Apple-clean, white) ---------- */}
       <div
+        inert={!open}
         className={`fixed inset-0 z-[70] flex flex-col bg-white transition-all duration-300 lg:hidden ${
           open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
         }`}
@@ -104,7 +114,7 @@ export default function Header() {
         </div>
 
         <nav className="flex flex-1 flex-col overflow-y-auto px-6 pt-2">
-          {links.map((l, i) => (
+          {navigation.map((l, i) => (
             <Link
               key={l.href}
               href={l.href}
@@ -119,7 +129,7 @@ export default function Header() {
           ))}
         </nav>
 
-        <div className="px-6 pb-9 pt-4">
+        {!home && <div className="px-6 pb-9 pt-4">
           <div className="grid grid-cols-3 gap-3">
             <a href="tel:+19198878666" onClick={() => setOpen(false)} className="flex flex-col items-center gap-1.5 rounded-2xl bg-[#f5f5f7] py-3.5 text-xs font-medium text-[#1d1d1f]">
               <svg viewBox="0 0 24 24" className="h-5 w-5 text-[#0071e3]" fill="none" stroke="currentColor" strokeWidth="1.7">
@@ -158,7 +168,7 @@ export default function Header() {
               </a>
             ))}
           </div>
-        </div>
+        </div>}
       </div>
     </header>
   );

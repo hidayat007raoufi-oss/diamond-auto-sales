@@ -14,8 +14,8 @@ const columns = [
   {
     title: "Company",
     links: [
-      { href: "/services", label: "Detailing & Service" },
-      { href: "/services", label: "Customization" },
+      { href: "/#services", label: "Repair & Maintenance" },
+      { href: "/#customization", label: "Customization" },
       { href: "/our-story", label: "Our Story" },
       { href: "/contact", label: "Contact" },
     ],
@@ -36,8 +36,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="mt-5 max-w-xs text-[13px] leading-relaxed text-[#6e6e73]">
-              North Carolina&apos;s premier automotive destination — vehicle sales,
-              rentals, financing, and full-service care, all in Raleigh.
+              Vehicle sales, rentals, financing, repair, and customization in Raleigh.
             </p>
           </div>
 

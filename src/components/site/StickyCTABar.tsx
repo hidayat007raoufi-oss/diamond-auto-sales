@@ -1,12 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const PHONE = "+19198878666";
 
 /** Floating mobile action bar — appears after scrolling, hides near top + under overlays. */
 export default function StickyCTABar() {
+  const home = usePathname() === "/";
   const [show, setShow] = useState(false);
   const [overlay, setOverlay] = useState(0);
 
@@ -22,10 +24,11 @@ export default function StickyCTABar() {
     };
   }, []);
 
-  const visible = show && overlay === 0;
+  const visible = !home && show && overlay === 0;
 
   return (
     <div
+      inert={!visible}
       className={`subnav-frost fixed inset-x-0 bottom-0 z-40 px-3 pb-[max(0.6rem,env(safe-area-inset-bottom))] pt-2.5 transition-all duration-300 lg:hidden ${
         visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-full opacity-0"
       }`}
