@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { servicePhone } from "@/lib/repair-menu";
 import { useEffect, useState } from "react";
 import DiamondLogo from "@/components/site/DiamondLogo";
 import { pushOverlay, popOverlay } from "@/lib/overlay";
@@ -24,19 +26,20 @@ const ICONS: Record<string, string> = {
     "M22 12a10 10 0 10-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7A10 10 0 0022 12z",
 };
 
-function Mark() {
+function Mark({ onClick }: { onClick?: () => void }) {
   return (
-    <Link href="/" className="flex items-center gap-2" aria-label="Diamond Auto Sales — home">
+    <Link href="/" onClick={onClick} className="grid h-10 w-10 place-items-center" aria-label="Diamond Auto Sales — home">
       <DiamondLogo className="h-6 w-6" />
-      <span className="flex flex-col leading-none">
-        <span className="text-[12px] font-semibold tracking-[0.2em] text-[#1d1d1f]">DIAMOND</span>
-        <span className="text-[7.5px] font-medium tracking-[0.3em] text-[#6e6e73]">AUTO SALES</span>
-      </span>
     </Link>
   );
 }
 
 export default function Header() {
+  const repairHome = usePathname() === "/";
+  const phone = repairHome ? servicePhone : { display: "(919) 887-8666", number: "+19198878666" };
+  const action = repairHome
+    ? { href: "/#service-contact", label: "Book Service" }
+    : { href: "/financing", label: "Get Approved" };
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -53,7 +56,7 @@ export default function Header() {
       <div className="mx-auto flex h-12 max-w-7xl items-center justify-between px-5 sm:px-8">
         <Mark />
 
-        <nav className="hidden items-center gap-8 lg:flex">
+        <nav aria-label="Main" className="hidden items-center gap-5 lg:flex xl:gap-8">
           {links.map((l) => (
             <Link
               key={l.href}
@@ -66,11 +69,11 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-5">
-          <a href="tel:+19198878666" className="hidden text-[13px] font-medium text-[#1d1d1f] md:block">
-            (919) 887-8666
+          <a href={`tel:${phone.number}`} className="hidden text-[13px] font-medium text-[#1d1d1f] md:block">
+            {phone.display}
           </a>
-          <Link href="/financing" className="hidden text-[13px] font-normal text-[#0071e3] hover:underline sm:block">
-            Get Approved
+          <Link href={action.href} className="hidden text-[13px] font-normal text-[#0071e3] hover:underline sm:block">
+            {action.label}
           </Link>
           <button
             onClick={() => setOpen((v) => !v)}
@@ -86,12 +89,13 @@ export default function Header() {
 
       {/* ---------- Full-screen mobile menu (Apple-clean, white) ---------- */}
       <div
+        inert={!open}
         className={`fixed inset-0 z-[70] flex flex-col bg-white transition-all duration-300 lg:hidden ${
           open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
         }`}
       >
         <div className="flex h-12 items-center justify-between px-5">
-          <Mark />
+          <Mark onClick={() => setOpen(false)} />
           <button
             onClick={() => setOpen(false)}
             aria-label="Close menu"
@@ -121,17 +125,17 @@ export default function Header() {
 
         <div className="px-6 pb-9 pt-4">
           <div className="grid grid-cols-3 gap-3">
-            <a href="tel:+19198878666" onClick={() => setOpen(false)} className="flex flex-col items-center gap-1.5 rounded-2xl bg-[#f5f5f7] py-3.5 text-xs font-medium text-[#1d1d1f]">
+            <a href={`tel:${phone.number}`} onClick={() => setOpen(false)} className="flex flex-col items-center gap-1.5 rounded-2xl bg-[#f5f5f7] py-3.5 text-xs font-medium text-[#1d1d1f]">
               <svg viewBox="0 0 24 24" className="h-5 w-5 text-[#0071e3]" fill="none" stroke="currentColor" strokeWidth="1.7">
                 <path d="M5 4h4l2 5-3 2a11 11 0 005 5l2-3 5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z" />
               </svg>
               Call Now
             </a>
-            <Link href="/financing" onClick={() => setOpen(false)} className="flex flex-col items-center gap-1.5 rounded-2xl bg-[#0071e3] py-3.5 text-xs font-medium text-white">
+            <Link href={action.href} onClick={() => setOpen(false)} className="flex flex-col items-center gap-1.5 rounded-2xl bg-[#0071e3] py-3.5 text-xs font-medium text-white">
               <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.7">
                 <path d="M5 12l4 4L19 7" />
               </svg>
-              Get Approved
+              {action.label}
             </Link>
             <Link href="/inventory" onClick={() => setOpen(false)} className="flex flex-col items-center gap-1.5 rounded-2xl bg-[#f5f5f7] py-3.5 text-xs font-medium text-[#1d1d1f]">
               <svg viewBox="0 0 24 24" className="h-5 w-5 text-[#0071e3]" fill="none" stroke="currentColor" strokeWidth="1.6">

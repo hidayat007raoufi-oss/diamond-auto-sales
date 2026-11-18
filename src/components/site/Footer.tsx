@@ -14,6 +14,7 @@ const columns = [
   {
     title: "Company",
     links: [
+      { href: "/#service-prices", label: "Service Prices" },
       { href: "/services", label: "Detailing & Service" },
       { href: "/services", label: "Customization" },
       { href: "/our-story", label: "Our Story" },
@@ -57,7 +58,7 @@ export default function Footer() {
               </div>
             ))}
             <div>
-              <p className="text-[12px] font-semibold text-[#1d1d1f]">Visit</p>
+              <p className="text-[12px] font-semibold text-[#1d1d1f]">Sales &amp; Rentals</p>
               <ul className="mt-3.5 space-y-2.5 text-[13px] text-[#6e6e73]">
                 <li>5915 Triangle Drive<br />Raleigh, NC 27616</li>
                 <li>
