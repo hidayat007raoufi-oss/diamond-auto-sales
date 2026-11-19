@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
+import { DriftScene, WrapStudio } from "@/components/site/AutomotiveMotion";
 import Reveal from "@/components/motion/Reveal";
 import { customizationMenu, detailingMenu, repairMenu, type ServiceMenu } from "@/lib/repair-menu";
 import styles from "./repair-home.module.css";
@@ -61,16 +61,7 @@ export default function Home() {
             <a href={inquiry()} className="pill pill-blue" aria-label="Book service by email">Book Service</a>
           </div>
         </div>
-        <div className={styles.heroArt} aria-hidden="true">
-          <Image
-            src="/brand/repair-hero.webp"
-            alt=""
-            fill
-            sizes="(max-width: 800px) 100vw, 60vw"
-            fetchPriority="high"
-            loading="eager"
-          />
-        </div>
+        <DriftScene />
       </section>
 
       <section id="services" className={styles.section} aria-labelledby="services-title">
@@ -89,13 +80,9 @@ export default function Home() {
             <Reveal>
               <p className={styles.eyebrow}>Customization</p>
               <h2 id="custom-title" className={`mt-2 ${styles.title}`}>Make it yours.</h2>
-              <p className={styles.subtitle}>Window tint, wraps, and body & paint.</p>
+              <p className={styles.subtitle}>Pick a finish to watch the wrap sweep across the car.</p>
             </Reveal>
-            <div className={styles.finishArt} aria-hidden="true">
-              <span />
-              <span />
-              <span />
-            </div>
+            <WrapStudio />
           </div>
           <PriceCards menu={customizationMenu} customize />
         </div>

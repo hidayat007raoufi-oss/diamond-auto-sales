@@ -1,0 +1,232 @@
+.driftScene, .driftVisual {
+  position: absolute;
+  inset: 0;
+}
+
+.driftScene {
+  overflow: hidden;
+  background: radial-gradient(ellipse at 74% 62%, #0f2961 0%, #09152d 32%, #050810 68%);
+}
+
+.driftVisual {
+  overflow: hidden;
+  pointer-events: none;
+  mask-image: linear-gradient(90deg, transparent 16%, #000 55%);
+}
+
+.track {
+  position: absolute;
+  inset: 60% -15% -25% 25%;
+  transform: perspective(390px) rotateX(47deg) rotateZ(-9deg);
+  background:
+    repeating-linear-gradient(0deg, transparent 0 82px, #5b83d333 83px 84px),
+    repeating-linear-gradient(90deg, transparent 0 96px, #5079cc2c 97px 98px),
+    radial-gradient(ellipse at 55% 8%, #3e6dc562, transparent 69%);
+  mask-image: linear-gradient(transparent, #000 30%, transparent);
+}
+
+.lightTrails {
+  position: absolute;
+  width: 72%;
+  height: 37%;
+  top: 40%;
+  right: -9%;
+  opacity: .42;
+  transform: skewY(-11deg);
+  background:
+    linear-gradient(90deg, transparent, #71acff 48%, transparent 90%) 75% 23% / 62% 2px no-repeat,
+    linear-gradient(90deg, transparent, #3476fd 54%, transparent) 50% 36% / 92% 5px no-repeat,
+    linear-gradient(90deg, transparent, #a6c6ff 68%, transparent) 100% 61% / 68% 1px no-repeat,
+    linear-gradient(90deg, transparent, #f85c58 52%, transparent) 100% 68% / 52% 3px no-repeat;
+  filter: drop-shadow(0 0 9px #65a5ff);
+}
+
+.driftVisual[data-playing="true"] .lightTrails { animation: streak 3.9s ease-out both; }
+
+.driftCar {
+  position: absolute;
+  width: min(68vw, 65rem);
+  aspect-ratio: 2.45;
+  bottom: 13%;
+  right: -1%;
+  transform-origin: 62% 78%;
+  filter: drop-shadow(0 2.4rem 1.65rem #01040d);
+}
+
+.driftCar img, .wrapCar img {
+  object-fit: contain;
+}
+
+.smoke {
+  position: absolute;
+  width: 65%;
+  height: 40%;
+  right: -14%;
+  bottom: 9%;
+  transform-origin: 22% 85%;
+  background:
+    radial-gradient(ellipse at 16% 76%, #e3eeffbf 0%, #7b9dc75c 25%, transparent 45%),
+    radial-gradient(ellipse at 46% 70%, #c7d9f3b8 0%, #849bb875 26%, transparent 51%),
+    radial-gradient(ellipse at 66% 46%, #c2d4ed9f 0%, #6683aa66 23%, transparent 47%),
+    radial-gradient(ellipse at 82% 35%, #94b5e2a3 0%, #4975b75c 25%, transparent 52%);
+  filter: blur(clamp(5px, 1vw, 16px));
+  opacity: .38;
+}
+
+.driftVisual[data-playing="true"] .driftCar { animation: drift 3.9s cubic-bezier(.22,.61,.26,1) both; }
+.driftVisual[data-playing="true"] .smoke { animation: tire-smoke 3.9s ease-out both; }
+
+@keyframes drift {
+  0% { transform: translate3d(70%, 13%, 0) scale(.76) rotate(-11deg); opacity: 0; }
+  15% { opacity: 1; }
+  35% { transform: translate3d(10%, 3%, 0) scale(.94) rotate(4deg); }
+  64% { transform: translate3d(-6%, 0, 0) scale(1.035) rotate(-3deg); }
+  100% { transform: translate3d(0, 0, 0) scale(1) rotate(0); }
+}
+
+@keyframes tire-smoke {
+  0% { opacity: 0; transform: translate(34%, 20%) scale(.5); }
+  39% { opacity: .95; transform: translate(5%, 7%) scale(.9); }
+  72% { opacity: .68; transform: translate(9%, -8%) scale(1.2); }
+  100% { opacity: .38; transform: translate(13%, -12%) scale(1.33); }
+}
+
+@keyframes streak {
+  0% { opacity: 0; translate: 64% 0; }
+  34% { opacity: .85; }
+  100% { opacity: .42; translate: 0 0; }
+}
+
+.replay, .wrapReplay {
+  border: 1px solid #91b2eb55;
+  border-radius: 999px;
+  padding: .55rem .9rem;
+  color: #d8e6ff;
+  background: #0b1425;
+  cursor: pointer;
+  font-size: .875rem;
+}
+
+.replay:hover, .wrapReplay:hover { background: #1b3159; }
+
+.replay {
+  position: absolute;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  z-index: 2;
+}
+
+.studio {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #658dd04d;
+  border-radius: .4rem 2rem .4rem 2rem;
+  background: #070d19;
+}
+
+.booth {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1.72;
+  background:
+    radial-gradient(ellipse at var(--light-x, 53%) 38%, color-mix(in srgb, var(--finish) 27%, transparent), transparent 66%),
+    linear-gradient(162deg, #121d32, #060b15 70%);
+}
+
+.boothFloor {
+  position: absolute;
+  inset: 67% -24% -44%;
+  transform: perspective(200px) rotateX(33deg);
+  background:
+    repeating-linear-gradient(90deg, #7da5e227 0 1px, transparent 1px 12%),
+    repeating-linear-gradient(0deg, #7da5e22c 0 1px, transparent 1px 18%);
+  mask-image: radial-gradient(ellipse, #000 12%, transparent 67%);
+}
+
+.wrapCar {
+  position: absolute;
+  inset: 15% 6% 13%;
+  filter: drop-shadow(0 1.3rem 1.1rem #000a);
+}
+
+.wrapPass { position: absolute; inset: 0; }
+
+.wrapPass[data-sweep="true"] {
+  animation: lay-film 1.55s cubic-bezier(.32,.04,.22,1) both;
+}
+
+.filmEdge {
+  display: none;
+  position: absolute;
+  inset: 12% auto 10% 0;
+  width: 3px;
+  background: linear-gradient(transparent, #fff 25% 72%, transparent);
+  box-shadow: 0 0 13px 3px var(--finish);
+  transform: skewX(-12deg);
+}
+
+.wrapPass[data-sweep="true"] .filmEdge {
+  display: block;
+  animation: film-edge 1.55s cubic-bezier(.32,.04,.22,1) both;
+}
+
+@keyframes lay-film {
+  from { clip-path: polygon(0 0, 0 0, -16% 100%, 0 100%); }
+  to { clip-path: polygon(0 0, 116% 0, 100% 100%, 0 100%); }
+}
+
+@keyframes film-edge {
+  0% { left: -8%; opacity: 0; }
+  17%, 78% { opacity: .82; }
+  100% { left: 107%; opacity: 0; }
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .65rem 1rem;
+  min-height: 4.5rem;
+  padding: .65rem 1rem;
+  border-top: 1px solid #7295cd33;
+}
+
+.finishName { font-size: .95rem; font-weight: 650; min-width: 6.4rem; }
+
+.swatches { display: flex; align-items: center; gap: .3rem; }
+
+.swatch {
+  display: grid;
+  place-items: center;
+  width: 2.65rem;
+  height: 2.65rem;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.swatch span {
+  width: 1.45rem;
+  height: 1.45rem;
+  border-radius: 50%;
+  background: linear-gradient(142deg, color-mix(in srgb, var(--swatch) 67%, white), var(--swatch) 42%, color-mix(in srgb, var(--swatch) 55%, black));
+}
+
+.swatch[aria-pressed="true"] { border-color: #a6c3f2; }
+
+.wrapReplay { margin-left: auto; }
+
+@media (max-width: 800px) {
+  .driftScene { background: radial-gradient(ellipse at 58% 74%, #142d65, #050810 56%); }
+  .driftVisual { inset: auto 0 0; height: clamp(15rem, 64vw, 27rem); mask-image: none; }
+  .driftCar { width: 94%; right: 3%; bottom: 24%; }
+  .smoke { width: 87%; bottom: 19%; }
+  .track { left: -7%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .driftVisual[data-playing="true"] :is(.driftCar, .smoke, .lightTrails),
+  .wrapPass[data-sweep="true"], .wrapPass[data-sweep="true"] .filmEdge { animation: none; }
+  .replay, .wrapReplay, .wrapPass[data-sweep="true"] .filmEdge { display: none; }
+  .smoke { opacity: .38; }
+}
