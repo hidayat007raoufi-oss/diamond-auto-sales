@@ -7,7 +7,6 @@ import styles from "./repair-home.module.css";
 
 const title = "Auto Repair & Customization";
 const description = "Explore Diamond Auto Sales service pricing for maintenance, brakes, diagnostics, tire service, tint, wraps, bodywork and detailing in Raleigh, NC.";
-const vehiclePhotos = "/vehicles/cadillac-cts-2015/cutouts";
 
 export const metadata: Metadata = {
   title,
@@ -25,7 +24,7 @@ function PriceCards({ menu, customize = false }: { menu: ServiceMenu[]; customiz
   return (
     <div className={styles.grid}>
       {menu.map(({ id, title, items, note }) => (
-        <article className={styles.card} key={id}>
+        <article id={id} className={styles.card} key={id}>
           <h3>{title}</h3>
           <dl className="mt-4 text-base">
             {items.map(([name, price]) => (
@@ -55,23 +54,23 @@ export default function Home() {
       <section className={styles.hero} aria-labelledby="repair-title">
         <div className={styles.heroCopy}>
           <p className={styles.eyebrow}>Diamond Auto Sales · Raleigh, NC</p>
-          <h1 id="repair-title" className={styles.headline}>{title}</h1>
+          <h1 id="repair-title" className={styles.headline}>Auto repair <span>&amp; customization.</span></h1>
           <p className={styles.subtitle}>From oil changes and brakes to tint, wraps, and paint.</p>
-          <div className="mt-6 flex flex-wrap justify-center gap-3">
+          <div className="mt-7 flex flex-wrap gap-3">
             <Link href="#services" className="pill pill-dark">Explore Services</Link>
             <a href={inquiry()} className="pill pill-blue" aria-label="Book service by email">Book Service</a>
           </div>
         </div>
-        <Image
-          className={styles.heroCar}
-          src={`${vehiclePhotos}/front-left.webp`}
-          alt=""
-          width={1500}
-          height={979}
-          sizes="(max-width: 872px) 96vw, 832px"
-          fetchPriority="high"
-          loading="eager"
-        />
+        <div className={styles.heroArt} aria-hidden="true">
+          <Image
+            src="/brand/repair-hero.webp"
+            alt=""
+            fill
+            sizes="(max-width: 800px) 100vw, 60vw"
+            fetchPriority="high"
+            loading="eager"
+          />
+        </div>
       </section>
 
       <section id="services" className={styles.section} aria-labelledby="services-title">
@@ -92,14 +91,11 @@ export default function Home() {
               <h2 id="custom-title" className={`mt-2 ${styles.title}`}>Make it yours.</h2>
               <p className={styles.subtitle}>Window tint, wraps, and body & paint.</p>
             </Reveal>
-            <Image
-              className={styles.customCar}
-              src={`${vehiclePhotos}/rear-right.webp`}
-              alt=""
-              width={1500}
-              height={847}
-              sizes="(max-width: 700px) 95vw, 580px"
-            />
+            <div className={styles.finishArt} aria-hidden="true">
+              <span />
+              <span />
+              <span />
+            </div>
           </div>
           <PriceCards menu={customizationMenu} customize />
         </div>

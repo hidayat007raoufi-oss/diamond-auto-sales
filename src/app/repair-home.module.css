@@ -1,22 +1,39 @@
 .hero {
-  background: radial-gradient(ellipse at 50% 76%, #142437 0%, #080d15 39%, #030407 69%);
-  color: #fff;
+  position: relative;
+  display: grid;
+  align-items: center;
+  min-height: min(48rem, 100svh);
+  isolation: isolate;
   overflow: hidden;
-  padding: clamp(7rem, 14vh, 10rem) 1.25rem 0;
-  text-align: center;
+  background: #050810;
+  color: white;
+  padding: 7rem max(1.25rem, calc((100vw - 73rem) / 2)) 5rem;
 }
 
-.heroCopy, .heroCar {
-  animation: enter 780ms cubic-bezier(.2,.65,.3,1) both;
+.heroCopy {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  animation: enter 650ms ease-out both;
 }
 
-.heroCar {
-  animation-delay: 110ms;
-  display: block;
-  height: auto;
-  margin: 1.25rem auto -1.5rem;
-  width: min(100%, 52rem);
-  filter: drop-shadow(0 24px 32px #000);
+.heroArt {
+  position: absolute;
+  inset: 0 0 0 32%;
+  background: #091326;
+  mask-image: linear-gradient(to right, transparent, black 32%);
+}
+
+.heroArt img {
+  object-fit: cover;
+  object-position: 63% 50%;
+}
+
+.heroArt::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(0deg, #050810 0%, transparent 29%), linear-gradient(90deg, #050810 0%, transparent 53%);
 }
 
 @keyframes enter {
@@ -42,9 +59,16 @@
 }
 
 .headline {
-  font-size: clamp(2.8rem, 7vw, 6.25rem);
-  margin: .65rem auto 0;
-  max-width: 13ch;
+  font-size: clamp(3.2rem, 7vw, 7rem);
+  line-height: .91;
+  margin-top: .8rem;
+  letter-spacing: -.075em;
+}
+
+.headline span {
+  display: block;
+  max-width: 12ch;
+  color: #a8caff;
 }
 
 .title { font-size: clamp(2.4rem, 5.3vw, 4.8rem); }
@@ -60,7 +84,7 @@
 .hero .subtitle, .dark .subtitle { color: #b9c6d8; }
 
 .section {
-  background: #f4f6f8;
+  background: #edf1f6;
   padding: clamp(3.75rem, 8vw, 7rem) 1.25rem;
   scroll-margin-top: 3rem;
 }
@@ -84,11 +108,14 @@
 .card {
   background: #fff;
   border: 1px solid #dce2e9;
-  border-radius: 1.25rem;
+  border-radius: .35rem 1.35rem .35rem 1.35rem;
+  scroll-margin-top: 4rem;
   padding: clamp(1.1rem, 3vw, 1.8rem);
 }
 
 .dark .card { background: #101a2c; border-color: #263955; }
+
+.card:target { outline: 2px solid #528fff; outline-offset: 3px; }
 
 .card h3 {
   font-size: clamp(1.25rem, 2.5vw, 1.65rem);
@@ -121,17 +148,51 @@
   grid-template-columns: 1fr 1fr;
 }
 
-.customCar {
-  width: 100%;
-  height: auto;
-  filter: drop-shadow(0 24px 30px #040811);
+.finishArt {
+  position: relative;
+  height: clamp(10rem, 20vw, 18rem);
+  overflow: hidden;
+  isolation: isolate;
 }
 
-@media (max-width: 700px) {
+.finishArt span {
+  position: absolute;
+  inset: 12% 10% 11% 18%;
+  transform: skew(-28deg);
+  border: 1px solid #5275ab;
+  border-radius: 1rem;
+  background: linear-gradient(152deg, #060c19 12%, #2e4f85 42%, #a6c9ff 46%, #142c53 50%, #080e21 75%);
+}
+
+.finishArt span:nth-child(2) {
+  translate: -11% 8%;
+  background: linear-gradient(152deg, #070a12 15%, #344778 42%, #d4e1ff 46%, #213759 49%, #070911 72%);
+}
+
+.finishArt span:nth-child(3) {
+  translate: -22% 16%;
+  background: linear-gradient(152deg, #070c1c 11%, #183bad 41%, #a0c5ff 46%, #1747ee 49%, #070e2a 76%);
+}
+
+@media (max-width: 800px) {
+  .hero {
+    min-height: 0;
+    align-items: start;
+    padding: 6.5rem 1.25rem clamp(15rem, 64vw, 24rem);
+  }
+
+  .heroArt {
+    inset: auto 0 0;
+    height: 58%;
+    mask-image: linear-gradient(transparent, black 27%);
+  }
+
+  .heroArt::after { background: linear-gradient(0deg, #050810 0%, transparent 27%); }
+  .headline { font-size: clamp(2.45rem, 10vw, 5rem); }
   .grid, .customIntro { grid-template-columns: 1fr; }
-  .heroCar { margin: 1.25rem auto 0; }
+  .finishArt { margin-top: 1rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .heroCopy, .heroCar { animation: none; }
+  .heroCopy { animation: none; }
 }

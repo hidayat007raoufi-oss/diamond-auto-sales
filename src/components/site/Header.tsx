@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import HomeNavigation from "@/components/site/HomeNavigation";
 import DiamondLogo from "@/components/site/DiamondLogo";
 import { pushOverlay, popOverlay } from "@/lib/overlay";
 import { SOCIAL_LINKS } from "@/lib/social";
@@ -33,17 +34,8 @@ function Mark() {
   );
 }
 
-const homeLinks = [
-  { href: "/#services", label: "Services" },
-  { href: "/#customization", label: "Customization" },
-  { href: "/inventory", label: "Inventory" },
-  { href: "/our-story", label: "About" },
-  { href: "/contact", label: "Contact" },
-];
-
 export default function Header() {
   const home = usePathname() === "/";
-  const navigation = home ? homeLinks : links;
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -60,8 +52,8 @@ export default function Header() {
       <div className="mx-auto flex h-12 max-w-7xl items-center justify-between px-5 sm:px-8">
         <Mark />
 
-        <nav className="hidden items-center gap-8 lg:flex">
-          {navigation.map((l) => (
+        {home ? <HomeNavigation /> : <nav className="hidden items-center gap-8 lg:flex">
+          {links.map((l) => (
             <Link
               key={l.href}
               href={l.href}
@@ -70,7 +62,7 @@ export default function Header() {
               {l.label}
             </Link>
           ))}
-        </nav>
+        </nav>}
 
         <div className="flex items-center gap-5">
           {!home && <a href="tel:+19198878666" className="hidden text-[13px] font-medium text-[#1d1d1f] md:block">
@@ -113,8 +105,8 @@ export default function Header() {
           </button>
         </div>
 
-        <nav className="flex flex-1 flex-col overflow-y-auto px-6 pt-2">
-          {navigation.map((l, i) => (
+        {home ? <HomeNavigation mobile onNavigate={() => setOpen(false)} /> : <nav className="flex flex-1 flex-col overflow-y-auto px-6 pt-2">
+          {links.map((l, i) => (
             <Link
               key={l.href}
               href={l.href}
@@ -127,7 +119,7 @@ export default function Header() {
               {l.label}
             </Link>
           ))}
-        </nav>
+        </nav>}
 
         {!home && <div className="px-6 pb-9 pt-4">
           <div className="grid grid-cols-3 gap-3">
