@@ -5,7 +5,7 @@
 
 .driftScene {
   overflow: hidden;
-  background: radial-gradient(ellipse at 74% 62%, #0f2961 0%, #09152d 32%, #050810 68%);
+  background: radial-gradient(ellipse at 74% 68%, #1764e333, transparent 58%);
 }
 
 .driftVisual {
@@ -217,7 +217,6 @@
 .wrapReplay { margin-left: auto; }
 
 @media (max-width: 800px) {
-  .driftScene { background: radial-gradient(ellipse at 58% 74%, #142d65, #050810 56%); }
   .driftVisual { inset: auto 0 0; height: clamp(15rem, 64vw, 27rem); mask-image: none; }
   .driftCar { width: 94%; right: 3%; bottom: 24%; }
   .smoke { width: 87%; bottom: 19%; }

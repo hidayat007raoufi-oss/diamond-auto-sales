@@ -1,10 +1,9 @@
 import type { MetadataRoute } from "next";
-import { vehicles } from "@/lib/vehicles";
 
 const base = "https://diamondautonc.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const routes = ["", "/inventory", "/experience", "/rentals", "/financing", "/our-story", "/contact"].map(
+  return ["", "/our-story", "/contact"].map(
     (path) => ({
       url: `${base}${path}`,
       lastModified: new Date(),
@@ -12,13 +11,4 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: path === "" ? 1 : 0.8,
     })
   );
-
-  const vehiclePages = vehicles.map((v) => ({
-    url: `${base}/inventory/${v.id}`,
-    lastModified: new Date(),
-    changeFrequency: "weekly" as const,
-    priority: 0.6,
-  }));
-
-  return [...routes, ...vehiclePages];
 }

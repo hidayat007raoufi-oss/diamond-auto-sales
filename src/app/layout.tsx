@@ -2,28 +2,17 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import Header from "@/components/site/Header";
 import Footer from "@/components/site/Footer";
-import StickyCTABar from "@/components/site/StickyCTABar";
-import ChromeGate from "@/components/site/ChromeGate";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://diamondauto.com"),
+  metadataBase: new URL("https://diamondautonc.com"),
   title: {
-    default: "Diamond Auto Sales — Premium Vehicles in Raleigh, NC",
+    default: "Diamond Auto Sales | Auto Repair & Customization in Raleigh",
     template: "%s | Diamond Auto Sales",
   },
-  description:
-    "Premium pre-owned and luxury vehicles for sale in Raleigh, NC. Transparent financing, 27-point inspected inventory, and in-house service.",
-  keywords: [
-    "used cars Raleigh",
-    "luxury cars Raleigh NC",
-    "premium vehicles for sale",
-    "auto financing Raleigh",
-    "Diamond Auto Sales",
-  ],
+  description: "Explore auto repair, maintenance, tint, wraps, bodywork and detailing services in Raleigh, NC.",
   openGraph: {
-    title: "Diamond Auto Sales — Premium Vehicles in Raleigh, NC",
-    description:
-      "Premium vehicles, transparent financing, and in-house service in Raleigh, North Carolina.",
+    title: "Diamond Auto Sales | Auto Repair & Customization in Raleigh",
+    description: "Auto repair, maintenance, tint, wraps, bodywork and detailing in Raleigh, NC.",
     type: "website",
     siteName: "Diamond Auto Sales",
     locale: "en_US",
@@ -33,7 +22,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#ffffff",
+  themeColor: "#080c16",
   colorScheme: "light",
 };
 
@@ -41,16 +30,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" className="antialiased">
       <body className="min-h-screen bg-white text-[#1d1d1f]">
-        <ChromeGate>
-          <Header />
-        </ChromeGate>
+        <Header />
         <main>{children}</main>
-        <ChromeGate>
-          <Footer />
-          {/* clearance so the sticky bar never hides footer content on mobile */}
-          <div aria-hidden className="h-24 lg:hidden" />
-          <StickyCTABar />
-        </ChromeGate>
+        <Footer />
       </body>
     </html>
   );

@@ -1,0 +1,90 @@
+.entrance {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  align-items: center;
+  min-height: max(38rem, min(51rem, 100svh));
+  overflow: hidden;
+  padding: 7rem max(1.25rem, calc((100vw - 73rem) / 2)) 8rem;
+  background: #04070e;
+  color: #fff;
+}
+
+.viewport, .camera, .shop, .shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.viewport { perspective: 850px; }
+
+.camera {
+  transform: rotateX(var(--look-y, 0deg)) rotateY(var(--look-x, 0deg));
+  transform-style: preserve-3d;
+  transition: transform 340ms cubic-bezier(.2,.65,.34,1);
+}
+
+.shop {
+  inset: -9%;
+  transform: translateZ(-90px) scale(1.18);
+  animation: enter-shop 4.2s cubic-bezier(.16,.67,.23,1) both;
+}
+
+.shop img { object-fit: cover; object-position: 56% center; }
+
+.bayFrame, .nearFrame {
+  position: absolute;
+  pointer-events: none;
+  border: solid #75baff78;
+  border-width: 1px 2px 0;
+  box-shadow: inset 1px 0 16px #75baff40, 1px 0 14px #5e9dff58;
+  background: linear-gradient(90deg, #152a4842, transparent 16%, transparent 83%, #152a4842);
+}
+
+.bayFrame {
+  inset: 12% 12% -12% 34%;
+  transform: translateZ(54px);
+  opacity: .66;
+}
+
+.nearFrame {
+  inset: 4% 2% -21% 23%;
+  transform: translateZ(140px);
+  opacity: .34;
+}
+
+.shade {
+  background:
+    linear-gradient(0deg, #050810 0%, transparent 30%),
+    linear-gradient(90deg, #040711 4%, #040711e6 19%, #040711a4 38%, transparent 74%);
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  max-width: 100%;
+}
+
+@keyframes enter-shop {
+  from { transform: translateZ(-190px) scale(1.25); }
+  to { transform: translateZ(-90px) scale(1.18); }
+}
+
+@media (max-width: 800px) {
+  .entrance {
+    min-height: 0;
+    align-items: start;
+    padding: 6.5rem 1.25rem clamp(15rem, 67vw, 27rem);
+  }
+
+  .shop img { object-position: 64% center; }
+  .shade { background: linear-gradient(180deg, #050810e9, #050810b8 55%, transparent 76%, #050810 100%); }
+  .bayFrame { inset: 39% 4% -16%; }
+  .nearFrame { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .camera { transform: none; transition: none; }
+  .shop { animation: none; }
+}

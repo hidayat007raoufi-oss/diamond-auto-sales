@@ -3,19 +3,16 @@ import DiamondLogo from "@/components/site/DiamondLogo";
 
 const columns = [
   {
-    title: "Shop",
+    title: "Services",
     links: [
-      { href: "/inventory", label: "All Inventory" },
-      { href: "/rentals", label: "Vehicle Rentals" },
-      { href: "/financing", label: "Financing" },
-      { href: "/contact?intent=trade", label: "Value Your Trade" },
+      { href: "/#services", label: "Repair & Maintenance" },
+      { href: "/#customization", label: "Customization" },
+      { href: "/#detailing", label: "Detailing" },
     ],
   },
   {
     title: "Company",
     links: [
-      { href: "/#services", label: "Repair & Maintenance" },
-      { href: "/#customization", label: "Customization" },
       { href: "/our-story", label: "Our Story" },
       { href: "/contact", label: "Contact" },
     ],
@@ -36,7 +33,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="mt-5 max-w-xs text-[13px] leading-relaxed text-[#6e6e73]">
-              Vehicle sales, rentals, financing, repair, and customization in Raleigh.
+              Auto repair, customization, and detailing in Raleigh.
             </p>
           </div>
 

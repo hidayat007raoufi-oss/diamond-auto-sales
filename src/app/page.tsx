@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { DriftScene, WrapStudio } from "@/components/site/AutomotiveMotion";
+import { WrapStudio } from "@/components/site/AutomotiveMotion";
+import ShopEntrance from "@/components/site/ShopEntrance";
 import Reveal from "@/components/motion/Reveal";
 import { customizationMenu, detailingMenu, repairMenu, type ServiceMenu } from "@/lib/repair-menu";
 import styles from "./repair-home.module.css";
@@ -15,8 +16,8 @@ export const metadata: Metadata = {
   openGraph: { title: `${title} | Diamond Auto Sales`, description, type: "website", siteName: "Diamond Auto Sales" },
 };
 
-function inquiry(service?: string) {
-  const subject = service ? `Service inquiry — ${service}` : "Service appointment request";
+function inquiry(service: string) {
+  const subject = `Service inquiry — ${service}`;
   return `mailto:hello@diamondautonc.com?subject=${encodeURIComponent(subject)}`;
 }
 
@@ -51,18 +52,25 @@ function PriceCards({ menu, customize = false }: { menu: ServiceMenu[]; customiz
 export default function Home() {
   return (
     <>
-      <section className={styles.hero} aria-labelledby="repair-title">
+      <ShopEntrance>
         <div className={styles.heroCopy}>
           <p className={styles.eyebrow}>Diamond Auto Sales · Raleigh, NC</p>
           <h1 id="repair-title" className={styles.headline}>Auto repair <span>&amp; customization.</span></h1>
-          <p className={styles.subtitle}>From oil changes and brakes to tint, wraps, and paint.</p>
+          <p className={styles.subtitle}>Maintenance, diagnostics, and custom finishes in Raleigh.</p>
           <div className="mt-7 flex flex-wrap gap-3">
-            <Link href="#services" className="pill pill-dark">Explore Services</Link>
-            <a href={inquiry()} className="pill pill-blue" aria-label="Book service by email">Book Service</a>
+            <Link href="#services" className="pill pill-blue">Explore Services</Link>
+            <Link href="#customization" className="pill pill-dark">Try a Wrap Color</Link>
           </div>
         </div>
-        <DriftScene />
-      </section>
+      </ShopEntrance>
+
+      <nav aria-label="Explore the shop" className={styles.bayNav}>
+        <div>
+          <Link href="#services"><strong>Repair & Maintenance</strong><span>Oil changes, brakes, tires, diagnostics</span></Link>
+          <Link href="#customization"><strong>Customization</strong><span>Tint, wraps, body & paint</span></Link>
+          <Link href="#detailing"><strong>Detailing</strong><span>Basic Wash, Deluxe, Premium</span></Link>
+        </div>
+      </nav>
 
       <section id="services" className={styles.section} aria-labelledby="services-title">
         <div className={styles.inner}>
@@ -109,7 +117,7 @@ export default function Home() {
             ))}
           </div>
           <div className="mt-10 flex flex-wrap gap-3">
-            <Link href="/inventory" className="pill pill-light">Browse Inventory</Link>
+            <a href={inquiry("Service appointment")} className="pill pill-blue">Request Service by Email</a>
             <Link href="/contact" className="pill pill-light">Contact Us</Link>
           </div>
         </div>

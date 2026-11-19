@@ -26,9 +26,9 @@ const sections = [
     ],
   },
   {
-    label: "Inventory",
-    description: "Browse vehicles and explore the showroom.",
-    links: [["Browse Inventory", "/inventory"], ["Explore in 3D", "/experience"], ["Financing", "/financing"]],
+    label: "Detailing",
+    description: "Compare the Basic Wash, Deluxe, and Premium packages.",
+    links: [["Detailing Packages", "/#detailing"]],
   },
   {
     label: "About",

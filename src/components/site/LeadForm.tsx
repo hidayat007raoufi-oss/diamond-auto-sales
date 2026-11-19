@@ -47,7 +47,7 @@ export default function LeadForm() {
         <Field label="Email" name="email" type="email" required />
       </div>
       <div className="mt-4">
-        <Field label="Interested Vehicle" name="vehicle" type="text" placeholder="e.g. 2015 Cadillac CTS" />
+        <Field label="Vehicle make and model" name="vehicle" type="text" placeholder="e.g. 2020 Honda Accord" />
       </div>
       <div className="mt-4">
         <label htmlFor="msg" className="mb-2 block text-[12px] font-medium text-[#6e6e73]">
@@ -57,13 +57,13 @@ export default function LeadForm() {
           id="msg"
           name="message"
           rows={3}
-          placeholder="Anything we should know?"
+          placeholder="Which service are you interested in?"
           className="w-full resize-none rounded-xl border border-black/15 bg-white px-4 py-3 text-[#1d1d1f] placeholder:text-[#86868b] outline-none transition-colors focus:border-[#0071e3]"
         />
       </div>
 
       <button type="submit" className="pill pill-blue mt-6 w-full justify-center py-3.5">
-        Request Availability
+        Request Service
         <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.7">
           <path d="M5 12h14M13 6l6 6-6 6" />
         </svg>

@@ -6,7 +6,7 @@ import LeadForm from "@/components/site/LeadForm";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Visit Diamond Auto at 5915 Triangle Drive, Raleigh NC 27616, or request a callback. Vehicle sales, service, and ownership programs.",
+    "Contact Diamond Auto Sales in Raleigh, NC for repair, detailing, or customization.",
 };
 
 const rows = [
@@ -23,8 +23,8 @@ export default function ContactPage() {
         <div>
           <SectionHeading
             kicker="Contact"
-            title={<>Ready to find your next vehicle?</>}
-            intro="Stop by our Raleigh showroom or send a message and our team will confirm availability — sales, financing, rentals, service, and trade-ins."
+            title={<>What can we help with?</>}
+            intro="Contact the shop to ask about a repair, a detailing package, or a custom finish."
           />
 
           <div className="mt-12 space-y-6">
